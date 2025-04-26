@@ -5,10 +5,10 @@ nav.navbar {
   
   /* Make the logo 100px tall and pull it up so it's centered in the 56px bar */
   nav.navbar .navbar-brand img {
-    height: 140px !important;
+    height: 80px !important;
     width: auto;
-    margin-top: -60px;   /* (100px logo – 56px navbar) / 2 = 22px */
-    margin-bottom: -60px;   
+    margin-top: -30px;   /* (100px logo – 56px navbar) / 2 = 22px */
+    margin-bottom: -30px;   
 }
 
 
