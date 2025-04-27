@@ -1,7 +1,11 @@
 // src/script/map.js
 
-//  — Make sure you include Turf.js **before** this in your HTML:
-//    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+/**
+ * Initializes Mapbox, draws Metro Vancouver boundary,
+ * and toggles wheelchair- and senior-friendly POIs.
+ *
+ * Requires Turf.js & MapboxGeocoder loaded before this.
+ */
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGVyLTIwMjUiLCJhIjoiY205dXZ5YmIwMGQ0NTJpcTNzb2prYnZpOCJ9.QzrbaFW5l9KvuKO-cqOaFg';
 
@@ -12,77 +16,122 @@ const map = new mapboxgl.Map({
   zoom:      11
 });
 
-// Zoom controls
+// 1️⃣ UI Controls: zoom, geolocate, search
 map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-// Geolocate + auto-center
 const geolocate = new mapboxgl.GeolocateControl({
   positionOptions: { enableHighAccuracy: true },
   trackUserLocation: true,
-  showUserHeading: true
+  showUserHeading:   true
 });
 map.addControl(geolocate, 'top-right');
-
-// Search box
-const geocoder = new MapboxGeocoder({
+map.addControl(new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   mapboxgl,
   placeholder: 'Search for a place',
   marker:      { color: 'orange' }
-});
-map.addControl(geocoder, 'top-left');
+}), 'top-left');
 
-map.on('load', () => {
-  // 1️⃣ auto-center on user
-  geolocate.trigger();
+// 2️⃣ Boundary: fetch from src/data, union & outline
+async function loadBoundary() {
+  try {
+    const url = '/src/data/metro-vancouver-boundaries.geojson';
+    console.log('Fetching boundary from:', url);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const geojson = await res.json();
 
-  // 2️⃣ build the path to your GeoJSON
-  const path       = window.location.pathname;                    
-  const dir        = path.substring(0, path.lastIndexOf('/'));    
-  const geojsonURL = `${dir}/../data/metro-vancouver-boundaries.geojson`;
-  console.log('Fetching boundary from:', geojsonURL);
+    // merge into one polygon
+    let merged = geojson.features[0];
+    for (let i = 1; i < geojson.features.length; i++) {
+      merged = turf.union(merged, geojson.features[i]);
+    }
+    // turn it into a LineString
+    const boundaryLine = turf.polygonToLine(merged);
 
-  // 3️⃣ fetch & merge
-  fetch(geojsonURL)
-    .then(res => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
-    })
-    .then(data => {
-      console.log('Raw GeoJSON loaded, feature count:', data.features.length);
+    map.addSource('lowerMainland', { type: 'geojson', data: boundaryLine });
+    map.addLayer({
+      id: 'lowerMainland-boundary',
+      type: 'line',
+      source: 'lowerMainland',
+      layout: { 'line-join': 'round', 'line-cap': 'round' },
+      paint:  { 'line-color': '#FF0000', 'line-width': 3 }
+    });
+  } catch (err) {
+    console.error('Boundary load/outline error:', err);
+  }
+}
 
-      // union all features into one
-      let merged = data.features[0];
-      for (let i = 1; i < data.features.length; i++) {
-        merged = turf.union(merged, data.features[i]);
-      }
+// 3️⃣ POIs: load two files from src/data and create markers
+function makeMarkers(features, array, iconName) {
+  features.forEach(f => {
+    const [lng, lat] = f.geometry.coordinates;
+    const el = document.createElement('div');
+    el.className = 'custom-marker';
+    el.style.backgroundImage = `url(/icons/${iconName}.svg)`;
+    el.style.width  = '32px';
+    el.style.height = '32px';
+    el.style.backgroundSize = 'contain';
+    array.push(new mapboxgl.Marker(el).setLngLat([lng, lat]));
+  });
+}
 
-      // wrap it back into a FeatureCollection
-      const outline = {
-        type: 'FeatureCollection',
-        features: [merged]
+async function loadPOIs() {
+  const wheelchair = [], senior = [];
+  try {
+    let res = await fetch('/src/data/wheelchair-friendly.geojson');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    let data = await res.json();
+    makeMarkers(data.features, wheelchair, 'wheelchair');
+
+    res = await fetch('/src/data/senior-friendly.geojson');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    data = await res.json();
+    makeMarkers(data.features, senior, 'senior');
+  } catch (err) {
+    console.error('POI load error:', err);
+  }
+
+  // ToggleControl definition (same as before)
+  class ToggleControl {
+    constructor(type, markers) {
+      this.type = type;
+      this.markers = markers;
+      this.visible = false;
+    }
+    onAdd(map) {
+      this.map = map;
+      const container = document.createElement('div');
+      container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+      const btn = document.createElement('button');
+      btn.className = 'mapboxgl-ctrl-icon';
+      btn.title = `${this.type} friendly`;
+      btn.style.backgroundImage = `url(/icons/${this.type}.svg)`;
+      btn.style.backgroundRepeat = 'no-repeat';
+      btn.style.backgroundPosition = 'center';
+      btn.style.backgroundSize = '24px';
+      btn.onclick = () => {
+        this.visible
+          ? this.markers.forEach(m => m.remove())
+          : this.markers.forEach(m => m.addTo(this.map));
+        this.visible = !this.visible;
+        btn.classList.toggle('active', this.visible);
       };
-      console.log('Dissolved outline ready:', outline);
+      container.appendChild(btn);
+      return container;
+    }
+    onRemove() {
+      this.container.remove();
+      this.map = null;
+    }
+  }
 
-      // 4️⃣ add as a source & layer
-      map.addSource('lowerMainland', {
-        type: 'geojson',
-        data: outline
-      });
+  map.addControl(new ToggleControl('wheelchair', wheelchair), 'top-right');
+  map.addControl(new ToggleControl('senior', senior),       'top-right');
+}
 
-      map.addLayer({
-        id:     'lowerMainland-boundary',
-        type:   'line',
-        source: 'lowerMainland',
-        layout: {
-          'line-join': 'round',
-          'line-cap':  'round'
-        },
-        paint: {
-          'line-color': '#FF0000',
-          'line-width': 3
-        }
-      });
-    })
-    .catch(err => console.error('Boundary load/dissolve error:', err));
+// 4️⃣ Kickoff on map load
+map.on('load', () => {
+  geolocate.trigger();
+  loadBoundary();
+  loadPOIs();
 });
