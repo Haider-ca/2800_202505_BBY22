@@ -1,10 +1,10 @@
 // loads top and bottom navbar fragments
 document.addEventListener('DOMContentLoaded', () => {
-  // derive the folder your HTML lives in (/html)
-  const path = window.location.pathname;                      
-  const dir  = path.substring(0, path.lastIndexOf('/'));      
 
-  // 1️⃣ Top navbar
+  const path = window.location.pathname;
+  const dir = path.substring(0, path.lastIndexOf('/'));
+
+  // 1- Top navbar
   const topEl = document.getElementById('navbar-placeholder');
   if (topEl) {
     const frag = topEl.dataset.nav === 'after'
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('Top navbar load error:', err));
   }
 
-  // 2️⃣ Bottom navbar
+  // 2- Bottom navbar
   const botEl = document.getElementById('bottom-navbar-placeholder');
   if (botEl) {
     fetch(`${dir}/partials/bottomNavbar.html`)
