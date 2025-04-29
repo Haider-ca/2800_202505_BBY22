@@ -1,0 +1,17 @@
+/* Allow the logo to overflow its container */
+nav.navbar {
+    overflow: visible;   /* only here, not on the placeholder or brand */
+  }
+  
+  /* Make the logo 100px tall and pull it up so it's centered in the 56px bar */
+  nav.navbar .navbar-brand img {
+    height: 100px !important;
+    width: auto;
+    margin-top: -35px;   /* (100px logo – 56px navbar) / 2 = 22px */
+    margin-bottom: -35px;   
+}
+
+
+
+
+  

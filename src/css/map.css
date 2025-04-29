@@ -1,0 +1,12 @@
+html, body {
+  margin: 0; padding: 0; height: 100%;
+}
+#map {
+  position: absolute;
+  top: 56px;     /* height of top navbar */
+  bottom: 56px;  /* height of bottom navbar */
+  width: 100%;
+}
+
+
+
