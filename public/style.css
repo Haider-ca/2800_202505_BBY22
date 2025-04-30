@@ -1,0 +1,9 @@
+.content {
+    margin: 0 auto;
+    width: 800px;
+    text-align: center;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+  
