@@ -109,6 +109,32 @@ function makeMarkers(features, array, iconName) {
     el.style.height = '32px';
     el.style.backgroundSize = 'contain'; // Style the marker with the specified icon
 
+    // Create popup HTML content
+const popupContent = `
+<div class="custom-popup">
+  <div class="popup-header">
+    <strong>${f.properties.username || 'Anonymous'}</strong>
+    <span>${f.properties.time || 'Unknown time'}</span>
+  </div>
+  <img src="${f.properties.image || '/icons/default.jpg'}" alt="POI photo" class="popup-img" />
+  <div class="popup-desc">${f.properties.description || 'No description available.'}</div>
+  <div class="popup-votes">
+    <span>👍 ${f.properties.likes || 0}</span>
+    <span>💬 ${f.properties.comments || 0}</span>
+  </div>
+</div>
+`;
+
+const popup = new mapboxgl.Popup({
+closeButton: false,
+closeOnClick: false,
+offset: 25,
+}).setHTML(popupContent);
+
+// Hover listeners
+el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+el.addEventListener('mouseleave', () => popup.remove());
+
     // Instantiate and store the Mapbox marker
     array.push(new mapboxgl.Marker(el).setLngLat([lng, lat]));
   });
