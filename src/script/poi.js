@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     formData.append('image', photoInput.files[0]);
                 }
 
-                fetch('http://localhost:5001/api/poi', {
+                fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
                     method: 'POST',
                     body: formData
                 })
