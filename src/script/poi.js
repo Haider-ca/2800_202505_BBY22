@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Display POI form in map page
             const modal = document.getElementById("poiModal");
             if (modal) {
-                modal.style.display = "block"; // !!!should be none, block is for test
+                modal.style.display = "none"; // !!!should be none, block is for test
             }
 
             // Upload photo
