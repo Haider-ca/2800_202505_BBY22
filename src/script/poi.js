@@ -1,63 +1,77 @@
+// src/script/poi.js
+// POI MODULE — DO NOT MODIFY
+
 document.addEventListener("DOMContentLoaded", () => {
-    // get html snippet of POI form
-    fetch("../html/poi/poiForm.html")
-        .then(res => res.text())
-        .then(html => {
-            // Insert POI form into map.html
-            document.getElementById("poi-form-container").innerHTML = html;
-
-            // Display POI form in map page
-            const modal = document.getElementById("poiModal");
-            if (modal) {
-                modal.style.display = "none"; // !!!should be none, block is for test
+    const container = document.getElementById("poi-form-container");
+    if (!container) {
+      console.warn("⚠️  #poi-form-container not found, skipping POI form load");
+      return;
+    }
+  
+    // 1) Load the HTML snippet
+    fetch("/partials/poiForm.html")
+      .then(res => {
+        if (!res.ok) throw new Error(`Could not load form: ${res.status}`);
+        return res.text();
+      })
+      .then(html => {
+        // 2) Inject into the page
+        container.innerHTML = html;
+  
+        // 3) Hide the modal by default
+        const modal = document.getElementById("poiModal");
+        if (modal) modal.style.display = "none";
+  
+        // 4) Wire up your upload button
+        const uploadBtn = document.getElementById("uploadBtn");
+        const photoInput = document.getElementById("photoInput");
+        const photoPreview = document.getElementById("photoPreview");
+        if (uploadBtn && photoInput) {
+          uploadBtn.addEventListener("click", () => photoInput.click());
+          photoInput.addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file && photoPreview) {
+              const reader = new FileReader();
+              reader.onload = e => {
+                photoPreview.src = e.target.result;
+                photoPreview.classList.remove("d-none");
+              };
+              reader.readAsDataURL(file);
             }
-
-            // Upload photo
-            document.getElementById("uploadBtn").addEventListener("click", () => {
-                document.getElementById("photoInput").click();
-            });
-
-            // Display photo
-            document.getElementById("photoInput").addEventListener("change", (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        const preview = document.getElementById("photoPreview");
-                        preview.src = e.target.result;
-                        preview.classList.remove("d-none");
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // postBtn click event
-            document.getElementById('postBtn').addEventListener('click', () => {
-                console.log("Post button clicked");
-                const title = document.getElementById('poiTitle').value;
-                const description = document.getElementById('poiDescription').value;
-                const photoInput = document.getElementById('photoInput');
-
-                const formData = new FormData();
-                formData.append('title', title);
-                formData.append('description', description);
-                if (photoInput.files[0]) {
-                    formData.append('image', photoInput.files[0]);
-                }
-
-                fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        alert('POI submitted!');
-                        console.log(data);
-                    })
-                    .catch(err => {
-                        console.error('Error:', err);
-                    });
-            });
-
-        });
-});
+          });
+        }
+  
+        // 5) Handle the POST
+        const postBtn = document.getElementById("postBtn");
+        if (postBtn) {
+          postBtn.addEventListener("click", () => {
+            const title = document.getElementById("poiTitle")?.value;
+            const description = document.getElementById("poiDescription")?.value;
+            const formData = new FormData();
+            if (title)       formData.append("title", title);
+            if (description) formData.append("description", description);
+            if (photoInput?.files[0]) {
+              formData.append("image", photoInput.files[0]);
+            }
+  
+            fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
+              method: "POST",
+              body: formData
+            })
+              .then(r => r.json())
+              .then(data => {
+                alert("POI submitted!");
+                console.log("POI response:", data);
+              })
+              .catch(err => {
+                console.error("POI submission error:", err);
+                alert("Failed to submit POI");
+              });
+          });
+        }
+      })
+      .catch(err => {
+        console.error("Error loading POI form:", err);
+      });
+  });
+  

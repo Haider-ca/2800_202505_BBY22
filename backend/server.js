@@ -1,42 +1,40 @@
-//Get environment variables from .env file.
-require('dotenv').config({ path: '../.env' });
+// backend/server.js
 
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+require('dotenv').config();
+const express   = require('express');
+const cors      = require('cors');
+const path      = require('path');
+const favicon   = require('serve-favicon');
 const connectDB = require('./config/db');
 
 const app = express();
-
-// Connect MongoDB
 connectDB();
 
-// CORS setup
-app.use(cors()); 
+// serve favicon
+app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 
-// Middleware
-app.use(express.json()); // Parse incoming JSON
-app.use('/src', express.static(path.join(__dirname, 'src'))); // Serve static files if needed
+// middlewares
+app.use(cors());
+app.use(express.json());
 
-// Mount route modules
+// static: public then src
+app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'src')));
+
+// API endpoints
 app.use('/api/poi', require('./routes/poi'));
-// add your routes here...
+app.use('/api/map', require('./map/routes/mapRoutes'));
 
-// Basic test route to confirm the API server is running
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+// health-check
+app.get('/', (req, res) => res.send('API is running...'));
 
-// Error handler (catch all server errors)
+// error handler
 app.use((err, req, res, next) => {
-  console.error('[Server Error]', err.stack);
+  console.error(err.stack);
   res.status(500).json({ message: 'Internal server error' });
 });
 
-// Set port
 const PORT = process.env.PORT || 5000;
-
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
