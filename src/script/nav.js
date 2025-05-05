@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const frag = topEl.dataset.nav === 'after'
       ? 'navbarAfterLogin'
       : 'navbarBeforeLogin';
-    fetch(`/src/html/partials/${frag}.html`)
+    fetch(`/html/partials/${frag}.html`)
       .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
       .then(html => topEl.innerHTML = html)
       .catch(err => console.error('Top navbar load error:', err));
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2- Bottom navbar
   const botEl = document.getElementById('bottom-navbar-placeholder');
   if (botEl) {
-    fetch(`/src/html/partials/bottomNavbar.html`)
+    fetch(`/html/partials/bottomNavbar.html`)
       .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
       .then(html => botEl.innerHTML = html)
       .catch(err => console.error('Bottom navbar load error:', err));
