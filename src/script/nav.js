@@ -1,27 +1,31 @@
-// loads top and bottom navbar fragments
-document.addEventListener('DOMContentLoaded', () => {
+// src/script/nav.js
+// NAV MODULE — DO NOT MODIFY
 
-  const path = window.location.pathname;
-  const dir = path.substring(0, path.lastIndexOf('/'));
+document.addEventListener('DOMContentLoaded', async () => {
+  const navContainer    = document.getElementById('navbar-placeholder');
+  const bottomContainer = document.getElementById('bottom-navbar-placeholder');
+  if (!navContainer || !bottomContainer) return;
 
-  // 1- Top navbar
-  const topEl = document.getElementById('navbar-placeholder');
-  if (topEl) {
-    const frag = topEl.dataset.nav === 'after'
-      ? 'navbarAfterLogin'
-      : 'navbarBeforeLogin';
-    fetch(`${dir}/partials/${frag}.html`)
-      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-      .then(html => topEl.innerHTML = html)
-      .catch(err => console.error('Top navbar load error:', err));
-  }
+  try {
+    // Load top nav (before-login by default)
+    const beforeHtml = await fetch('/partials/navbarBeforeLogin.html').then(r => r.text());
+    navContainer.innerHTML = beforeHtml;
 
-  // 2- Bottom navbar
-  const botEl = document.getElementById('bottom-navbar-placeholder');
-  if (botEl) {
-    fetch(`${dir}/partials/bottomNavbar.html`)
-      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-      .then(html => botEl.innerHTML = html)
-      .catch(err => console.error('Bottom navbar load error:', err));
+    // If you implement login-state detection in the future,
+    // swap out the above for navbarAfterLogin.html.
+    //
+    // e.g.:
+    // const isLoggedIn = /* your auth check */;
+    // const topFile    = isLoggedIn
+    //   ? '/partials/navbarAfterLogin.html'
+    //   : '/partials/navbarBeforeLogin.html';
+    // const topHtml    = await fetch(topFile).then(r => r.text());
+    // navContainer.innerHTML = topHtml;
+
+    // Load bottom nav
+    const bottomHtml = await fetch('/partials/bottomNavbar.html').then(r => r.text());
+    bottomContainer.innerHTML = bottomHtml;
+  } catch (err) {
+    console.error('Failed to load nav partials:', err);
   }
 });

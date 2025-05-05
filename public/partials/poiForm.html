@@ -1,0 +1,23 @@
+<div id="poiModal" class="position-absolute top-50 start-50 translate-middle bg-white border rounded p-4 shadow"
+    style="width: 22rem; z-index: 1050; display: block;">
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-2" id="closePOI"></button>
+    <h5 class="mb-3">Add a New POI</h5>
+    <div class="mb-3">
+        <label for="poiTitle" class="form-label fw-bold">Title:</label>
+        <input type="text" class="form-control" id="poiTitle">
+    </div>
+    <div class="mb-3">
+        <label for="poiDescription" class="form-label fw-bold">Description:</label>
+        <textarea class="form-control" id="poiDescription" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-secondary w-100" id="uploadBtn">Upload Photo</button>
+        <input type="file" id="photoInput" accept="image/*" capture="environment" class="d-none">
+    </div>
+    <div class="mb-3">
+        <img id="photoPreview" src="#" class="img-fluid rounded d-none" alt="Preview Image">
+    </div>
+    <div class="d-grid">
+        <button class="btn btn-primary" id="postBtn">Post</button>
+    </div>
+</div>

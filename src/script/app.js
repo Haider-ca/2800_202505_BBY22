@@ -1,5 +1,7 @@
-const contentText = document.querySelector('.content');
+// src/script/app.js
 
-document.addEventListener('DOMContentLoaded', function() {
-  contentText.innerHTML = "This is the content";
-}, false);
+document.addEventListener('DOMContentLoaded', () => {
+  const contentText = document.querySelector('.content');
+  if (!contentText) return;          // bail out if the element isn’t on this page
+  contentText.textContent = "This is the content";
+});
