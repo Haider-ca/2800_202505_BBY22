@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <section class="profile">
+            <div class="avatar">
+                <img src="/img/bob.jpg" alt="User Avatar" />
+                <div class="menu-icon"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                <div class="dropdown">
+                    <div>Edit profile</div>
+                    <div>Reset password</div>
+                    <div>Delete profile</div>
+                </div>
+            </div>
+            <div class="info">
+                <p><strong>Name:</strong> Bob</p>
+                <p><strong>Age:</strong> 35</p>
+                <p><strong>Job:</strong> Freelancer</p>
+                <p><strong>Description:</strong> I love taking a walk around where I live and enjoy the sunlight
+                    whenever I can</p>
+            </div>
+        </section>
+
+        <section class="posts">
+            <h2>Your Post</h2>
+            <div class="post-grid">
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar-sm">
+                            <img src="/img/bob.jpg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <span class="name">Bob</span>
+                            <span class="time">Today 13:09</span>
+                        </div>
+                        <div class="post-actions">
+                            <span class="icon"><i class="fa-solid fa-trash"></i></span>
+                            <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                        </div>
+                    </div>
+                    <img src="/img/home1.jpg" alt="Post image" />
+                    <p>Main door on the right is wheelchair accessible. Ramp available.</p>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar-sm">
+                            <img src="/img/bob.jpg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <span class="name">Bob</span>
+                            <span class="time">Today 13:09</span>
+                        </div>
+                        <div class="post-actions">
+                            <span class="icon"><i class="fa-solid fa-trash"></i></span>
+                            <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                        </div>
+                    </div>
+                    <img src="/img/home1.jpg" alt="Post image" />
+                    <p>Main door on the right is wheelchair accessible. Ramp available.</p>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar-sm">
+                            <img src="/img/bob.jpg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <span class="name">Bob</span>
+                            <span class="time">Today 13:09</span>
+                        </div>
+                        <div class="post-actions">
+                            <span class="icon"><i class="fa-solid fa-trash"></i></span>
+                            <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                        </div>
+                    </div>
+                    <img src="/img/home1.jpg" alt="Post image" />
+                    <p>Main door on the right is wheelchair accessible. Ramp available.</p>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar-sm">
+                            <img src="/img/bob.jpg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <span class="name">Bob</span>
+                            <span class="time">Today 13:09</span>
+                        </div>
+                        <div class="post-actions">
+                            <span class="icon"><i class="fa-solid fa-trash"></i></span>
+                            <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                        </div>
+                    </div>
+                    <img src="/img/home1.jpg" alt="Post image" />
+                    <p>Main door on the right is wheelchair accessible. Ramp available.</p>
+                </div>
+            </div>
+            <a href="#" class="see-more">See more →</a>
+        </section>
+    </div>
+
+    <script>
+        const menuIcon = document.querySelector(".menu-icon");
+        const dropdown = document.querySelector(".dropdown");
+
+        menuIcon.addEventListener("click", () => {
+            dropdown.classList.toggle("show");
+        });
+    </script>
+</body>
+
+</html>
