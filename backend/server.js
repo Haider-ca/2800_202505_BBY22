@@ -22,8 +22,8 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'src')));
 
 // API endpoints
-app.use('/api/poi', require('./routes/poi'));
 app.use('/api/map', require('./map/routes/mapRoutes'));
+app.use('/api/poi', require('./poi/routes/poiRoutes'));
 
 // health-check
 app.get('/', (req, res) => res.send('API is running...'));
