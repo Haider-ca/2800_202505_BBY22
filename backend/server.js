@@ -5,7 +5,9 @@ const express   = require('express');
 const cors      = require('cors');
 const path      = require('path');
 const favicon   = require('serve-favicon');
-const connectDB = require('./config/db');
+const connectDB = require('./config/db'); 
+
+const authRoutes = require('./routes/auth');//add this for login features 
 
 const app = express();
 connectDB();
@@ -24,6 +26,7 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 // API endpoints
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
+app.use('/api', authRoutes);//add this for login features 
 
 // health-check
 app.get('/', (req, res) => res.send('API is running...'));
