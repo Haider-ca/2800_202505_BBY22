@@ -41,6 +41,14 @@ html, body {
   font-family: "Segoe UI", Roboto, sans-serif;
 }
 
+#dir-summary {
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 1px solid #e1e5eb;
+  margin-bottom: 8px;
+}
+
 /* Turn-by-Turn box – auto‐height and lifted up */
 #turn-by-turn {
   position: absolute;
