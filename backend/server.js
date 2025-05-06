@@ -1,5 +1,4 @@
 // backend/server.js
-
 require('dotenv').config();
 const express   = require('express');
 const cors      = require('cors');
@@ -24,6 +23,8 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 // API endpoints
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
+// ← new: directions proxy
+app.use('/api/directions', require('./map/routes/directionsRoutes'));
 
 // health-check
 app.get('/', (req, res) => res.send('API is running...'));

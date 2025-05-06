@@ -1,5 +1,7 @@
 // src/script/map.js
-// MAP MODULE — DO NOT MODIFY
+// MAP MODULE — now as an ES module, plus initDirections hookup
+
+import { initDirections } from './mapDirections.js';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGVyLTIwMjUiLCJhIjoiY205dXZ5YmIwMGQ0NTJpcTNzb2prYnZpOCJ9.QzrbaFW5l9KvuKO-cqOaFg';
 
@@ -50,6 +52,9 @@ map.on('load', () => {
   loadPOIs();
 });
 
+// initialize the Directions panel logic
+initDirections(map);
+
 async function loadBoundary() {
   try {
     const res = await fetch('/data/metro-vancouver-boundaries.geojson');
@@ -93,22 +98,6 @@ async function loadPOIs() {
       const geo = await res.json();
       makeMarkers(geo.features, seniorMarkers, 'senior');
     }
-
-    // --- To switch back to dynamic API when your DB has locations, replace the above block with: ---
-    /*
-    // Build query string only for active filters
-    const params = new URLSearchParams();
-    if (filterWheelchair) params.set('wheelchair', 'true');
-    if (filterSenior)     params.set('senior',     'true');
-    const url = '/api/map' + (params.toString() ? `?${params}` : '');
-
-    const res = await fetch(url, { cache: 'no-store' });
-    const data = await res.json();
-    const wcFeatures = data.features.filter(f => f.properties.wheelchairFriendly);
-    const srFeatures = data.features.filter(f => f.properties.seniorFriendly);
-    makeMarkers(wcFeatures, wheelchairMarkers, 'wheelchair');
-    makeMarkers(srFeatures, seniorMarkers, 'senior');
-    */
   } catch (err) {
     console.error('POI load error:', err);
   }
