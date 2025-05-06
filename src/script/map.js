@@ -1,9 +1,8 @@
 // src/script/map.js
-// MAP MODULE — now as an ES module, plus initDirections hookup
 
 import { initDirections } from './mapDirections.js';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGVyLTIwMjUiLCJhIjoiY205dXZ5YmIwMGQ0NTJpcTNzb2prYnZpOCJ9.QzrbaFW5l9KvuKO-cqOaFg';
+// NOTE: mapboxgl.accessToken is set in public/config.js, so no manual assignment here.
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -52,8 +51,12 @@ map.on('load', () => {
   loadPOIs();
 });
 
-// initialize the Directions panel logic
+// Initialize the directions panel
 initDirections(map);
+
+//////////////////////////////
+// Boundary & POI functions //
+//////////////////////////////
 
 async function loadBoundary() {
   try {
@@ -120,6 +123,10 @@ function makeMarkers(features, list, icon) {
     list.push(marker);
   }
 }
+
+///////////////////////
+// ToggleControl     //
+///////////////////////
 
 class ToggleControl {
   constructor(type, markersArray, onToggle) {

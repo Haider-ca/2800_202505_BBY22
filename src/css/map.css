@@ -1,31 +1,135 @@
 /* src/css/map.css */
 
-/* Reset and reserve space for navbars */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+/* ========= CONFIGURATION ========= */
+:root {
+  --nav-height: 70px;         /* adjust to your top‐navbar height */
+  --bottom-nav-height: 56px;  /* adjust to your bottom‐navbar height */
+}
+
+/* ========= RESET & LAYOUT ========= */
+html, body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
   overflow: hidden;
 }
 
-/* Position the map between the fixed navbars */
+/* Map container */
 #map {
   position: absolute;
-  top: 56px;     /* height of your fixed-top navbar */
-  bottom: 56px;  /* height of your fixed-bottom navbar */
+  top: var(--nav-height);
+  bottom: var(--bottom-nav-height);
   width: 100%;
-  z-index: 0;    /* ensure it sits under both navbars */
+  z-index: 0;
 }
 
-/* Temporarily hide the POI‐form container so it doesn’t overlay the bottom nav */
-#poi-form-container {
-  display: none !important;
+/* Temporarily hide the POI form under bottom nav */
+#poi-form-container { display: none !important; }
+
+/* ========= DIRECTIONS PANEL ========= */
+#directions-panel {
+  position: absolute;
+  top: calc(var(--nav-height) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;               /* widen so all three inputs fit */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  /* allow children (geocoder dropdowns) to overflow */
+  overflow: visible;
+  z-index: 1000;
+  font-family: "Segoe UI", Roboto, sans-serif;
 }
 
-/* Your custom markers (no changes needed here) */
-.custom-marker {
-  background-size: contain;
-  background-repeat: no-repeat;
+/* Mode Buttons */
+#mode-buttons {
+  display: flex;
+}
+#mode-buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: #f2f4f7;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#mode-buttons button:hover { background: #e1e5eb; }
+#mode-buttons button.active {
+  background: #007cbf;
+  color: #fff;
+}
+#mode-buttons button:first-child  { border-top-left-radius: 8px; }
+#mode-buttons button:last-child   { border-top-right-radius: 8px; }
+
+/* Inputs Row: geocoders + Go button */
+.inputs-row {
+  /* three columns: start, end, go */
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  padding: 12px;
+  /* allow geocoder dropdowns to overflow */
+  overflow: visible;
+}
+
+/* Ensure the plugin’s geocoder inputs fill their column */
+.inputs-row .geocoder {
+  width: 100%;
+}
+
+/* Style the Go button */
+#dir-go {
+  padding: 10px 20px;
+  background: #007cbf;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#dir-go:hover { background: #0066aa; }
+
+/* Spinner & Error */
+#dir-spinner, #dir-error {
+  padding: 0 12px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+#dir-error { color: #d0454c; }
+.hidden { display: none !important; }
+
+/* Step List */
+#directions-steps {
+  margin: 8px 0 16px;
+  padding: 0 12px;
+  list-style: decimal inside;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+/* ========= MAPBOX CONTROLS ========= */
+/* Only the map’s built-in geocoder from map.addControl() */
+#map > .mapboxgl-ctrl-geocoder {
+  position: absolute !important;
+  top: var(--nav-height) !important;
+  left: 10px !important;
+  z-index: 5 !important;
+}
+/* Other map controls */
+.mapboxgl-ctrl-top-left,
+.mapboxgl-ctrl-top-right {
+  top: var(--nav-height) !important;
+  z-index: 5 !important;
+}
+.mapboxgl-ctrl {
+  z-index: 4 !important;
+}
+
+/* Bottom navbar placeholder */
+#bottom-navbar-placeholder {
+  position: absolute;
+  bottom: 0;
+  height: var(--bottom-nav-height);
+  width: 100%;
+  z-index: 6;
 }
