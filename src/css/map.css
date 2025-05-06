@@ -1,31 +1,109 @@
-/* src/css/map.css */
-
-/* Reset and reserve space for navbars */
-html,
-body {
+/* ─── Base & Navbars ─── */
+html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
-
-/* Position the map between the fixed navbars */
-#map {
-  position: absolute;
-  top: 56px;     /* height of your fixed-top navbar */
-  bottom: 56px;  /* height of your fixed-bottom navbar */
+#navbar-placeholder nav,
+#bottom-navbar-placeholder nav {
   width: 100%;
-  z-index: 0;    /* ensure it sits under both navbars */
+  z-index: 1030;
 }
 
-/* Temporarily hide the POI‐form container so it doesn’t overlay the bottom nav */
+/* ─── Map + Overlays Wrapper ─── */
+#map-container {
+  position: absolute;
+  top: 56px;    /* height of fixed-top navbar */
+  bottom: 56px; /* height of fixed-bottom navbar */
+  left: 0;
+  right: 0;
+}
+
+/* ─── Mapbox Canvas (must be empty at load) ─── */
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Geocoder (top-right) ─── */
+#geocoder-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  width: 250px;
+}
+
+/* ─── Smaller Modern Weather Card (bottom-left) ─── */
+#location-info {
+  position: absolute;
+  bottom: 1rem;
+  left:   1rem;
+  z-index: 10;
+  display:       flex;
+  align-items:   center;
+  background:    #f5f7fa;        /* light grey so white icon pops */
+  border-radius: 8px;
+  box-shadow:    0 2px 8px rgba(0, 0, 0, 0.08);
+  padding:       0.5rem 0.75rem;
+  font-family:   'Segoe UI', Tahoma, sans-serif;
+  min-width:     120px;
+  max-width:     140px;
+}
+#location-info::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left:   16px;
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: #f5f7fa transparent transparent;
+}
+
+#weather-icon {
+  width:  40px;
+  height: 40px;
+  margin-right: 0.5rem;
+  /* two zero-offset drop-shadows create a crisp outline */
+  filter:
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
+    brightness(1.2)
+    contrast(1.3);
+}
+
+
+.weather-text {
+  display:        flex;
+  flex-direction: column;
+  line-height:    1;
+}
+.weather-text #city {
+  font-size:    0.75rem;
+  font-weight:  500;
+  color:        #333;
+  margin-bottom: 0.2rem;
+}
+.weather-text #temp {
+  font-size:   1.25rem;
+  font-weight: 600;
+  color:       #111;
+}
+.weather-text #description {
+  font-size:      0.65rem;
+  color:          #555;
+  text-transform: capitalize;
+}
+
+/* ─── Hide POI form (optional) ─── */
 #poi-form-container {
   display: none !important;
 }
 
-/* Your custom markers (no changes needed here) */
+/* ─── Custom markers (unchanged) ─── */
 .custom-marker {
-  background-size: contain;
+  background-size:   contain;
   background-repeat: no-repeat;
 }

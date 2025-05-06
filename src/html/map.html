@@ -5,49 +5,65 @@
   <title>PathPal – Map</title>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-  <!-- favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
-  <!-- Bootstrap CSS & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-
-  <!-- Mapbox & Geocoder CSS -->
-  <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css" rel="stylesheet" />
-  <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" rel="stylesheet" />
-
-  <!-- App-specific styles -->
+  <!-- App CSS -->
   <link rel="stylesheet" href="/css/map.css" />
   <link rel="stylesheet" href="/css/nav.css" />
+
+  <!-- Third-party CSS -->
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
 </head>
 <body>
-  <!-- Top navigation placeholder -->
+  <!-- Top navbar placeholder -->
   <div id="navbar-placeholder" data-nav="after"></div>
 
-  <!-- Map container -->
-  <div id="map"></div>
+  <!-- Map + overlays wrapper -->
+  <div id="map-container">
+    <!-- 1) Empty Mapbox canvas -->
+    <div id="map"></div>
 
-  <!-- POI form container -->
+    <!-- 2) Geocoder search box -->
+    <div id="geocoder-container"></div>
+
+    <!-- 3) Smaller modern weather card (bottom-left) -->
+    <div id="location-info">
+      <img id="weather-icon" alt="Weather icon" />
+      <div class="weather-text">
+        <div id="city">--</div>
+        <div id="temp">--°C</div>
+        <div id="description">--</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POI form & bottom nav -->
   <div id="poi-form-container"></div>
-
-  <!-- Bottom navigation placeholder -->
   <div id="bottom-navbar-placeholder"></div>
 
-  <!-- Load navigation scripts -->
-  <script src="/script/nav.js"></script>
-
-  <!-- Mapbox GL JS, Geocoder & Turf -->
+  <!-- Third-party JS -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
   <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
-
-  <!-- Main map logic -->
-  <script src="/script/map.js"></script>
-
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Other application scripts -->
+  <!-- App scripts -->
+  <script src="/script/nav.js"></script>
+  <script src="/script/map.js"></script>
+  <script src="/script/location.js"></script>
   <script src="/config.js"></script>
   <script src="/script/app.js"></script>
   <script src="/script/poi.js"></script>
