@@ -2,7 +2,7 @@
 
 import { initDirections } from './mapDirections.js';
 
-// NOTE: mapboxgl.accessToken is set in public/config.js, so no manual assignment here.
+// NOTE: mapboxgl.accessToken is set in public/config.js
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -20,21 +20,29 @@ const wheelchairMarkers = [];
 const seniorMarkers     = [];
 
 map.on('load', () => {
-  // Built-in controls
+  // ─── 1) Load bench icon at native resolution ───
+  map.loadImage('/icons/bench.png', (err, img) => {
+    if (err) {
+      console.error('Failed to load bench icon:', err);
+      return;
+    }
+    if (!map.hasImage('bench-15')) {
+      map.addImage('bench-15', img);
+    }
+  });
+
+  // ─── 2) Built-in controls ───
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(new mapboxgl.GeolocateControl({
     positionOptions: { enableHighAccuracy: true },
     trackUserLocation: true,
     showUserHeading: true
   }), 'top-right');
-  map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl,
-    placeholder: 'Search for a place',
-    marker:      false
-  }), 'top-left');
 
-  // Toggle controls
+  // (global geocoder commented out)
+  // map.addControl(new MapboxGeocoder({ … }), 'top-left');
+
+  // ─── 3) POI Toggle controls ───
   const wcCtrl = new ToggleControl('wheelchair', wheelchairMarkers, visible => {
     filterWheelchair = visible;
     loadPOIs();
@@ -46,7 +54,7 @@ map.on('load', () => {
   map.addControl(wcCtrl, 'top-right');
   map.addControl(srCtrl, 'top-right');
 
-  // Draw boundary and load initial POIs
+  // ─── 4) Draw boundary & load initial POIs ───
   loadBoundary();
   loadPOIs();
 });

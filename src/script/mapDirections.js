@@ -1,38 +1,82 @@
 // src/script/mapDirections.js
 
 export function initDirections(map) {
-  let coordStart = null,
-      coordEnd   = null,
-      profile    = 'driving';
+  let coordStart   = null,
+      coordEnd     = null,
+      profile      = 'driving',
+      startMarker  = null,
+      endMarker    = null;
 
-  // Arrays to hold markers so we can clear them
-  const routeMarkers = [];
-  const benchMarkers = [];
-
-  // 1) Start & End geocoders
+  // 1) Start & End geocoders (no built-in marker)
   const geocoderStart = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     mapboxgl,
-    placeholder: 'Start (city, address...)',
+    placeholder: 'Start (city, address…)',
     types:       'place,address,poi',
-    limit:       5
+    limit:       5,
+    marker:      false
   });
   const geocoderEnd = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     mapboxgl,
-    placeholder: 'End (city, address...)',
+    placeholder: 'End (city, address…)',
     types:       'place,address,poi',
-    limit:       5
+    limit:       5,
+    marker:      false
   });
+
   document.getElementById('geocoder-start')
           .appendChild(geocoderStart.onAdd(map));
   document.getElementById('geocoder-end')
-          .appendChild(  geocoderEnd.onAdd(map));
+          .appendChild(geocoderEnd.onAdd(map));
 
-  geocoderStart.on('result', e => coordStart = e.result.geometry.coordinates.join(','));
-  geocoderEnd  .on('result', e => coordEnd   = e.result.geometry.coordinates.join(','));
+  // place (or move) a marker whenever the user selects a start result:
+  geocoderStart.on('result', e => {
+    coordStart = e.result.geometry.coordinates.join(',');
+    // remove old
+    if (startMarker) startMarker.remove();
+    // add new
+    startMarker = new mapboxgl.Marker({ color: '#007cbf' })
+      .setLngLat(e.result.geometry.coordinates)
+      .addTo(map);
+  });
 
-  // 2) Mode buttons
+  // same for end:
+  geocoderEnd.on('result', e => {
+    coordEnd = e.result.geometry.coordinates.join(',');
+    if (endMarker) endMarker.remove();
+    endMarker = new mapboxgl.Marker({ color: '#007cbf' })
+      .setLngLat(e.result.geometry.coordinates)
+      .addTo(map);
+  });
+
+// 2) Inline “current location” button beside Start (with faster fallback)
+const panelGeo = new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true,
+    maximumAge:         60_000,  
+    timeout:            5_000    
+  },
+  trackUserLocation:  false,
+  showUserHeading:    false,
+  showAccuracyCircle: false
+});
+  document.querySelector('.start-wrapper')
+          .appendChild(panelGeo.onAdd(map));
+
+  panelGeo.on('geolocate', e => {
+    coordStart = [e.coords.longitude, e.coords.latitude].join(',');
+    // move any existing marker
+    if (startMarker) startMarker.remove();
+    startMarker = new mapboxgl.Marker({ color: '#007cbf' })
+      .setLngLat([e.coords.longitude, e.coords.latitude])
+      .addTo(map);
+    // label it
+    const input = document.querySelector('.start-wrapper .mapboxgl-ctrl-geocoder--input');
+    if (input) input.value = 'Current Location';
+  });
+
+  // 3) Mode buttons
   document.querySelectorAll('#mode-buttons button').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#mode-buttons button')
@@ -42,38 +86,34 @@ export function initDirections(map) {
     });
   });
 
-  // 3) UI helpers
+  // 4) UI elements
   const spinnerEl = document.getElementById('dir-spinner'),
         errorEl   = document.getElementById('dir-error'),
-        stepsEl   = document.getElementById('directions-steps');
+        stepsEl   = document.getElementById('directions-steps'),
+        turnBox   = document.getElementById('turn-by-turn');
   const showSpinner = () => spinnerEl.classList.remove('hidden');
   const hideSpinner = () => spinnerEl.classList.add('hidden');
   const showError   = msg => { errorEl.textContent = msg; errorEl.classList.remove('hidden'); };
   const clearError  = ()  => { errorEl.textContent = ''; errorEl.classList.add('hidden'); };
 
-  // Remove any previous route line and markers
   function clearRoute() {
-    // clear layer if exists
     if (map.getLayer('route-line')) {
       map.removeLayer('route-line');
       map.removeSource('route-line');
     }
-    // clear any markers we added
-    routeMarkers.forEach(m => m.remove());
-    routeMarkers.length = 0;
-    benchMarkers.forEach(m => m.remove());
-    benchMarkers.length = 0;
+    if (map.getLayer('benches-layer')) {
+      map.removeLayer('benches-layer');
+      map.removeSource('benches');
+    }
+    turnBox.style.display = 'none';
+    stepsEl.innerHTML    = '';
   }
 
-  // 4) Fetch route from backend
+  // 5) Fetch
   async function fetchRoute(start, end, prof) {
-    // map senior→walking, wheelchair→driving
-    const apiProfile = prof === 'senior' 
-      ? 'walking' 
-      : prof === 'wheelchair' 
-      ? 'driving' 
-      : prof;
-
+    const apiProfile = prof === 'senior'    ? 'walking'
+                      : prof === 'wheelchair' ? 'driving'
+                      : prof;
     const res = await fetch(
       `/api/directions?start=${start}&end=${end}&profile=${apiProfile}`
     );
@@ -83,33 +123,19 @@ export function initDirections(map) {
     return data;
   }
 
-  // 5) Draw the route line and add invisible markers for padding
-
+  // 6) Draw + fit
   function drawRoute(route) {
-    const isDashed = profile === 'walking' || profile === 'senior';
-  
-    // solid vs. dotted widths
-    const solidWidth  = 10;  // driving
-    const dotSize     = 8;  // diameter of each dot
-    const gapSize     = 1.5;   // spacing between dots
-  
-    const paint = {
+    const dashed = profile === 'walking' || profile === 'senior';
+    const paint  = {
       'line-color': '#007cbf',
-      'line-width': isDashed ? dotSize : solidWidth
+      'line-width': dashed ? 6 : 14,
+      ...(dashed ? { 'line-dasharray': [0,4] } : {})
     };
-  
-    if (isDashed) {
-      // 0-length dash = full circle of `dotSize`, then small gap
-      paint['line-dasharray'] = [0, gapSize];
-    }
-  
-    // remove any existing route-line
+
     if (map.getLayer('route-line')) {
       map.removeLayer('route-line');
       map.removeSource('route-line');
     }
-  
-    // add source & layer
     map.addSource('route-line', {
       type: 'geojson',
       data: { type:'Feature', geometry: route.geometry }
@@ -118,92 +144,81 @@ export function initDirections(map) {
       id:     'route-line',
       type:   'line',
       source: 'route-line',
-      layout: {
-        'line-cap':  'round',
-        'line-join': 'round'
-      },
+      layout: { 'line-cap':'round','line-join':'round' },
       paint
     });
 
-    // optional: add invisible markers at start/end for zoom-fit
-    ['start','end'].forEach((pt, idx) => {
-      const coords = idx===0
-        ? route.geometry.coordinates[0]
-        : route.geometry.coordinates.slice(-1)[0];
-      const m = new mapboxgl.Marker({ color: 'transparent' })
-        .setLngLat(coords)
-        .addTo(map);
-      routeMarkers.push(m);
-    });
-    // fit to bounds
     const coords = route.geometry.coordinates;
-    const bounds = coords.reduce((b, c) => b.extend(c), new mapboxgl.LngLatBounds(coords[0], coords[0]));
-    map.fitBounds(bounds, { padding: 40 });
+    const bounds = coords.reduce(
+      (b, c) => b.extend(c),
+      new mapboxgl.LngLatBounds(coords[0], coords[0])
+    );
+    map.fitBounds(bounds, { padding: 40, maxZoom: 14 });
   }
 
-  // 6) Overlay benches for senior
+  // 7) Benches (unchanged)
   async function addBenches(route) {
     try {
-      const r = await fetch('/data/benches.geojson');
-      if (!r.ok) throw new Error(`Benches load ${r.status}`);
-      const benches = await r.json();
-      const line    = turf.lineString(route.geometry.coordinates);
-      const buffer  = turf.buffer(line, 0.05, { units: 'kilometers' });
-      const pts     = benches.features.filter(f =>
-        turf.booleanPointInPolygon(f, buffer)
-      );
+      const resp = await fetch('/data/benches.geojson');
+      if (!resp.ok) throw new Error('Benches data not found');
+      const benchData = await resp.json();
+      const buffer    = turf.buffer(route.geometry, 0.05, { units:'kilometers' });
+      const nearby    = benchData.features.filter(f => turf.booleanPointInPolygon(f, buffer));
+      const fc        = { type:'FeatureCollection', features: nearby };
 
-      pts.forEach(f => {
-        const el = document.createElement('div');
-        el.className = 'custom-marker';
-        el.style.backgroundImage = 'url(/icons/bench.png)';
-        el.style.width = '24px';
-        el.style.height = '24px';
-        el.style.backgroundSize = 'contain';
-        const marker = new mapboxgl.Marker(el)
-          .setLngLat(f.geometry.coordinates)
-          .addTo(map);
-        benchMarkers.push(marker);
-      });
+      if (map.getSource('benches')) {
+        map.getSource('benches').setData(fc);
+      } else {
+        map.addSource('benches', { type:'geojson', data: fc });
+        map.addLayer({
+          id:     'benches-layer',
+          type:   'symbol',
+          source: 'benches',
+          layout: {
+            'icon-image': 'bench-15',
+            'icon-size':  0.04,
+            'icon-allow-overlap': true
+          }
+        });
+      }
     } catch (err) {
-      console.warn('Benches not displayed:', err.message);
+      console.warn('Benches load error:', err);
     }
   }
 
-  // 7) Render step-by-step instructions
+  // 8) Steps
   function renderSteps(route) {
     stepsEl.innerHTML = route.legs[0].steps
-      .map(s => `<li>${s.maneuver.instruction}</li>`)
+      .map((s,i) => `<li>${i+1}. ${s.maneuver.instruction}</li>`)
       .join('');
   }
 
-  // 8) “Go” button handler
+  // 9) Go
   document.getElementById('dir-go').addEventListener('click', async () => {
     clearError(); clearRoute(); showSpinner();
     try {
-      let start = coordStart;
-      if (!start) {
-        const pos = await new Promise((res, rej) =>
-          navigator.geolocation.getCurrentPosition(res, rej)
-        );
-        start = `${pos.coords.longitude},${pos.coords.latitude}`;
-      }
-      if (!start || !coordEnd) {
-        throw new Error('Please select both start & end points (or allow location).');
-      }
+      if (!coordStart) throw new Error('Please set a start location.');
+      if (!coordEnd)   throw new Error('Please set an end location.');
 
-      const route = await fetchRoute(start, coordEnd, profile);
+      const route = await fetchRoute(coordStart, coordEnd, profile);
       drawRoute(route);
-
-      if (profile === 'senior') {
-        await addBenches(route);
-      }
       renderSteps(route);
-
+      if (profile === 'senior') await addBenches(route);
+      turnBox.style.display = 'block';
     } catch (err) {
       showError(err.message);
     } finally {
       hideSpinner();
     }
+  });
+
+  // 10) Clear
+  document.getElementById('dir-clear').addEventListener('click', () => {
+    clearRoute();
+    geocoderStart.clear();
+    geocoderEnd.clear();
+    if (startMarker) { startMarker.remove(); startMarker = null; }
+    if (endMarker)   { endMarker.remove();   endMarker   = null; }
+    coordStart = coordEnd = null;
   });
 }
