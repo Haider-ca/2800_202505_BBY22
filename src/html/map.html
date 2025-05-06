@@ -19,6 +19,7 @@
   <!-- App-specific styles -->
   <link rel="stylesheet" href="/css/map.css" />
   <link rel="stylesheet" href="/css/nav.css" />
+  <link rel="stylesheet" href="/css/addPoi.css" />
 </head>
 <body>
   <!-- Top navigation placeholder -->
@@ -51,5 +52,9 @@
   <script src="/config.js"></script>
   <script src="/script/app.js"></script>
   <script src="/script/poi.js"></script>
+  <script type="module">
+    import { setupAddPOIFeature } from '/script/addPoi.js';
+    setupAddPOIFeature();
+  </script>
 </body>
 </html>

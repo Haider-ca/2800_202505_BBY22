@@ -19,11 +19,6 @@ body {
   z-index: 0;    /* ensure it sits under both navbars */
 }
 
-/* Temporarily hide the POI‐form container so it doesn’t overlay the bottom nav */
-#poi-form-container {
-  display: none !important;
-}
-
 /* Your custom markers (no changes needed here) */
 .custom-marker {
   background-size: contain;
