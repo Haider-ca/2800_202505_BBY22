@@ -12,6 +12,9 @@ html, body {
   z-index: 1030;
 }
 
+<<<<<<< HEAD
+/* Your custom markers (no changes needed here) */
+=======
 /* ─── Map + Overlays Wrapper ─── */
 #map-container {
   position: absolute;
@@ -98,7 +101,12 @@ html, body {
 }
 
 /* ─── Hide POI form (optional) ─── */
+#poi-form-container {
+  display: none !important;
+}
+
 /* ─── Custom markers (unchanged) ─── */
+>>>>>>> haider_alsudani_location_weather
 .custom-marker {
   background-size:   contain;
   background-repeat: no-repeat;

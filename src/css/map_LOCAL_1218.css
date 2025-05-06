@@ -1,0 +1,26 @@
+/* src/css/map.css */
+
+/* Reset and reserve space for navbars */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Position the map between the fixed navbars */
+#map {
+  position: absolute;
+  top: 56px;     /* height of your fixed-top navbar */
+  bottom: 56px;  /* height of your fixed-bottom navbar */
+  width: 100%;
+  z-index: 0;    /* ensure it sits under both navbars */
+}
+
+/* Your custom markers (no changes needed here) */
+.custom-marker {
+  background-size: contain;
+  background-repeat: no-repeat;
+}

@@ -98,6 +98,10 @@ html, body {
 }
 
 /* ─── Hide POI form (optional) ─── */
+#poi-form-container {
+  display: none !important;
+}
+
 /* ─── Custom markers (unchanged) ─── */
 .custom-marker {
   background-size:   contain;
