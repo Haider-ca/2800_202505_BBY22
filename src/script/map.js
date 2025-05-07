@@ -31,7 +31,35 @@ map.on('load', () => {
     }
   });
 
-  // ─── 2) Built-in controls ───
+  // ─── 2) Live‑traffic source & layer (hidden by default) ───
+  map.addSource('traffic', {
+    type: 'vector',
+    url:  'mapbox://mapbox.mapbox-traffic-v1'
+  });
+  map.addLayer({
+    id:            'traffic-layer',
+    type:          'line',
+    source:        'traffic',
+    'source-layer':'traffic',
+    layout: {
+      'line-join': 'round',
+      'line-cap':  'round',
+      visibility:  'none'
+    },
+    paint: {
+      'line-color': [
+        'match',
+        ['get','congestion'],
+        'low',      '#2DC4B2',
+        'moderate', '#FFFF00',
+        'heavy',    '#FF0000',
+        /*default*/ '#000000'
+      ],
+      'line-width': 2
+    }
+  });
+
+  // ─── 3) Built‑in navigation & geolocate ───
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(new mapboxgl.GeolocateControl({
     positionOptions: { enableHighAccuracy: true },
@@ -39,10 +67,35 @@ map.on('load', () => {
     showUserHeading: true
   }), 'top-right');
 
-  // (global geocoder commented out)
-  // map.addControl(new MapboxGeocoder({ … }), 'top-left');
+  // ─── 4) Traffic Toggle Button ───
+  const trafficBtn = document.createElement('button');
+  trafficBtn.className = 'mapboxgl-ctrl-icon';
+  trafficBtn.setAttribute('aria-label','Toggle traffic');
+  trafficBtn.textContent = '🚦';
+  trafficBtn.style.fontSize = '18px';
+  trafficBtn.addEventListener('click', () => {
+    const vis = map.getLayoutProperty('traffic-layer','visibility');
+    map.setLayoutProperty(
+      'traffic-layer',
+      'visibility',
+      vis === 'none' ? 'visible' : 'none'
+    );
+  });
 
-  // ─── 3) POI Toggle controls ───
+  const trafficControl = {
+    onAdd() {
+      this._container = document.createElement('div');
+      this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+      this._container.appendChild(trafficBtn);
+      return this._container;
+    },
+    onRemove() {
+      this._container.parentNode.removeChild(this._container);
+    }
+  };
+  map.addControl(trafficControl, 'top-right');
+
+  // ─── 5) POI Toggle Controls ───
   const wcCtrl = new ToggleControl('wheelchair', wheelchairMarkers, visible => {
     filterWheelchair = visible;
     loadPOIs();
@@ -54,7 +107,7 @@ map.on('load', () => {
   map.addControl(wcCtrl, 'top-right');
   map.addControl(srCtrl, 'top-right');
 
-  // ─── 4) Draw boundary & load initial POIs ───
+  // ─── 6) Draw boundary & load initial POIs ───
   loadBoundary();
   loadPOIs();
 });
@@ -92,7 +145,6 @@ async function loadBoundary() {
 }
 
 async function loadPOIs() {
-  // Clear existing markers
   wheelchairMarkers.forEach(m => m.remove());
   seniorMarkers.forEach(m => m.remove());
   wheelchairMarkers.length = 0;
@@ -159,7 +211,9 @@ class ToggleControl {
     btn.addEventListener('click', () => {
       this.visible = !this.visible;
       btn.classList.toggle('active', this.visible);
-      this.markersArray.forEach(m => this.visible ? m.addTo(this.map) : m.remove());
+      this.markersArray.forEach(m =>
+        this.visible ? m.addTo(this.map) : m.remove()
+      );
       this.onToggle(this.visible);
     });
 
