@@ -6,4 +6,7 @@ const poiController = require('../controllers/poiController');
 // upload 
 router.post('/', uploadSingle, poiController.createPOI);
 
+// Get all POIs
+router.get('/', poiController.getAllPOIs);
+
 module.exports = router;

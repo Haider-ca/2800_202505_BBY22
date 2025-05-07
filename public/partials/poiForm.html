@@ -1,23 +1,52 @@
-<div id="poiModal" class="position-absolute top-50 start-50 translate-middle bg-white border rounded p-4 shadow"
-    style="width: 22rem; z-index: 1050; display: block;">
-    <button type="button" class="btn-close position-absolute top-0 end-0 m-2" id="closePOI"></button>
-    <h5 class="mb-3">Add a New POI</h5>
-    <div class="mb-3">
-        <label for="poiTitle" class="form-label fw-bold">Title:</label>
-        <input type="text" class="form-control" id="poiTitle">
+<div id="poiModal" class="position-absolute top-50 start-50 translate-middle bg-white rounded-4 p-3 shadow"
+    style="width: 85vw; max-width: 20rem; z-index: 1050; display: none;">
+
+    <!-- Close button -->
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-2" id="closePOI" aria-label="Close"></button>
+
+    <!-- Title -->
+    <h5 class="fw-semibold mb-3 text-center">📍 Add a New POI</h5>
+
+    <!-- Title Field -->
+    <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="poiTitle" placeholder="POI Title">
+        <label for="poiTitle">Title</label>
     </div>
-    <div class="mb-3">
-        <label for="poiDescription" class="form-label fw-bold">Description:</label>
-        <textarea class="form-control" id="poiDescription" rows="3"></textarea>
+
+    <!-- Description Field -->
+    <div class="form-floating mb-2">
+        <textarea class="form-control" id="poiDescription" placeholder="Description" style="height: 100px;"></textarea>
+        <label for="poiDescription">Description</label>
     </div>
-    <div class="mb-3">
-        <button class="btn btn-secondary w-100" id="uploadBtn">Upload Photo</button>
+
+    <!-- Upload Button -->
+    <div class="mb-2">
+        <button class="btn btn-outline-dark w-100 py-2" id="uploadBtn">📷 Upload Photo</button>
         <input type="file" id="photoInput" accept="image/*" capture="environment" class="d-none">
     </div>
-    <div class="mb-3">
-        <img id="photoPreview" src="#" class="img-fluid rounded d-none" alt="Preview Image">
+
+    <!-- Preview -->
+    <div class="mb-2 text-center">
+        <img id="photoPreview" src="#" class="img-fluid rounded d-none" alt="Preview Image"
+            style="max-height: 150px; object-fit: cover;">
     </div>
+
+    <!-- Submit -->
     <div class="d-grid">
         <button class="btn btn-primary" id="postBtn">Post</button>
+    </div>
+</div>
+
+<!-- Success Toast Notification for POI Submission -->
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 2000">
+    <div id="poiToast" class="toast align-items-center text-white bg-success border-0" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                POI submitted successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
     </div>
 </div>

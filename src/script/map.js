@@ -13,10 +13,12 @@ const map = new mapboxgl.Map({
 // Filter flags
 let filterWheelchair = false;
 let filterSenior     = false;
+let filterUserPOI = false;
 
 // Marker arrays (never reassign)
 const wheelchairMarkers = [];
 const seniorMarkers     = [];
+const userPOIMarkers = [];
 
 map.on('load', () => {
   // Built-in controls
@@ -42,8 +44,13 @@ map.on('load', () => {
     filterSenior = visible;
     loadPOIs();
   });
+  const userPOICtrl = new ToggleControl('poi', userPOIMarkers, visible => {
+    filterUserPOI = visible;
+    loadPOIs();
+  });
   map.addControl(wcCtrl, 'top-right');
   map.addControl(srCtrl, 'top-right');
+  map.addControl(userPOICtrl, 'top-right');
 
   // Draw boundary and load initial POIs
   loadBoundary();
@@ -79,8 +86,10 @@ async function loadPOIs() {
   // Clear existing markers
   wheelchairMarkers.forEach(m => m.remove());
   seniorMarkers.forEach(m => m.remove());
+  userPOIMarkers.forEach(m => m.remove());
   wheelchairMarkers.length = 0;
   seniorMarkers.length     = 0;
+  userPOIMarkers.length = 0;
 
   try {
     if (filterWheelchair) {
@@ -93,6 +102,23 @@ async function loadPOIs() {
       const geo = await res.json();
       makeMarkers(geo.features, seniorMarkers, 'senior');
     }
+    if (filterUserPOI) {
+      const res = await fetch('/api/poi');
+      const data = await res.json();
+    
+      // Convert to GeoJSON Feature format
+      const features = data.map(poi => ({
+        type: 'Feature',
+        geometry: poi.coordinates,
+        properties: {
+          title: poi.title,
+          description: poi.description
+        }
+      }));
+    
+      makeMarkers(features, userPOIMarkers, 'poi');
+    }
+    
 
     // --- To switch back to dynamic API when your DB has locations, replace the above block with: ---
     /*
@@ -151,12 +177,21 @@ class ToggleControl {
     btn.style.backgroundImage  = `url(/icons/${this.type}.png)`;
     btn.style.backgroundSize   = '24px 24px';
     btn.style.backgroundRepeat = 'no-repeat';
+    btn.style.backgroundPosition = 'center';
 
     btn.addEventListener('click', () => {
       this.visible = !this.visible;
       btn.classList.toggle('active', this.visible);
       this.markersArray.forEach(m => this.visible ? m.addTo(this.map) : m.remove());
       this.onToggle(this.visible);
+
+      // If the POI toggle is activated, pan to the user's current location
+      if (this.type === 'poi' && this.visible && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const { latitude, longitude } = pos.coords;
+          this.map.flyTo({ center: [longitude, latitude], zoom: 14 });
+        });
+      }
     });
 
     this.container.appendChild(btn);
@@ -167,3 +202,7 @@ class ToggleControl {
     this.map = null;
   }
 }
+
+// Expose the map instance and user POI markers globally for access from other scripts
+window.pathpalMap = map;
+window.userPOIMarkers = userPOIMarkers;
