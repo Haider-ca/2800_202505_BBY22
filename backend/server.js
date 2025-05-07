@@ -2,10 +2,12 @@
 
 require('dotenv').config();
 const express   = require('express');
+const session   = require('express-session')
 const cors      = require('cors');
 const path      = require('path');
 const favicon   = require('serve-favicon');
 const connectDB = require('./config/db'); 
+const MongoStore = require('connect-mongo');
 
 const authRoutes = require('./routes/auth');//add this for login features 
 
@@ -15,8 +17,26 @@ connectDB();
 // serve favicon
 app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 
+
 // middlewares
-app.use(cors());
+app.use(session({
+  secret:process.env.NODE_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    dbName:'PathPal',
+    collectionName:'sessions'
+  }),
+  cookie: { 
+    secure: false, 
+    maxAge: 1000*60*60*24}
+}))
+app.use(cors({
+  origin: 'http://localhost:5000',  // Replace with your frontend port
+  credentials: true
+}));
+
 app.use(express.json());
 
 // static: public then src
