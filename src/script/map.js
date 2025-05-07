@@ -146,17 +146,46 @@ function makeMarkers(features, list, icon) {
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
 
+    const [lng, lat] = coords;  // ✅ Required for the popup to work
+
     const el = document.createElement('div');
     el.className = 'custom-marker';
     el.style.backgroundImage = `url(/icons/${icon}.png)`;
-    el.style.width           = '32px';
-    el.style.height          = '32px';
-    el.style.backgroundSize  = 'contain';
+    el.style.width = '32px';
+    el.style.height = '32px';
+    el.style.backgroundSize = 'contain';
 
-    const marker = new mapboxgl.Marker(el).setLngLat(coords).addTo(map);
+    // Create popup HTML content
+    const popupContent = `
+      <div class="custom-popup">
+        <div class="popup-header">
+          <strong>${f.properties.username || 'Anonymous'}</strong>
+          <span>${f.properties.time || 'Unknown time'}</span>
+        </div>
+        <img src="${f.properties.image || '/icons/default.jpg'}" alt="POI photo" class="popup-img" />
+        <div class="popup-desc">${f.properties.description || 'No description available.'}</div>
+        <div class="popup-votes">
+          <span>👍 ${f.properties.likes || 0}</span>
+          <span>💬 ${f.properties.comments || 0}</span>
+        </div>
+      </div>
+    `;
+
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      offset: 25,
+    }).setHTML(popupContent);
+
+    // Hover listeners
+    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+    el.addEventListener('mouseleave', () => popup.remove());
+
+    const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
   }
 }
+
 
 class ToggleControl {
   constructor(type, markersArray, onToggle) {
