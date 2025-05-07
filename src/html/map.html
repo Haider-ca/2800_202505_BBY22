@@ -1,52 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <title>PathPal – Map</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta charset="utf-8" />
+  <title>PathPal – Map</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/css/map.css" />
+  <link rel="stylesheet" href="/css/nav.css" />
+<<<<<<< HEAD
+  <link rel="stylesheet" href="/css/addPoi.css" />
+=======
 
-
-    <!-- Mapbox CSS -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css" rel="stylesheet" />
-    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
-        rel="stylesheet" />
-
-    <!-- your map styles -->
-    <link rel="stylesheet" href="./css/map.css" />
-    <link rel="stylesheet" href="./css/nav.css" />
+  <!-- Third-party CSS -->
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+>>>>>>> haider_alsudani_location_weather
 </head>
-
 <body>
-    <!-- top nav -->
-    <div id="navbar-placeholder" data-nav="after"></div>
+  <!-- Top navbar placeholder -->
+  <div id="navbar-placeholder" data-nav="after"></div>
 
-    <!-- map -->
+  <!-- Map + overlays wrapper -->
+  <div id="map-container">
+    <!-- 1) Empty Mapbox canvas -->
     <div id="map"></div>
 
-    <!-- bottom nav -->
-    <div id="bottom-navbar-placeholder"></div>
+    <!-- 2) Geocoder search box -->
+    <div id="geocoder-container"></div>
 
-    <!-- single nav loader -->
-    <script src="../script/nav.js"></script>
+    <!-- 3) Smaller modern weather card (bottom-left) -->
+    <div id="location-info">
+      <img id="weather-icon" alt="Weather icon" />
+      <div class="weather-text">
+        <div id="city">--</div>
+        <div id="temp">--°C</div>
+        <div id="description">--</div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Mapbox & plugins -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
-    <script
-        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <!-- POI form & bottom nav -->
+  <div id="poi-form-container"></div>
+  <div id="bottom-navbar-placeholder"></div>
 
-    <!-- map logic -->
-    <script src="../script/map.js"></script>
+  <!-- Third-party JS -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="../script/app.js"></script>
+  <!-- App scripts -->
+  <script src="/script/nav.js"></script>
+  <script src="/script/map.js"></script>
+  <script src="/script/location.js"></script>
+  <script src="/config.js"></script>
+  <script src="/script/app.js"></script>
+  <script src="/script/poi.js"></script>
+  <script type="module">
+    import { setupAddPOIFeature } from '/script/addPoi.js';
+    setupAddPOIFeature();
+  </script>
 </body>
-
 </html>
