@@ -19,6 +19,39 @@ let filterSenior     = false;
 const wheelchairMarkers = [];
 const seniorMarkers     = [];
 
+// ─── VoiceControl ───
+class VoiceControl {
+  constructor(onToggle) {
+    this.onToggle = onToggle;
+    this.enabled  = false;
+  }
+  onAdd(map) {
+    this.map = map;
+    this.container = document.createElement('div');
+    this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
+    this.btn = document.createElement('button');
+    this.btn.type = 'button';
+    this.btn.className = 'mapboxgl-ctrl-icon';
+    this.btn.setAttribute('aria-label', 'Toggle voice guidance');
+    this.btn.textContent = '🔊';
+    this.btn.style.opacity = '0.4';
+
+    this.btn.addEventListener('click', () => {
+      this.enabled = !this.enabled;
+      this.btn.style.opacity = this.enabled ? '1.0' : '0.4';
+      window.voiceGuidanceEnabled = this.enabled;
+    });
+
+    this.container.appendChild(this.btn);
+    return this.container;
+  }
+  onRemove() {
+    this.container.remove();
+    this.map = null;
+  }
+}
+
 map.on('load', () => {
   // ─── 1) Load bench icon at native resolution ───
   map.loadImage('/icons/bench.png', (err, img) => {
@@ -62,9 +95,9 @@ map.on('load', () => {
   // ─── 3) Built‑in navigation & geolocate ───
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(new mapboxgl.GeolocateControl({
-    positionOptions: { enableHighAccuracy: true },
+    positionOptions:   { enableHighAccuracy: true },
     trackUserLocation: true,
-    showUserHeading: true
+    showUserHeading:   true
   }), 'top-right');
 
   // ─── 4) Traffic Toggle Button ───
@@ -81,7 +114,6 @@ map.on('load', () => {
       vis === 'none' ? 'visible' : 'none'
     );
   });
-
   const trafficControl = {
     onAdd() {
       this._container = document.createElement('div');
@@ -95,7 +127,13 @@ map.on('load', () => {
   };
   map.addControl(trafficControl, 'top-right');
 
-  // ─── 5) POI Toggle Controls ───
+  // ─── 5) Voice toggle control ───
+  const voiceControl = new VoiceControl(enabled => {
+    window.voiceGuidanceEnabled = enabled;
+  });
+  map.addControl(voiceControl, 'top-right');
+
+  // ─── 6) POI Toggle Controls ───
   const wcCtrl = new ToggleControl('wheelchair', wheelchairMarkers, visible => {
     filterWheelchair = visible;
     loadPOIs();
@@ -107,13 +145,13 @@ map.on('load', () => {
   map.addControl(wcCtrl, 'top-right');
   map.addControl(srCtrl, 'top-right');
 
-  // ─── 6) Draw boundary & load initial POIs ───
+  // ─── 7) Draw boundary & load initial POIs ───
   loadBoundary();
   loadPOIs();
-});
 
-// Initialize the directions panel
-initDirections(map);
+  // ─── 8) Initialize directions ───
+  initDirections(map);
+});
 
 //////////////////////////////
 // Boundary & POI functions //
