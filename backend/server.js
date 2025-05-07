@@ -9,8 +9,8 @@ const { connect } = require('./db');  // relative to server.js
 async function start() {
   const db = await connect();
   const app = express();
-  app.use('/main', express.static(path.join(__dirname, 'src')));
-app.use('/static', express.static(path.join(__dirname, 'html')));
+  app.use('/main', express.static(path.join(__dirname, '../src')));
+app.use('/static', express.static(path.join(__dirname, '../src/html')));
 app.use('/css', express.static(path.join(__dirname, '../src/css')));
 app.use('/script', express.static(path.join(__dirname, '../src/script')));
 app.use('/partials', express.static(path.join(__dirname, '../src/html/partials')));
