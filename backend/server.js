@@ -1,54 +1,43 @@
+// backend/server.js
 
-require('dotenv').config();      // looks for .env in project root
-const express = require('express');
-const path = require("path");
-//const app = express();
-const port = 8000;
-const { connect } = require('./db');  // relative to server.js
+require('dotenv').config();
+const express   = require('express');
+const cors      = require('cors');
+const path      = require('path');
+const favicon   = require('serve-favicon');
+const connectDB = require('./config/db'); 
 
-async function start() {
-  const db = await connect();
-  const app = express();
-  app.use('/main', express.static(path.join(__dirname, '../src')));
-app.use('/static', express.static(path.join(__dirname, '../src/html')));
-app.use('/css', express.static(path.join(__dirname, '../src/css')));
-app.use('/script', express.static(path.join(__dirname, '../src/script')));
-app.use('/partials', express.static(path.join(__dirname, '../src/html/partials')));
-app.use('/src/data', express.static(path.join(__dirname, '../src/data')));
-app.use('/public', express.static(path.join(__dirname, '../public')));
+const authRoutes = require('./routes/auth');//add this for login features 
 
-/** Routes */
+const app = express();
+connectDB();
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/html/map.html'));
+// serve favicon
+app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
+
+// middlewares
+app.use(cors());
+app.use(express.json());
+
+// static: public then src
+app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'src')));
+
+// API endpoints
+app.use('/api/map', require('./map/routes/mapRoutes'));
+app.use('/api/poi', require('./poi/routes/poiRoutes'));
+app.use('/api', authRoutes);//add this for login features 
+
+// health-check
+app.get('/', (req, res) => res.send('API is running...'));
+
+// error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal server error' });
 });
 
-app.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/html/home.html'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
-
-app.get("/POI", (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/html/POI.html'));
-});
-
-app.get("/You", (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/html/You.html'));
-});
-
-
-// /*** DEFAULT ***/
-
-
-// app.get("*", (req, res) => {
-//     res.set('Content-Type', 'text/html');
-//     res.sendFile(path.join(__dirname, '/views/not-found.html'));
-//     return res.status(404);
-//   });
-  
-   app.listen(port, () => {
-   console.log(`Example app listening on port ${port}`)
-  });
-
-}
-
-start().catch(console.error);
