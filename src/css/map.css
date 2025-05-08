@@ -199,12 +199,12 @@ html, body {
   --bottom-nav-height: 56px;
 }
 
-/* ========= RESET & LAYOUT ========= */
+/* ========= RESET & LAYOUT =========
 html, body {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   overflow: hidden;
-}
+} */
 
 /* ========= DIRECTIONS PANEL ========= */
 #directions-panel {
