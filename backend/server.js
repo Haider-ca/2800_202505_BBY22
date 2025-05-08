@@ -32,10 +32,10 @@ app.use(session({
     secure: false, 
     maxAge: 1000*60*60*24}
 }))
-app.use(cors({
-  origin: 'http://localhost:5000',  // Replace with your frontend port
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:500',  // Replace with your frontend port
+//   credentials: true
+// }));
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
@@ -44,6 +44,11 @@ app.use(
   '/css',
   express.static(path.join(__dirname, '..', 'src', 'css'))
 );
+
+// expose backend/config/config.js at the URL /config.js
+app.get('/api/config', (req, res) => {
+  res.json({ mapboxToken: process.env.MAPBOX_TOKEN });
+});
 
 // static assets
 app.use(express.static(path.join(__dirname, '..', 'public')));
