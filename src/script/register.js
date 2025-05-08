@@ -16,7 +16,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
             const response = await fetch('/api/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email, password })  // 'name' is collected but not used in backend yet
+              body: JSON.stringify({ name, email, password }) 
             });
         
             const data = await response.json();
