@@ -1,3 +1,5 @@
+/* src/css/map.css */
+
 /* ─── Base & Navbars ─── */
 html, body {
   margin: 0;
@@ -44,7 +46,7 @@ html, body {
   z-index: 10;
   display:       flex;
   align-items:   center;
-  background:    #f5f7fa;        /* light grey so white icon pops */
+  background:    #f5f7fa;
   border-radius: 8px;
   box-shadow:    0 2px 8px rgba(0, 0, 0, 0.08);
   padding:       0.5rem 0.75rem;
@@ -61,20 +63,16 @@ html, body {
   border-style: solid;
   border-color: #f5f7fa transparent transparent;
 }
-
 #weather-icon {
   width:  40px;
   height: 40px;
   margin-right: 0.5rem;
-  /* two zero-offset drop-shadows create a crisp outline */
   filter:
     drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
     drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
     brightness(1.2)
     contrast(1.3);
 }
-
-
 .weather-text {
   display:        flex;
   flex-direction: column;
@@ -106,4 +104,191 @@ html, body {
 .custom-marker {
   background-size:   contain;
   background-repeat: no-repeat;
+}
+
+
+/* ========= CONFIGURATION ========= */
+:root {
+  --nav-height: 70px;
+  --bottom-nav-height: 56px;
+}
+
+/* ========= RESET & LAYOUT ========= */
+html, body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+
+/* Map container */
+#map {
+  position: absolute;
+  top: var(--nav-height);
+  bottom: var(--bottom-nav-height);
+  width: 100%;
+  z-index: 0;
+}
+
+/* Temporarily hide the POI form */
+#poi-form-container { display: none !important; }
+
+/* ========= DIRECTIONS PANEL ========= */
+#directions-panel {
+  position: absolute;
+  top: calc(var(--nav-height) + 12px);
+  left: 12px;
+  width: 600px;
+  max-height: 125px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  overflow: visible;
+  z-index: 1000;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+#dir-summary {
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 1px solid #e1e5eb;
+  margin-bottom: 8px;
+}
+
+/* Turn-by-Turn box – auto‐height and lifted up */
+#turn-by-turn {
+  position: absolute;
+  top: calc(var(--nav-height) + 140px);
+  left: 12px;
+  width: 320px;
+  background: rgba(255,255,255,0.95);
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  z-index: 1000;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Mode Buttons */
+#mode-buttons {
+  display: flex;
+}
+#mode-buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: #f2f4f7;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#mode-buttons button:hover { background: #e1e5eb; }
+#mode-buttons button.active {
+  background: #007cbf;
+  color: #fff;
+}
+#mode-buttons button:first-child  { border-top-left-radius: 8px; }
+#mode-buttons button:last-child   { border-top-right-radius: 8px; }
+
+/* Inputs Row */
+.inputs-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 8px;
+  padding: 12px;
+  overflow: visible;
+}
+.inputs-row .geocoder { width: 100%; }
+
+/* Start-wrapper & GeolocateControl styling */
+.start-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.start-wrapper .mapboxgl-ctrl-geolocate {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+.start-wrapper .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
+  width: 100%;
+  height: 100%;
+  background-size: 24px;
+}
+
+/* Clear button */
+#dir-clear {
+  padding: 8px;
+  background: #e1e5eb;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+#dir-clear:hover {
+  background: #d0d4da;
+}
+
+/* Go button */
+#dir-go {
+  padding: 10px 20px;
+  background: #007cbf;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#dir-go:hover { background: #0066aa; }
+
+/* Spinner & Error */
+#dir-spinner, #dir-error {
+  padding: 0 12px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+#dir-error { color: #d0454c; }
+.hidden { display: none !important; }
+
+/* Step List inside turn-by-turn */
+#turn-by-turn h5 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+#turn-by-turn ul {
+  margin: 0;
+  padding: 0 0 0 1.2em;
+  list-style-type: decimal;
+}
+#turn-by-turn li {
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+/* Mapbox controls adjustments */
+#map > .mapboxgl-ctrl-geocoder {
+  position: absolute !important;
+  top: var(--nav-height) !important;
+  left: 10px !important;
+  z-index: 5 !important;
+}
+.mapboxgl-ctrl-top-left,
+.mapboxgl-ctrl-top-right {
+  top: var(--nav-height) !important;
+  z-index: 5 !important;
+}
+.mapboxgl-ctrl { z-index: 4 !important; }
+
+/* Bottom nav placeholder */
+#bottom-navbar-placeholder {
+  position: absolute;
+  bottom: 0;
+  height: var(--bottom-nav-height);
+  width: 100%;
+  z-index: 6;
 }
