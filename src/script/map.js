@@ -1,8 +1,10 @@
 // src/script/map.js
 
 import { initDirections } from './mapDirections.js';
+import { setupAddPOIFeature } from './addPoi.js';
 
-// NOTE: mapboxgl.accessToken is set in public/config.js
+mapboxgl.accessToken = window.MAPBOX_TOKEN;
+
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -158,6 +160,10 @@ map.on('load', () => {
 
   // ─── 8) Initialize directions ───
   initDirections(map);
+
+  // ─── 9) Initialize Add-POI feature ───
+  console.log('🌐 map loaded, initializing POI feature');
+  setupAddPOIFeature();
 });
 
 //////////////////////////////

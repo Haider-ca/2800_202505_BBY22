@@ -1,11 +1,12 @@
 // backend/server.js
 require('dotenv').config();
-const express   = require('express');
-const session   = require('express-session')
-const cors      = require('cors');
-const path      = require('path');
-const favicon   = require('serve-favicon');
-const connectDB = require('./config/db'); 
+
+const path = require('path');
+const express = require('express');
+const session = require('express-session');
+const cors    = require('cors');
+const favicon = require('serve-favicon');
+const connectDB = require('./config/db');
 const MongoStore = require('connect-mongo');
 
 const authRoutes = require('./routes/auth');//add this for login features 
@@ -37,6 +38,11 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+app.use(
+  '/css',
+  express.static(path.join(__dirname, '..', 'src', 'css'))
+);
 
 // static assets
 app.use(express.static(path.join(__dirname, '..', 'public')));

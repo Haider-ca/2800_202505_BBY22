@@ -1,5 +1,4 @@
 // src/script/mapDirections.js
-
 export function initDirections(map) {
   let coordStart   = null,
       coordEnd     = null,
