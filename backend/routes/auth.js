@@ -7,7 +7,7 @@ const saltRounds = 10;
 // @desc    Register a new user
 // @access  Public
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
     // Create and save new user (password will be hashed automatically)
     const passwordHash = await bcrypt.hash(password, saltRounds);
-    const newUser = new User({ email, passwordHash });
+    const newUser = new User({ name, email, passwordHash });
     await newUser.save();
 
     res.status(201).json({ message: 'User registered successfully' });
