@@ -22,8 +22,6 @@ html, body {
   z-index: 0;
 }
 
-/* Temporarily hide the POI form */
-#poi-form-container { display: none !important; }
 
 /* ========= DIRECTIONS PANEL ========= */
 #directions-panel {
