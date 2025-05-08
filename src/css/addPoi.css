@@ -11,25 +11,18 @@
     margin-bottom: 8px;
     color: #333;
   }
-  
-  .poi-btn {
-    position: fixed;  
-    bottom: 200px;       
-    right: 20px;
-    width: 36px;
-    height: 36px;
-    background-image: url('/icons/addPOI.png');
-    background-size: 24px 24px;
-    background-repeat: no-repeat;
-    background-position: center;
+
+  .popup-btn {
+    background-color: #0d6efd;
+    color: white;
     border: none;
+    padding: 6px 12px;
     border-radius: 6px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    font-size: 13px;
     cursor: pointer;
-    z-index: 10000;
+    transition: background-color 0.2s;
   }
 
-  
   .popup-btn:hover {
     background-color: #084298;
   }
