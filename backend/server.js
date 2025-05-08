@@ -32,20 +32,24 @@ app.use(session({
     secure: false, 
     maxAge: 1000*60*60*24}
 }))
-app.use(cors({
-  origin: 'http://localhost:5000',  // Replace with your frontend port
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:5000',  // Replace with your frontend port
+//   credentials: true
+// }));
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
+// Home Page
+app.get('/', (req, res) => {
+  res.redirect('/html/map.html');
+});
+
+// static assets
 app.use(
   '/css',
   express.static(path.join(__dirname, '..', 'src', 'css'))
 );
-
-// static assets
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'src')));
 
@@ -56,9 +60,6 @@ app.use('/api', authRoutes);//add this for login features
 
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
-
-// health-check
-app.get('/', (req, res) => res.send('API is running...'));
 
 // global error handler
 app.use((err, req, res, next) => {
