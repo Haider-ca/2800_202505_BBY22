@@ -3,8 +3,7 @@
 import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
 
-const { mapboxToken } = await fetch('/api/config').then(r => r.json());
-mapboxgl.accessToken = mapboxToken;
+mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
 
 const map = new mapboxgl.Map({
