@@ -3,14 +3,15 @@ const POI = require('../../models/POI');
 
 exports.createPOI = async (req, res) => {
   try {
-    const { title, description, lng, lat } = req.body;
+    const { title, description, lng, lat, tags } = req.body;
     const imageUrl = req.file.path;
     const coordinates = {
       type: 'Point',
       coordinates: [parseFloat(lng), parseFloat(lat)]
     };
 
-    const newPOI = await poiService.createPOI({ title, description, imageUrl, coordinates });
+    const parsedTags = tags ? JSON.parse(tags) : [];
+    const newPOI = await poiService.createPOI({ title, description, imageUrl, coordinates, tags: parsedTags });
 
     res.status(201).json({ message: 'POI saved', poi: newPOI });
   } catch (err) {

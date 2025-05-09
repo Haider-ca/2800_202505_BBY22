@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData();
             if (title)       formData.append("title", title);
             if (description) formData.append("description", description);
+            const tags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value);
+            formData.append("tags", JSON.stringify(tags));
             if (photoInput?.files[0]) {
               formData.append("image", photoInput.files[0]);
             }
@@ -66,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lng) formData.append("lng", lng);
             if (lat) formData.append("lat", lat);
 
-            fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
+            fetch(`/api/poi`, {
               method: "POST",
               body: formData
             })
