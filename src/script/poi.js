@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lng) formData.append("lng", lng);
             if (lat) formData.append("lat", lat);
 
-            fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
+            fetch(`/api/poi`, {
               method: "POST",
               body: formData
             })
