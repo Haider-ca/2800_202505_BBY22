@@ -17,6 +17,10 @@ connectDB();
 // serve favicon
 app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 
+// serve static files from public and src directories
+app.use('/public', express.static(path.join(__dirname, '..', 'public')));
+app.use('/src', express.static(path.join(__dirname, '..', 'src')));
+
 
 // middlewares
 app.use(session({
@@ -57,6 +61,7 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
 app.use('/api', authRoutes);//add this for login features 
+app.use('/api/profile', require('./profile/routes/profileRoutes'));
 
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
