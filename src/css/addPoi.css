@@ -11,7 +11,7 @@
     margin-bottom: 8px;
     color: #333;
   }
-  
+
   .popup-btn {
     background-color: #0d6efd;
     color: white;
@@ -22,13 +22,14 @@
     cursor: pointer;
     transition: background-color 0.2s;
   }
-  
+
   .popup-btn:hover {
     background-color: #084298;
   }
   
   /* Add POI button */
   .poi-btn {
+    outline: 4px dashed magenta !important;
     position: absolute;
     bottom: 30px;
     right: 10px;
