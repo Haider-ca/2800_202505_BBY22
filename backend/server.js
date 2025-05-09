@@ -33,8 +33,8 @@ app.use(session({
     maxAge: 1000*60*60*24}
 }))
 app.use(cors({
-  origin: 'http://localhost:5000',  // Replace with your frontend port
-  credentials: true
+  //origin: 'http://localhost:5000',  // Replace with your frontend port
+  //credentials: true
 }));
 
 app.use(express.urlencoded({extended:true}));
