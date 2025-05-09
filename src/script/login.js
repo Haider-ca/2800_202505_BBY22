@@ -1,9 +1,11 @@
+//src/script/login.js
 document.getElementById('login-form').addEventListener('submit', async function (e) {
           e.preventDefault(); // Prevent the default HTML form submission
         
           // Get user input values
           const email = document.getElementById('email').value.trim();
           const password = document.getElementById('password').value;
+          
         
           try {
             // Send login request to backend
@@ -13,6 +15,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ email, password }),
+              credentials:'include'
             });
         
             const data = await response.json();
