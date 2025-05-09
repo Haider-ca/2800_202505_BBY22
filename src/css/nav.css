@@ -1,0 +1,66 @@
+/* Push page content away from fixed navbars */
+body {
+  padding-top: 56px;    /* height of fixed-top navbar */
+  padding-bottom: 56px; /* height of fixed-bottom navbar */
+}
+
+/* Ensure both navbars span full width and sit above map & controls */
+#navbar-placeholder nav,
+#bottom-navbar-placeholder nav {
+  width: 100%;
+  z-index: 1030;
+}
+
+/* Allow the logo to overflow its container */
+nav.navbar {
+  overflow: visible;
+}
+/* Center a tall logo in the 56px bar */
+nav.navbar .navbar-brand img {
+  height: 100px !important;
+  width: auto;
+  margin-top: -35px;
+  margin-bottom: -35px;
+}
+
+/* Top navbar (light) */
+.navbar-light.fixed-top {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.navbar-light.fixed-top .navbar-brand,
+.navbar-light.fixed-top .nav-link {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+.navbar-light.fixed-top .nav-link:hover,
+.navbar-light.fixed-top .navbar-brand:hover {
+  color: #000 !important;
+}
+.navbar-light.fixed-top .navbar-toggler-icon {
+  filter: invert(0.2); /* ensure visibility on light bg */
+}
+
+/* Bottom navbar (light) */
+.navbar-light.fixed-bottom {
+  background-color: #f8f9fa !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.navbar-light.fixed-bottom .nav-link {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+.navbar-light.fixed-bottom .nav-link:hover {
+  color: #000 !important;
+}
+
+/* Fallback dark‐theme support */
+.navbar-dark {
+  background-color: #343a40 !important;
+}
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.navbar-dark .navbar-brand:hover,
+.navbar-dark .nav-link:hover {
+  color: #fff !important;
+}
