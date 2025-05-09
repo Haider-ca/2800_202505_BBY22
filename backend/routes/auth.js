@@ -60,4 +60,24 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Middleware to check if user is authenticated
+const authMiddleware = async (req, res, next) => {
+  if (!req.session.email) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+
+  try {
+    const user = await User.findOne({ email: req.session.email });
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+    req.user = { id: user._id };
+    next();
+  } catch (err) {
+    console.error('Auth middleware error:', err);
+    res.status(500).json({ error: 'Server error during authentication' });
+  }
+};
+
 module.exports = router;
+module.exports.authMiddleware = authMiddleware;
