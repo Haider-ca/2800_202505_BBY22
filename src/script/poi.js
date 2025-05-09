@@ -41,7 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
   
-        // 5) Handle the POST
+        // 5) Close form
+        const closeBtn = document.getElementById("closePOI");
+        if (closeBtn && modal) {
+          closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+          });
+        }
+
+        // 6) Handle the POST
         const postBtn = document.getElementById("postBtn");
         if (postBtn) {
           postBtn.addEventListener("click", () => {
@@ -50,18 +58,47 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData();
             if (title)       formData.append("title", title);
             if (description) formData.append("description", description);
+            const tags = Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value);
+            formData.append("tags", JSON.stringify(tags));
             if (photoInput?.files[0]) {
               formData.append("image", photoInput.files[0]);
             }
-  
-            fetch(`${CONFIG.API_BASE_URL}/api/poi`, {
+            // Add coordinates
+            const { lng, lat } = window.clickedLatLng || {};
+            if (lng) formData.append("lng", lng);
+            if (lat) formData.append("lat", lat);
+
+            fetch(`/api/poi`, {
               method: "POST",
               body: formData
             })
               .then(r => r.json())
               .then(data => {
-                alert("POI submitted!");
+                const toastEl = document.getElementById("poiToast");
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
                 console.log("POI response:", data);
+                // 1. Read coordinates
+                const { lng, lat } = window.clickedLatLng || {};
+
+                if (lng && lat) {
+                  // 2. Create marker element
+                  const el = document.createElement('div');
+                  el.className = 'custom-marker';
+                  el.style.backgroundImage = `url(/icons/poi.png)`;
+                  el.style.width = '32px';
+                  el.style.height = '32px';
+                  el.style.backgroundSize = 'contain';
+
+                  // 3. Add marker to the map
+                  const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(window.pathpalMap);
+                  if (window.userPOIMarkers) {
+                    window.userPOIMarkers.push(marker);
+                  }
+                }
+
+                // 4. Hide the form modal
+                if (modal) modal.style.display = "none";
               })
               .catch(err => {
                 console.error("POI submission error:", err);
