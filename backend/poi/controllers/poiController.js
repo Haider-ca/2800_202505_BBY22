@@ -20,6 +20,11 @@ const POI = require('../../models/POI');
 // };
 exports.createPOI = async (req, res) => {
   try {
+    console.log("✅ [createPOI] Controller triggered");
+console.log("🧾 title:", title);
+console.log("🧾 lng / lat:", lng, lat);
+console.log("🖼️ imageUrl:", req.file?.secure_url || req.file?.path || 'undefined');
+
     console.log("📥 [POI] req.body:", req.body);
     console.log("📷 [POI] req.file:", req.file);
 
@@ -47,9 +52,14 @@ exports.createPOI = async (req, res) => {
     console.log("✅ POI saved:", newPOI);
     res.status(201).json({ message: 'POI saved', poi: newPOI });
   } catch (err) {
-    console.error("❌ Failed to create POI:", err);
-    res.status(500).json({ error: 'Failed to save POI', detail: err.message });
-  }
+    console.error("❌ [createPOI] Error stack:", err.stack);
+    console.error("❌ [createPOI] Error message:", err.message);
+    res.status(500).json({
+      error: 'Failed to save POI',
+      detail: err.message,
+      stack: err.stack
+    });
+  }  
 };
 
 
