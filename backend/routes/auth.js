@@ -60,4 +60,26 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/check-auth', async (req, res) => {
+  if (req.session && req.session.email) {
+    try {
+      const user = await User.findOne({ email: req.session.email });
+      if (!user) {
+        return res.status(401).json({ loggedIn: false });
+      }
+
+      res.status(200).json({
+        loggedIn: true,
+        email: user.email,
+        name: user.name 
+      });
+    } catch (err) {
+      console.error('Check-auth error:', err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  } else {
+    res.status(401).json({ loggedIn: false });
+  }
+});
+
 module.exports = router;

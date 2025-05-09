@@ -23,7 +23,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
             if (response.ok) {
               // Login success: redirect or show message
               alert('Login successful');
-              window.location.href = '/home.html'; // Change to your main page
+              window.location.href = '/html/home.html'; // Change to your main page
             } else {
               // Show error message from backend
               alert(data.message || 'Login failed');

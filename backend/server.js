@@ -32,10 +32,7 @@ app.use(session({
     secure: false, 
     maxAge: 1000*60*60*24}
 }))
-app.use(cors({
-  //origin: 'http://localhost:5000',  // Replace with your frontend port
-  //credentials: true
-}));
+app.use(cors());
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
@@ -48,6 +45,7 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
 app.use('/api', authRoutes);//add this for login features 
+
 
 // health-check
 app.get('/', (req, res) => res.send('API is running...'));
