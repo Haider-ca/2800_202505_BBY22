@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
               reader.onload = e => {
                 photoPreview.src = e.target.result;
                 photoPreview.classList.remove("d-none");
+                // Clear error message
+                const errorEl = document.getElementById("uploadError");
+                if (errorEl) errorEl.style.display = "none";
               };
               reader.readAsDataURL(file);
             }
@@ -45,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const closeBtn = document.getElementById("closePOI");
         if (closeBtn && modal) {
           closeBtn.addEventListener("click", () => {
+            resetPOIForm();
             modal.style.display = "none";
           });
         }
@@ -53,8 +57,49 @@ document.addEventListener("DOMContentLoaded", () => {
         const postBtn = document.getElementById("postBtn");
         if (postBtn) {
           postBtn.addEventListener("click", () => {
-            const title = document.getElementById("poiTitle")?.value;
-            const description = document.getElementById("poiDescription")?.value;
+            const titleInput = document.getElementById("poiTitle");
+            const descInput = document.getElementById("poiDescription");
+
+            const title = titleInput?.value.trim();
+            const description = descInput?.value.trim();
+            const errorEl = document.getElementById("uploadError");
+            const titleError = document.getElementById("titleError");
+            const descError = document.getElementById("descError");
+
+            // Clear error message
+            if (errorEl) errorEl.style.display = "none";
+            if (titleError) titleError.style.display = "none";
+            if (descError) descError.style.display = "none";
+
+            // Input check
+            let hasError = false;
+
+            if (!title) {
+              if (titleError) {
+                titleError.innerText = "Title is required.";
+                titleError.style.display = "block";
+              }
+              hasError = true;
+            }
+
+            if (!description) {
+              if (descError) {
+                descError.innerText = "Description is required.";
+                descError.style.display = "block";
+              }
+              hasError = true;
+            }
+
+            if (!photoInput?.files[0]) {
+              if (errorEl) {
+                errorEl.innerText = "Please upload a photo before submitting.";
+                errorEl.style.display = "block";
+              }
+              hasError = true;
+            }
+
+            if (hasError) return;
+
             const formData = new FormData();
             if (title)       formData.append("title", title);
             if (description) formData.append("description", description);
@@ -97,7 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
                   }
                 }
 
-                // 4. Hide the form modal
+                // 4. Clear form
+                resetPOIForm();
+
+                // 5. Hide the form modal
                 if (modal) modal.style.display = "none";
               })
               .catch(err => {
@@ -110,5 +158,38 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(err => {
         console.error("Error loading POI form:", err);
       });
+
+      function resetPOIForm() {
+        const titleInput = document.getElementById("poiTitle");
+        const descriptionInput = document.getElementById("poiDescription");
+        const photoInput = document.getElementById("photoInput");
+        const photoPreview = document.getElementById("photoPreview");
+
+        const errorEl = document.getElementById("uploadError");
+        const titleError = document.getElementById("titleError");
+        const descError = document.getElementById("descError");
+        
+      
+        if (titleInput) titleInput.value = "";
+        if (descriptionInput) descriptionInput.value = "";
+      
+        document.querySelectorAll('input[name="tags"]:checked')
+          .forEach(cb => cb.checked = false);
+      
+        if (photoPreview) {
+          photoPreview.src = "";
+          photoPreview.classList.add("d-none");
+        }
+      
+        if (photoInput) photoInput.value = "";
+
+        // Clear error message
+        if (errorEl) errorEl.style.display = "none";
+        if (titleError) titleError.style.display = "none";
+        if (descError) descError.style.display = "none";
+      
+        window.clickedLatLng = null;
+      }
+      
   });
   
