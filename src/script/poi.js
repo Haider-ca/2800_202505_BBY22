@@ -72,34 +72,35 @@ document.addEventListener("DOMContentLoaded", () => {
               method: "POST",
               body: formData
             })
-              .then(r => r.json())
-              .then(data => {
+            .then(r => r.json())
+            .then(data => {
+                console.log("POI response:", data);
+            
+                // ✅ ✅ THIS IS THE FIX
+                filterUserPOI = true;
+                loadPOIs();
+            
+                // Existing success behavior
                 const toastEl = document.getElementById("poiToast");
                 const toast = new bootstrap.Toast(toastEl);
                 toast.show();
-                console.log("POI response:", data);
-                // 1. Read coordinates
+            
+                // Add marker immediately at clicked location (optional but nice)
                 const { lng, lat } = window.clickedLatLng || {};
-
                 if (lng && lat) {
-                  // 2. Create marker element
                   const el = document.createElement('div');
                   el.className = 'custom-marker';
                   el.style.backgroundImage = `url(/icons/poi.png)`;
                   el.style.width = '32px';
                   el.style.height = '32px';
                   el.style.backgroundSize = 'contain';
-
-                  // 3. Add marker to the map
                   const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(window.pathpalMap);
-                  if (window.userPOIMarkers) {
-                    window.userPOIMarkers.push(marker);
-                  }
+                  window.userPOIMarkers?.push(marker);
                 }
-
-                // 4. Hide the form modal
+            
                 if (modal) modal.style.display = "none";
-              })
+            })
+            
               .catch(err => {
                 console.error("POI submission error:", err);
                 alert("Failed to submit POI");
