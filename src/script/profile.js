@@ -1,7 +1,7 @@
 // Function to load user profile information from the server
 async function loadProfile() {
-    const API_BASE_URL = window.CONFIG?.API_BASE_URL || 'http://localhost:5001';
-    const response = await fetch(API_BASE_URL + '/api/profile', { method: 'GET', credentials: 'include' });
+    const API_BASE_URL = '/api';
+    const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
     if (!response.ok) {
         alert('Failed to load profile. Please log in again.');
         window.location.href = '/src/html/login/login.html';
@@ -27,8 +27,8 @@ async function updateProfile(event) {
         console.log('No file selected for upload'); // Log when no file is selected
     }
 
-    const API_BASE_URL = window.CONFIG?.API_BASE_URL || 'http://localhost:5001';
-    const response = await fetch(API_BASE_URL + '/api/profile', {
+    const API_BASE_URL = '/api';
+    const response = await fetch(API_BASE_URL + '/profile', {
         method: 'PUT',
         body: formData,
         credentials: 'include'
@@ -45,8 +45,8 @@ async function updateProfile(event) {
 // Function to delete user profile after confirmation
 async function deleteProfile() {
     if (confirm('Are you sure you want to delete your profile?')) {
-        const API_BASE_URL = window.CONFIG?.API_BASE_URL || 'http://localhost:5001';
-        const response = await fetch(API_BASE_URL + '/api/profile', {
+        const API_BASE_URL = '/api';
+        const response = await fetch(API_BASE_URL + '/profile', {
             method: 'DELETE',
             credentials: 'include'
         });
