@@ -31,6 +31,12 @@ const updateProfileHandler = async (req, res) => {
 
         // Update the profile with new data
         const profile = await updateProfile(req.session.email, updates);
+
+        // If email was updated, update the session email to the new value
+        if (updates.email && updates.email !== req.session.email) {
+            req.session.email = updates.email;
+        }
+
         res.json(profile);
     } catch (error) {
         res.status(400).json('Failed to update profile');
