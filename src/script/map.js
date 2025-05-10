@@ -196,40 +196,58 @@ async function loadBoundary() {
 }
 
 async function loadPOIs() {
+  // Clear old markers
   wheelchairMarkers.forEach(m => m.remove());
   seniorMarkers.forEach(m => m.remove());
   userPOIMarkers.forEach(m => m.remove());
   wheelchairMarkers.length = 0;
-  seniorMarkers.length     = 0;
+  seniorMarkers.length = 0;
   userPOIMarkers.length = 0;
 
   try {
+    // Load wheelchair
     if (filterWheelchair) {
       const res = await fetch('/data/wheelchair-friendly.geojson');
       const geo = await res.json();
       makeMarkers(geo.features, wheelchairMarkers, 'wheelchair');
     }
+
+    // Load senior
     if (filterSenior) {
       const res = await fetch('/data/senior-friendly.geojson');
       const geo = await res.json();
       makeMarkers(geo.features, seniorMarkers, 'senior');
     }
+
+    // ✅ ✅ Load user POIs
     if (filterUserPOI) {
       const res = await fetch('/api/poi');
       const data = await res.json();
-    
-      // Convert to GeoJSON Feature format
+      console.log('Loaded POIs from backend:', data);
+
       const features = data.map(poi => ({
         type: 'Feature',
         geometry: poi.coordinates,
         properties: {
           title: poi.title,
-          description: poi.description
+          description: poi.description,
+          imageUrl: poi.imageUrl,
+          username: poi.username,
+          createdAt: poi.createdAt,
+          likes: poi.likes,
+          comments: poi.comments
         }
       }));
-    
+
+      // ✅ THIS LINE IS MISSING IN YOUR CODE!
       makeMarkers(features, userPOIMarkers, 'poi');
     }
+
+  } catch (err) {
+    console.error('POI load error:', err);
+  }
+}
+
     
 
     // --- To switch back to dynamic API when your DB has locations, replace the above block with: ---
@@ -247,10 +265,6 @@ async function loadPOIs() {
     makeMarkers(wcFeatures, wheelchairMarkers, 'wheelchair');
     makeMarkers(srFeatures, seniorMarkers, 'senior');
     */
-  } catch (err) {
-    console.error('POI load error:', err);
-  }
-}
 
 function makeMarkers(features, list, icon) {
   for (const f of features) {
@@ -258,7 +272,7 @@ function makeMarkers(features, list, icon) {
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
 
-    const [lng, lat] = coords;  // ✅ Required for the popup to work
+    const [lng, lat] = coords;
 
     const el = document.createElement('div');
     el.className = 'custom-marker';
@@ -267,21 +281,24 @@ function makeMarkers(features, list, icon) {
     el.style.height = '32px';
     el.style.backgroundSize = 'contain';
 
-    // Create popup HTML content
+    // ✅ Corrected from 'poi' to 'f.properties'
     const popupContent = `
-      <div class="custom-popup">
-        <div class="popup-header">
-          <strong>${f.properties.username || 'Anonymous'}</strong>
-          <span>${f.properties.time || 'Unknown time'}</span>
-        </div>
-        <img src="${f.properties.image || '/icons/default.jpg'}" alt="POI photo" class="popup-img" />
-        <div class="popup-desc">${f.properties.description || 'No description available.'}</div>
-        <div class="popup-votes">
-          <span>👍 ${f.properties.likes || 0}</span>
-          <span>💬 ${f.properties.comments || 0}</span>
-        </div>
-      </div>
-    `;
+  <div class="custom-popup">
+    <div class="popup-header">
+      <strong>${f.properties.username || 'Anonymous'}</strong><br/>
+      <span>${new Date(f.properties.createdAt).toLocaleString() || 'Unknown time'}</span>
+    </div>
+    <img src="${f.properties.imageUrl || '/icons/default.jpg'}" 
+         alt="POI photo" 
+         class="popup-img" />
+    <div class="popup-desc">${f.properties.description || 'No description'}</div>
+    <div class="popup-votes">
+      <span>👍 ${f.properties.likes || 0}</span>
+      <span>💬 ${f.properties.comments?.length || 0}</span>
+    </div>
+  </div>
+`;
+
 
     const popup = new mapboxgl.Popup({
       closeButton: false,
@@ -289,7 +306,6 @@ function makeMarkers(features, list, icon) {
       offset: 25,
     }).setHTML(popupContent);
 
-    // Hover listeners
     el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
     el.addEventListener('mouseleave', () => popup.remove());
 
@@ -297,6 +313,7 @@ function makeMarkers(features, list, icon) {
     list.push(marker);
   }
 }
+
 
 
 ///////////////////////
