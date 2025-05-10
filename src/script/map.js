@@ -2,6 +2,7 @@
 
 import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
+import { createPopup } from './popup.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
@@ -223,8 +224,13 @@ async function loadPOIs() {
         type: 'Feature',
         geometry: poi.coordinates,
         properties: {
+          _id: poi._id,
           title: poi.title,
-          description: poi.description
+          description: poi.description,
+          image: poi.imageUrl,
+          time: poi.createdAt,
+          likes: poi.likes,
+          dislikes: poi.dislikes
         }
       }));
     
@@ -258,7 +264,7 @@ function makeMarkers(features, list, icon) {
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
 
-    const [lng, lat] = coords;  // ✅ Required for the popup to work
+    const [lng, lat] = coords;
 
     const el = document.createElement('div');
     el.className = 'custom-marker';
@@ -267,27 +273,11 @@ function makeMarkers(features, list, icon) {
     el.style.height = '32px';
     el.style.backgroundSize = 'contain';
 
-    // Create popup HTML content
-    const popupContent = `
-      <div class="custom-popup">
-        <div class="popup-header">
-          <strong>${f.properties.username || 'Anonymous'}</strong>
-          <span>${f.properties.time || 'Unknown time'}</span>
-        </div>
-        <img src="${f.properties.image || '/icons/default.jpg'}" alt="POI photo" class="popup-img" />
-        <div class="popup-desc">${f.properties.description || 'No description available.'}</div>
-        <div class="popup-votes">
-          <span>👍 ${f.properties.likes || 0}</span>
-          <span>💬 ${f.properties.comments || 0}</span>
-        </div>
-      </div>
-    `;
-
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false,
-      offset: 25,
-    }).setHTML(popupContent);
+    // Create popup
+    const popup = createPopup({
+      coordinates: [lng, lat],
+      properties: f.properties
+    });    
 
     // Hover listeners
     el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
