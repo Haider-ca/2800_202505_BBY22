@@ -6,6 +6,9 @@ import { createPopup } from './popup.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
+// New globals to cache  point A to B coords
+let lastOrigin      = null;   
+let lastDestination = null;
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -160,12 +163,37 @@ map.on('load', () => {
   loadPOIs();
 
   // ─── 8) Initialize directions ───
-  initDirections(map);
+ const directions = initDirections(map, {
+    onRouteSet: ({ origin, destination }) => {
+      lastOrigin      = origin;
+      lastDestination = destination;
+    }
+  });
 
   // ─── 9) Initialize Add-POI feature ───
   console.log('🌐 map loaded, initializing POI feature');
   setupAddPOIFeature();
 });
+
+  // ─── 10) Mode-tab click handlers ───
+  const profileMap = {
+    driving:    'mapbox/driving',
+    walking:    'mapbox/walking',
+    senior:     'mapbox/walking',   
+    wheelchair: 'mapbox/cycling'    
+  };
+
+  Object.entries(profileMap).forEach(([mode, profile]) => {
+    const tab = document.getElementById(`${mode}Tab`);
+    if (!tab) return;
+    tab.addEventListener('click', () => {
+      directions.setProfile(profile);
+      if (lastOrigin && lastDestination) {
+        directions.setOrigin(lastOrigin);
+        directions.setDestination(lastDestination);
+      }
+    });
+  });
 
 //////////////////////////////
 // Boundary & POI functions //

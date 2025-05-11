@@ -8,9 +8,7 @@ export function initDirections(map) {
     _watchId = null,
     _liveCount = 0;
 
-  //
   // ─── Voice helper & live-tracking ───
-  //
   function speak(text) {
     if (!window.voiceGuidanceEnabled || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
@@ -19,6 +17,7 @@ export function initDirections(map) {
     window.speechSynthesis.speak(utter);
   }
 
+  //GPS live tracking
   function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
     if (_watchId !== null) navigator.geolocation.clearWatch(_watchId);
     _liveCount = 0;
@@ -37,8 +36,8 @@ export function initDirections(map) {
       }
     }, err => console.warn('Live watch error:', err), {
       enableHighAccuracy: true,
-      maximumAge: 5000,
-      timeout: 10000
+      maximumAge: 30000,
+      timeout: 60000
     });
   }
 
@@ -52,13 +51,11 @@ export function initDirections(map) {
     types: 'place,address,poi',
     limit: 5,
     marker: false,
-    // BLOCK everything when input === "Current Location"
     filter: feature => startInputEl?.value !== 'Current Location'
   });
 
   const startGc = geocoderStart.onAdd(map);
   document.getElementById('geocoder-start').appendChild(startGc);
-  // grab the <input> & the internal clear‐button for later
   startInputEl = startGc.querySelector('input.mapboxgl-ctrl-geocoder--input');
   const startClearBtn = startGc.querySelector('button.mapboxgl-ctrl-geocoder--clear');
 
@@ -73,7 +70,6 @@ export function initDirections(map) {
   document.getElementById('geocoder-end')
     .appendChild(geocoderEnd.onAdd(map));
 
-  // ─── result handlers ───
   geocoderStart.on('result', e => {
     coordStart = e.result.geometry.coordinates.join(',');
     if (startMarker) startMarker.remove();
@@ -101,42 +97,30 @@ export function initDirections(map) {
     .appendChild(panelGeo.onAdd(map));
 
   panelGeo.on('geolocate', e => {
-    // 1) drop your marker as before
     coordStart = `${e.coords.longitude},${e.coords.latitude}`;
     if (startMarker) startMarker.remove();
     startMarker = new mapboxgl.Marker({ color: '#007cbf' })
       .setLngLat([e.coords.longitude, e.coords.latitude])
       .addTo(map);
-
-    // 2) set “Current Location” in the input
     geocoderStart.setInput('Current Location');
-
-    // 3) notify the Geocoder internals that there’s text
     startInputEl.dispatchEvent(new Event('input', { bubbles: true }));
-
-    // 4) focus the input so Mapbox shows the clear (×) button
     startInputEl.focus();
   });
 
-
-
-
-
-  //
   // ─── 3) Mode buttons ───
-  //
   document.querySelectorAll('#mode-buttons button').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#mode-buttons button')
         .forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       profile = btn.dataset.mode;
+      if (coordStart && coordEnd) {
+        route();
+      }
     });
   });
 
-  //
   // ─── 4) UI refs & helpers ───
-  //
   const spinnerEl = document.getElementById('dir-spinner'),
     errorEl = document.getElementById('dir-error'),
     summaryEl = document.getElementById('dir-summary'),
@@ -170,9 +154,7 @@ export function initDirections(map) {
     return `${mins} m`;
   }
 
-  //
   // ─── 5) Fetch route ───
-  //
   async function fetchRoute(start, end, prof) {
     const apiProfile = prof === 'senior' ? 'walking'
       : prof === 'wheelchair' ? 'driving'
@@ -189,9 +171,7 @@ export function initDirections(map) {
     return data;
   }
 
-  //
   // ─── 6) Draw & fit ───
-  //
   function drawRoute(route) {
     const dashed = profile === 'walking' || profile === 'senior';
     const paint = {
@@ -218,9 +198,7 @@ export function initDirections(map) {
     map.fitBounds(bounds, { padding: 40, maxZoom: 14 });
   }
 
-  //
   // ─── 7) Add benches (senior) ───
-  //
   async function addBenches(route) {
     try {
       const resp = await fetch('/data/benches.geojson');
@@ -244,9 +222,7 @@ export function initDirections(map) {
     }
   }
 
-  //
   // ─── 8) Render steps & voice ───
-  //
   function renderSteps(route) {
     const steps = route.legs[0].steps;
     if (steps.length) speak(steps[0].maneuver.instruction);
@@ -266,27 +242,36 @@ export function initDirections(map) {
     };
   }
 
-  //
-  // ─── 9) “Go” button ───
-  //
-  document.getElementById('dir-go').addEventListener('click', async () => {
-    clearError(); clearRoute(); showSpinner();
+  async function route() {
+    clearError();
+    clearRoute();
+    showSpinner();
     try {
-      if (!coordStart) throw new Error('Please set a start location.');
-      if (!coordEnd) throw new Error('Please set an end location.');
+      const r = await fetchRoute(coordStart, coordEnd, profile);
+      // apply senior / wheelchair speed modifiers
+      if (profile === 'senior') {
+        r.duration *= 1.5;
+        r.legs[0].steps.forEach(s => (s.duration *= 1.5));
+      }
+      if (profile === 'wheelchair') {
+        r.duration *= 1.25;
+        r.legs[0].steps.forEach(s => (s.duration *= 1.25));
+      }
 
-      const route = await fetchRoute(coordStart, coordEnd, profile);
-      if (profile === 'senior') { route.duration *= 1.5; route.legs[0].steps.forEach(s => s.duration *= 1.5); }
-      if (profile === 'wheelchair') { route.duration *= 1.25; route.legs[0].steps.forEach(s => s.duration *= 1.25); }
-
-      summaryEl.textContent =
-        `Total: ${formatDistance(route.distance)} · ETA ${formatTime(route.duration)}`;
+      // update summary & speak
+      summaryEl.textContent = `Total: ${formatDistance(r.distance)} · ETA ${formatTime(r.duration)}`;
       speak(summaryEl.textContent);
 
-      drawRoute(route);
-      renderSteps(route);
-      if (profile === 'senior') await addBenches(route);
+      // draw & list steps
+      drawRoute(r);
+      renderSteps(r);
 
+      // add benches if senior mode
+      if (profile === 'senior') {
+        await addBenches(r);
+      }
+
+      // reveal turn‐by‐turn and start live‐tracking
       turnBox.style.display = 'block';
       startLiveTracking(fetchRoute, drawRoute, renderSteps, showError);
 
@@ -295,11 +280,23 @@ export function initDirections(map) {
     } finally {
       hideSpinner();
     }
+  }
+
+  // ─── 9) “Go” button ───
+  document.getElementById('dir-go').addEventListener('click', () => {
+    clearError();
+    if (!coordStart) {
+      showError('Please set a start location.');
+      return;
+    }
+    if (!coordEnd) {
+      showError('Please set an end location.');
+      return;
+    }
+    route();
   });
 
-  //
   // ─── 10) “Clear” button ───
-  //
   document.getElementById('dir-clear').addEventListener('click', () => {
     clearRoute();
     geocoderStart.clear();
