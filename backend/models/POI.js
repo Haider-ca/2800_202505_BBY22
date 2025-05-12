@@ -15,6 +15,22 @@ const poiSchema = new mongoose.Schema({
       required: true
     }
   },
+  tags: {
+    type: [String],
+    default: []
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  dislikes: {
+    type: Number,
+    default: 0
+  },
+  comments: {
+    type: [String],
+    default: []
+  },
   createdAt: { type: Date, default: Date.now }
 });
 

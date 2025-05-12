@@ -1,16 +1,23 @@
-const map = window.pathpalMap;
+// src/script/addPoi.js
 
-let addingPOIMode = false; // Flag indicating whether user is in "add POI" mode
-let tempPOIMarker = null; // Temporary red marker shown during POI selection
+// shared module‐scope state
+let addingPOIMode  = false;
+let tempPOIMarker  = null;
 
-// Entry point to set up the POI creation feature
 export function setupAddPOIFeature() {
-  // Add the floating button to trigger POI creation
+  console.log('🔘 setupAddPOIFeature() called');
+  const map = window.pathpalMap;
+  if (!map) {
+    console.error('AddPOI: map not initialized yet');
+    return;
+  }
+
+  // 1) inject the button & wire its click (helper uses those same state vars)
   createAddPOIButton();
 
-  map.on("click", (e) => {
+  // 2) listen for map clicks while in POI mode
+  map.on('click', e => {
     if (addingPOIMode) {
-      // When in "add" mode, handle map click as POI selection
       handlePOICreationClick(e);
     }
   });
@@ -18,9 +25,21 @@ export function setupAddPOIFeature() {
 
 // Creates the floating button for "Add POI"
 function createAddPOIButton() {
+  console.log('⚙️ createAddPOIButton() running');
+  // const poiBtn = document.createElement("button");
+    const map = window.pathpalMap;
+  if (!map) return console.error('AddPOI: map not initialized');
   const poiBtn = document.createElement("button");
   poiBtn.id = "add-poi-btn";
   poiBtn.className = "poi-btn";
+
+ // inline fallback positioning
+ poiBtn.style.position = 'fixed';
+ poiBtn.style.bottom   = '80px';
+ poiBtn.style.right    = '10px';
+ poiBtn.style.zIndex   = '10000';
+
+
   poiBtn.setAttribute("aria-label", "Add POI");
 
   poiBtn.addEventListener("click", () => {
@@ -54,11 +73,14 @@ function createAddPOIButton() {
     }
   });
 
-  document.getElementById("map").appendChild(poiBtn);
+  // document.getElementById("map").appendChild(poiBtn);
+  document.body.appendChild(poiBtn);
 }
 
 // Handles a click on the map while in "add POI" mode
 function handlePOICreationClick(e) {
+    const map = window.pathpalMap;
+  if (!map) return console.error('AddPOI: map not initialized in click handler');
   const { lng, lat } = e.lngLat;
 
   // Remove any existing temporary marker

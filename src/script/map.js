@@ -1,7 +1,14 @@
 // src/script/map.js
-// MAP MODULE — DO NOT MODIFY
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGFpZGVyLTIwMjUiLCJhIjoiY205dXZ5YmIwMGQ0NTJpcTNzb2prYnZpOCJ9.QzrbaFW5l9KvuKO-cqOaFg';
+import { initDirections } from './mapDirections.js';
+import { setupAddPOIFeature } from './addPoi.js';
+import { createPopup } from './popup.js';
+
+mapboxgl.accessToken = window.MAPBOX_TOKEN;
+
+// New globals to cache  point A to B coords
+let lastOrigin      = null;   
+let lastDestination = null;
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -20,22 +27,121 @@ const wheelchairMarkers = [];
 const seniorMarkers     = [];
 const userPOIMarkers = [];
 
+// ─── VoiceControl ───
+class VoiceControl {
+  constructor(onToggle) {
+    this.onToggle = onToggle;
+    this.enabled  = false;
+  }
+  onAdd(map) {
+    this.map = map;
+    this.container = document.createElement('div');
+    this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+
+    this.btn = document.createElement('button');
+    this.btn.type = 'button';
+    this.btn.className = 'mapboxgl-ctrl-icon';
+    this.btn.setAttribute('aria-label', 'Toggle voice guidance');
+    this.btn.textContent = '🔊';
+    this.btn.style.opacity = '0.4';
+
+    this.btn.addEventListener('click', () => {
+      this.enabled = !this.enabled;
+      this.btn.style.opacity = this.enabled ? '1.0' : '0.4';
+      window.voiceGuidanceEnabled = this.enabled;
+    });
+
+    this.container.appendChild(this.btn);
+    return this.container;
+  }
+  onRemove() {
+    this.container.remove();
+    this.map = null;
+  }
+}
+
 map.on('load', () => {
-  // Built-in controls
+  // ─── 1) Load bench icon at native resolution ───
+  map.loadImage('/icons/bench.png', (err, img) => {
+    if (err) {
+      console.error('Failed to load bench icon:', err);
+      return;
+    }
+    if (!map.hasImage('bench-15')) {
+      map.addImage('bench-15', img);
+    }
+  });
+
+  // ─── 2) Live‑traffic source & layer (hidden by default) ───
+  map.addSource('traffic', {
+    type: 'vector',
+    url:  'mapbox://mapbox.mapbox-traffic-v1'
+  });
+  map.addLayer({
+    id:            'traffic-layer',
+    type:          'line',
+    source:        'traffic',
+    'source-layer':'traffic',
+    layout: {
+      'line-join': 'round',
+      'line-cap':  'round',
+      visibility:  'none'
+    },
+    paint: {
+      'line-color': [
+        'match',
+        ['get','congestion'],
+        'low',      '#2DC4B2',
+        'moderate', '#FFFF00',
+        'heavy',    '#FF0000',
+        /*default*/ '#000000'
+      ],
+      'line-width': 2
+    }
+  });
+
+  // ─── 3) Built‑in navigation & geolocate ───
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(new mapboxgl.GeolocateControl({
-    positionOptions: { enableHighAccuracy: true },
+    positionOptions:   { enableHighAccuracy: true },
     trackUserLocation: true,
-    showUserHeading: true
+    showUserHeading:   true
   }), 'top-right');
-  map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl,
-    placeholder: 'Search for a place',
-    marker:      false
-  }), 'top-left');
 
-  // Toggle controls
+  // ─── 4) Traffic Toggle Button ───
+  const trafficBtn = document.createElement('button');
+  trafficBtn.className = 'mapboxgl-ctrl-icon';
+  trafficBtn.setAttribute('aria-label','Toggle traffic');
+  trafficBtn.textContent = '🚦';
+  trafficBtn.style.fontSize = '18px';
+  trafficBtn.addEventListener('click', () => {
+    const vis = map.getLayoutProperty('traffic-layer','visibility');
+    map.setLayoutProperty(
+      'traffic-layer',
+      'visibility',
+      vis === 'none' ? 'visible' : 'none'
+    );
+  });
+  const trafficControl = {
+    onAdd() {
+      this._container = document.createElement('div');
+      this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+      this._container.appendChild(trafficBtn);
+      return this._container;
+    },
+    onRemove() {
+      this._container.parentNode.removeChild(this._container);
+    }
+  };
+  map.addControl(trafficControl, 'top-right');
+
+  // ─── 5) Voice toggle control ───
+  const voiceControl = new VoiceControl(enabled => {
+    window.voiceGuidanceEnabled = enabled;
+  });
+  map.addControl(voiceControl, 'top-right');
+
+  // ─── 6) POI Toggle Controls ───
   const wcCtrl = new ToggleControl('wheelchair', wheelchairMarkers, visible => {
     filterWheelchair = visible;
     loadPOIs();
@@ -52,10 +158,46 @@ map.on('load', () => {
   map.addControl(srCtrl, 'top-right');
   map.addControl(userPOICtrl, 'top-right');
 
-  // Draw boundary and load initial POIs
+  // ─── 7) Draw boundary & load initial POIs ───
   loadBoundary();
   loadPOIs();
+
+  // ─── 8) Initialize directions ───
+ const directions = initDirections(map, {
+    onRouteSet: ({ origin, destination }) => {
+      lastOrigin      = origin;
+      lastDestination = destination;
+    }
+  });
+
+  // ─── 9) Initialize Add-POI feature ───
+  console.log('🌐 map loaded, initializing POI feature');
+  setupAddPOIFeature();
 });
+
+  // ─── 10) Mode-tab click handlers ───
+  const profileMap = {
+    driving:    'mapbox/driving',
+    walking:    'mapbox/walking',
+    senior:     'mapbox/walking',   
+    wheelchair: 'mapbox/cycling'    
+  };
+
+  Object.entries(profileMap).forEach(([mode, profile]) => {
+    const tab = document.getElementById(`${mode}Tab`);
+    if (!tab) return;
+    tab.addEventListener('click', () => {
+      directions.setProfile(profile);
+      if (lastOrigin && lastDestination) {
+        directions.setOrigin(lastOrigin);
+        directions.setDestination(lastDestination);
+      }
+    });
+  });
+
+//////////////////////////////
+// Boundary & POI functions //
+//////////////////////////////
 
 async function loadBoundary() {
   try {
@@ -83,7 +225,6 @@ async function loadBoundary() {
 }
 
 async function loadPOIs() {
-  // Clear existing markers
   wheelchairMarkers.forEach(m => m.remove());
   seniorMarkers.forEach(m => m.remove());
   userPOIMarkers.forEach(m => m.remove());
@@ -111,8 +252,13 @@ async function loadPOIs() {
         type: 'Feature',
         geometry: poi.coordinates,
         properties: {
+          _id: poi._id,
           title: poi.title,
-          description: poi.description
+          description: poi.description,
+          image: poi.imageUrl,
+          time: poi.createdAt,
+          likes: poi.likes,
+          dislikes: poi.dislikes
         }
       }));
     
@@ -146,17 +292,35 @@ function makeMarkers(features, list, icon) {
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
 
+    const [lng, lat] = coords;
+
     const el = document.createElement('div');
     el.className = 'custom-marker';
     el.style.backgroundImage = `url(/icons/${icon}.png)`;
-    el.style.width           = '32px';
-    el.style.height          = '32px';
-    el.style.backgroundSize  = 'contain';
+    el.style.width = '32px';
+    el.style.height = '32px';
+    el.style.backgroundSize = 'contain';
 
-    const marker = new mapboxgl.Marker(el).setLngLat(coords).addTo(map);
+    // Create popup
+    const popup = createPopup({
+      coordinates: [lng, lat],
+      properties: f.properties
+    });    
+
+    // Hover listeners
+    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+    el.addEventListener('mouseleave', () => popup.remove());
+
+    const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
   }
 }
+
+
+///////////////////////
+// ToggleControl     //
+///////////////////////
+
 
 class ToggleControl {
   constructor(type, markersArray, onToggle) {
@@ -182,7 +346,9 @@ class ToggleControl {
     btn.addEventListener('click', () => {
       this.visible = !this.visible;
       btn.classList.toggle('active', this.visible);
-      this.markersArray.forEach(m => this.visible ? m.addTo(this.map) : m.remove());
+      this.markersArray.forEach(m =>
+        this.visible ? m.addTo(this.map) : m.remove()
+      );
       this.onToggle(this.visible);
 
       // If the POI toggle is activated, pan to the user's current location

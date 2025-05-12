@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/src/css/profile.css">
+</head>
+
+<body>
+    <div class="container">
+        <section class="profile">
+            <div class="avatar">
+                <img id="avatar" src="/public/img/defaultUser.png" alt="User Avatar">
+                <div class="menu-icon"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                <div class="dropdown">
+                    <div onclick="showEditForm()">Edit profile</div>
+                    <div>Reset password</div>
+                    <div onclick="deleteProfile()">Delete profile</div>
+                </div>
+            </div>
+            <div class="info">
+                <p><strong>Name:</strong> <span id="name"></span></p>
+                <p><strong>Email:</strong> <span id="email"></span></p>
+                <p><strong>Description:</strong> <span id="description"></span></p>
+            </div>
+            <div id="editForm" style="display: none;">
+                <form id="updateForm" enctype="multipart/form-data">
+                    <input type="text" id="newName" placeholder="New name">
+                    <input type="email" id="newEmail" placeholder="New email">
+                    <textarea id="newDescription" placeholder="New description"></textarea>
+                    <input type="file" id="avatarInput" name="image" accept="image/*">
+                    <div class="button-group">
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="cancelEdit()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script src="/public/config.js"></script>
+    <script src="/src/script/profile.js"></script>
+</body>
+
+</html>

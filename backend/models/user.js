@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
-// Define the user schema with email and passwordHash
+// Define the user schema
 const userSchema = new mongoose.Schema({
   name:{
     type: String,
@@ -17,7 +17,21 @@ const userSchema = new mongoose.Schema({
   passwordHash: {
     type: String,
     required: true,
-  }
+  },
+  avatar: {
+    type: String,
+    default: '/public/img/defaultUser.png'
+},
+name: {
+    type: String,
+    trim: true,
+    default: ''
+},
+description: {
+    type: String,
+    trim: true,
+    default: ''
+}
 });
 
 // Add a method to compare a given password with the stored hash

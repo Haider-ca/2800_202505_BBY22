@@ -5,22 +5,10 @@
   <title>PathPal – Map</title>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-  <!-- App CSS -->
-  <link rel="stylesheet" href="/css/map.css" />
-  <link rel="stylesheet" href="/css/nav.css" />
-<<<<<<< HEAD
-  <link rel="stylesheet" href="/css/addPoi.css" />
-=======
+  <!-- favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
-  <!-- Third-party CSS -->
-  <link
-    href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css"
-    rel="stylesheet"
-  />
-  <link
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
-    rel="stylesheet"
-  />
+  <!-- Bootstrap CSS & Icons -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -29,10 +17,28 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     rel="stylesheet"
   />
->>>>>>> haider_alsudani_location_weather
+
+  <!-- Mapbox GL & Geocoder CSS -->
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+    rel="stylesheet"
+  />
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="/css/map.css" />
+  <link rel="stylesheet" href="/css/nav.css" />
+  <link rel="stylesheet" href="/css/addPoi.css" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/popup.css">
+
+
 </head>
 <body>
-  <!-- Top navbar placeholder -->
+  <!-- Top nav -->
   <div id="navbar-placeholder" data-nav="after"></div>
 
   <!-- Map + overlays wrapper -->
@@ -54,22 +60,63 @@
     </div>
   </div>
 
-  <!-- POI form & bottom nav -->
+  <!-- Directions panel -->
+  <div id="directions-panel">
+    <div id="mode-buttons">
+      <button data-mode="driving" class="active">Driving</button>
+      <button data-mode="walking">Walking</button>
+      <button data-mode="senior">Senior</button>
+      <button data-mode="wheelchair">Wheelchair</button>
+    </div>
+    <div class="inputs-row">
+      <div class="start-wrapper">
+        <div id="geocoder-start" class="geocoder"></div>
+        <!-- geolocate-control injected here -->
+      </div>
+      <div id="geocoder-end" class="geocoder"></div>
+      <button id="dir-go">Go</button>
+      <button id="dir-clear" title="Clear route">✕</button>
+    </div>
+    <div id="dir-spinner" class="hidden">Loading…</div>
+    <div id="dir-error" class="hidden"></div>
+  </div>
+
+  <!-- Turn-by-Turn container (hidden until Go) -->
+  <div id="turn-by-turn" style="display: none;">
+    <h5>Route Details</h5>
+    <div id="dir-summary" class="mb-2"></div>
+    <ul id="directions-steps"></ul>
+  </div>
+
+  <!-- POI form (hidden) & bottom nav -->
   <div id="poi-form-container"></div>
   <div id="bottom-navbar-placeholder"></div>
 
-  <!-- Third-party JS -->
-  <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
-  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- App scripts -->
+  <!-- Nav loader -->
   <script src="/script/nav.js"></script>
-  <script src="/script/map.js"></script>
-  <script src="/script/location.js"></script>
+
+  <!-- Mapbox GL core -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
+
+  <!-- Config (sets window.MAPBOX_TOKEN & mapboxgl.accessToken) -->
   <script src="/config.js"></script>
+
+  <!-- Geocoder & Turf -->
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js">
+  </script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+
+  <!-- App modules -->
+  <script type="module" src="/script/map.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/script/app.js"></script>
+  <script src="/script/location.js"></script>
+
+  
+
+
+  <!-- Add POI feature -->
   <script src="/script/poi.js"></script>
   <script type="module">
     import { setupAddPOIFeature } from '/script/addPoi.js';
