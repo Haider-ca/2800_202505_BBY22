@@ -77,6 +77,7 @@ function cancelEdit() {
     if (editForm) {
         editForm.style.display = 'none'; // Hide the edit form
         document.getElementById('updateForm').reset(); // Reset form to initial state
+        removeAvatarPreview();
     } else {
         console.error('Edit form not found in DOM'); // Log error if form is not found
     }
@@ -103,6 +104,35 @@ function setupDropdown() {
     }
 }
 
+// Function to preview the selected avatar image
+function previewAvatar(event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('avatarPreviewContainer');
+    const previewImage = document.getElementById('avatarPreview');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewContainer.style.display = 'none';
+    }
+}
+
+// Function to remove the avatar preview and reset the file input
+function removeAvatarPreview() {
+    const previewContainer = document.getElementById('avatarPreviewContainer');
+    const previewImage = document.getElementById('avatarPreview');
+    const avatarInput = document.getElementById('avatarInput');
+
+    previewImage.src = '';
+    previewContainer.style.display = 'none';
+    avatarInput.value = ''; // Reset input file
+}
+
 // Event listener for DOM content loaded: Initialize events when the page is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
     setupDropdown(); // Initialize dropdown functionality
@@ -111,6 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
         updateForm.addEventListener('submit', updateProfile); // Attach submit event to form
     } else {
         console.error('Update form not found in DOM'); // Log error if form is not found
+    }
+    const avatarInput = document.getElementById('avatarInput');
+    if (avatarInput) {
+        avatarInput.addEventListener('change', previewAvatar);
     }
     loadProfile(); // Load profile information on page load
 });
