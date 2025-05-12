@@ -7,7 +7,7 @@
 
 body {
     background-color: #f5f5f5;
-    padding: 20px;
+    padding: 20px 20px 56px 20px;
     line-height: 1.6;
     color: #333;
 }
@@ -235,6 +235,16 @@ body {
 #removeAvatar:hover {
     color: #c82333;
     background: #f8d7da;
+}
+
+#user-name {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.dropdown-toggle {
+    display: flex !important;
+    align-items: center !important;
 }
 
 /* Responsive Styles */

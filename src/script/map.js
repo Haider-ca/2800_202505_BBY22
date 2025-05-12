@@ -2,9 +2,13 @@
 
 import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
+import { createPopup } from './popup.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
+// New globals to cache  point A to B coords
+let lastOrigin      = null;   
+let lastDestination = null;
 
 const map = new mapboxgl.Map({
   container: 'map',
@@ -159,12 +163,37 @@ map.on('load', () => {
   loadPOIs();
 
   // ─── 8) Initialize directions ───
-  initDirections(map);
+ const directions = initDirections(map, {
+    onRouteSet: ({ origin, destination }) => {
+      lastOrigin      = origin;
+      lastDestination = destination;
+    }
+  });
 
   // ─── 9) Initialize Add-POI feature ───
   console.log('🌐 map loaded, initializing POI feature');
   setupAddPOIFeature();
 });
+
+  // ─── 10) Mode-tab click handlers ───
+  const profileMap = {
+    driving:    'mapbox/driving',
+    walking:    'mapbox/walking',
+    senior:     'mapbox/walking',   
+    wheelchair: 'mapbox/cycling'    
+  };
+
+  Object.entries(profileMap).forEach(([mode, profile]) => {
+    const tab = document.getElementById(`${mode}Tab`);
+    if (!tab) return;
+    tab.addEventListener('click', () => {
+      directions.setProfile(profile);
+      if (lastOrigin && lastDestination) {
+        directions.setOrigin(lastOrigin);
+        directions.setDestination(lastDestination);
+      }
+    });
+  });
 
 //////////////////////////////
 // Boundary & POI functions //
@@ -223,8 +252,13 @@ async function loadPOIs() {
         type: 'Feature',
         geometry: poi.coordinates,
         properties: {
+          _id: poi._id,
           title: poi.title,
-          description: poi.description
+          description: poi.description,
+          image: poi.imageUrl,
+          time: poi.createdAt,
+          likes: poi.likes,
+          dislikes: poi.dislikes
         }
       }));
     
@@ -258,21 +292,35 @@ function makeMarkers(features, list, icon) {
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
 
+    const [lng, lat] = coords;
+
     const el = document.createElement('div');
     el.className = 'custom-marker';
     el.style.backgroundImage = `url(/icons/${icon}.png)`;
-    el.style.width           = '32px';
-    el.style.height          = '32px';
-    el.style.backgroundSize  = 'contain';
+    el.style.width = '32px';
+    el.style.height = '32px';
+    el.style.backgroundSize = 'contain';
 
-    const marker = new mapboxgl.Marker(el).setLngLat(coords).addTo(map);
+    // Create popup
+    const popup = createPopup({
+      coordinates: [lng, lat],
+      properties: f.properties
+    });    
+
+    // Hover listeners
+    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+    el.addEventListener('mouseleave', () => popup.remove());
+
+    const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
   }
 }
 
+
 ///////////////////////
 // ToggleControl     //
 ///////////////////////
+
 
 class ToggleControl {
   constructor(type, markersArray, onToggle) {

@@ -1,14 +1,32 @@
+// Function to check authentication status
+async function checkAuth() {
+    const API_BASE_URL = '/api';
+    const response = await fetch(API_BASE_URL + '/check-auth', {
+        method: 'GET',
+        credentials: 'include'
+    });
+    const data = await response.json();
+    return data.loggedIn;
+}
+
 // Function to load user profile information from the server
 async function loadProfile() {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to view your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     const API_BASE_URL = '/api';
     const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
     if (!response.ok) {
         alert('Failed to load profile. Please log in again.');
-        window.location.href = '/src/html/login/login.html';
+        window.location.href = '/html/login/login.html';
         return;
     }
     const data = await response.json();
-    document.getElementById('avatar').src = data.avatar || '/public/img/defaultUser.png';
+    document.getElementById('avatar').src = data.avatar || '/img/defaultUser.png';
     document.getElementById('email').textContent = data.email || '';
     document.getElementById('name').textContent = data.name || '';
     document.getElementById('description').textContent = data.description || '';
@@ -17,6 +35,13 @@ async function loadProfile() {
 // Function to update user profile information and upload an image if provided
 async function updateProfile(event) {
     event.preventDefault(); // Prevent default form submission behavior (reload page)
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to update your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     const formData = new FormData();
     formData.append('email', document.getElementById('newEmail').value);
     formData.append('name', document.getElementById('newName').value);
@@ -38,12 +63,19 @@ async function updateProfile(event) {
         loadProfile(); // Reload profile information
     } else {
         const errorData = await response.json();
-        alert('Failed to update profile: ' + ('An unexpected error occurred')); // Display error message
+        alert('Failed to update profile: ' + (errorData.message || 'An unexpected error occurred')); // Display error message
     }
 }
 
 // Function to delete user profile after confirmation
 async function deleteProfile() {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to delete your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     if (confirm('Are you sure you want to delete your profile?')) {
         const API_BASE_URL = '/api';
         const response = await fetch(API_BASE_URL + '/profile', {
@@ -112,7 +144,7 @@ function previewAvatar(event) {
 
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             previewImage.src = e.target.result;
             previewContainer.style.display = 'block';
         };
@@ -130,11 +162,11 @@ function removeAvatarPreview() {
 
     previewImage.src = '';
     previewContainer.style.display = 'none';
-    avatarInput.value = ''; // Reset input file
+    avatarInput.value = '';
 }
 
 // Event listener for DOM content loaded: Initialize events when the page is fully loaded
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     setupDropdown(); // Initialize dropdown functionality
     const updateForm = document.getElementById('updateForm');
     if (updateForm) {
@@ -146,5 +178,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (avatarInput) {
         avatarInput.addEventListener('change', previewAvatar);
     }
-    loadProfile(); // Load profile information on page load
+    await loadProfile(); // Load profile information on page load
 });
