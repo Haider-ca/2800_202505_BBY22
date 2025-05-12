@@ -4,11 +4,11 @@ async function loadProfile() {
     const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
     if (!response.ok) {
         alert('Failed to load profile. Please log in again.');
-        window.location.href = '/src/html/login/login.html';
+        window.location.href = '/html/login/login.html';
         return;
     }
     const data = await response.json();
-    document.getElementById('avatar').src = data.avatar || '/public/img/defaultUser.png';
+    document.getElementById('avatar').src = data.avatar || '/img/defaultUser.png';
     document.getElementById('email').textContent = data.email || '';
     document.getElementById('name').textContent = data.name || '';
     document.getElementById('description').textContent = data.description || '';
@@ -104,7 +104,7 @@ function setupDropdown() {
 }
 
 // Event listener for DOM content loaded: Initialize events when the page is fully loaded
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     setupDropdown(); // Initialize dropdown functionality
     const updateForm = document.getElementById('updateForm');
     if (updateForm) {
@@ -112,5 +112,5 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.error('Update form not found in DOM'); // Log error if form is not found
     }
-    loadProfile(); // Load profile information on page load
+    await loadProfile(); // Load profile information on page load
 });
