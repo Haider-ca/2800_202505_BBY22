@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
           .then(data => {
             if (data.loggedIn) {
               const nameSpan = document.getElementById('user-name');
+              const homeLink = document.querySelector('.nav-link[href="/index.html"]');
               if (nameSpan) {
                 nameSpan.innerHTML = `Hi, ${data.name}`;
+              }
+              if (homeLink) {
+                homeLink.setAttribute('href', '/html/home.html');
               }
             }
           });
