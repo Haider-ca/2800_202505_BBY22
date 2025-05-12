@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ✅ Inserted -> Now bind logout
         bindLogout();
-
+ 
         // ✅ Then fetch login info
         fetch('/api/check-auth', { credentials: 'include' })
           .then(res => res.json())
