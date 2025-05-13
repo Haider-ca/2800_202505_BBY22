@@ -75,9 +75,7 @@ function bindLogout() {
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
             });
-
-            location.reload();
-
+          location.reload();
           // ✅ Optional: Redirect to home page
           // window.location.href = '/index.html';
         } else {
