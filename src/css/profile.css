@@ -54,7 +54,7 @@ body {
     color: #007bff;
 }
 
-.dropdown {
+.dropdown-menu {
     display: none;
     position: absolute;
     top: 100%;
@@ -71,7 +71,7 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(10px);
     }
 
     to {
@@ -80,19 +80,19 @@ body {
     }
 }
 
-.dropdown div {
+.dropdown-menu div {
     padding: 8px 15px;
     font-size: 14px;
     color: #333;
     cursor: pointer;
 }
 
-.dropdown div:hover {
+.dropdown-menu div:hover {
     background-color: #f1f1f1;
     color: #007bff;
 }
 
-.dropdown.show {
+.dropdown-menu.show {
     display: block;
 }
 
@@ -237,6 +237,104 @@ body {
     background: #f8d7da;
 }
 
+/* Reset Password Modal Styles */
+#resetPasswordModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+#resetPasswordModal.show {
+    display: block;
+}
+
+#resetPasswordModal > div {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#resetPasswordModal h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+}
+
+#resetPasswordModal .input-group {
+    margin-bottom: 12px;
+}
+
+#newPassword,
+#confirmPassword {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#newPassword:focus,
+#confirmPassword:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#resetPasswordModal .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#resetPasswordModal button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#resetPasswordModal button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#resetPasswordModal button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#resetPasswordModal button[type="button"] {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#resetPasswordModal button[type="button"]:hover {
+    background-color: #c82333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0);
+    }
+}
+
 /* Responsive Styles */
 @media (min-width: 769px) {
     #editForm {
@@ -266,13 +364,21 @@ body {
         font-size: 24px;
     }
 
-    .dropdown {
+    .dropdown-menu {
         right: 35%;
         top: 100%;
     }
 
     #avatarPreviewContainer {
         text-align: center;
+    }
+
+    #resetPasswordModal > div {
+        max-width: 400px;
+    }
+
+    #resetPasswordModal button {
+        width: auto;
     }
 }
 
@@ -294,7 +400,7 @@ body {
         padding: 5px;
     }
 
-    .dropdown {
+    .dropdown-menu {
         top: 100%;
         right: 27%;
         min-width: 120px;
@@ -343,5 +449,29 @@ body {
         width: 16px;
         height: 16px;
         font-size: 10px;
+    }
+
+    #resetPasswordModal {
+        width: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #resetPasswordModal > div {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    #newPassword,
+    #confirmPassword {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    #resetPasswordModal button {
+        font-size: 13px;
+        padding: 8px 12px;
+        width: 100%;
     }
 }

@@ -1,5 +1,7 @@
 const User = require('../../models/user');
 const cloudinary = require('../../config/cloudinary');
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 // Fetch user profile by email, excluding password hash
 const getProfile = async (email) => {
@@ -51,6 +53,22 @@ const updateProfile = async (email, updates) => {
   };
 };
 
+// Service to reset the user's password
+const resetPassword = async (userId, newPassword) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) throw new Error('User not found');
+
+    // Hash the new password using bcrypt
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    user.passwordHash = hashedPassword;
+
+    await user.save();
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Delete a user profile and their avatar image if stored on Cloudinary
 const deleteProfile = async (email) => {
   const user = await User.findOneAndDelete({ email });
@@ -73,4 +91,5 @@ module.exports = {
   getProfile,
   updateProfile,
   deleteProfile,
+  resetPassword
 };
