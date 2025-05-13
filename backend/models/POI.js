@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const poiSchema = new mongoose.Schema({
+  userId: String,
+  username: String,
   title: String,
   description: String,
   imageUrl: String,

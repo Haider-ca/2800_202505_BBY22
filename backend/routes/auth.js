@@ -49,8 +49,10 @@ router.post('/login', async (req, res) => {
      return res.status(401).json({ message: 'Incorrect password' });
    }
 
-   // ✅ Store user email in session after successful login
+   // Store user userId, email, name in session after successful login
+   req.session.userId  = user._id;
    req.session.email = user.email;
+   req.session.name  = user.name;
 
     // Login successful (you can add JWT/session here)
     res.json({ message: 'Login successful', user: user.email });
@@ -84,20 +86,20 @@ router.get('/check-auth', async (req, res) => {
 });
 // Middleware to check if user is authenticated
 const authMiddleware = async (req, res, next) => {
-  if (!req.session.email) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
-
-  try {
-    const user = await User.findOne({ email: req.session.email });
-    if (!user) {
-      return res.status(401).json({ error: 'User not found' });
+  if (req.session && req.session.email) {
+    try {
+      const user = await User.findOne({ email: req.session.email });
+      if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      req.user = user;
+      next();
+    } catch (err) {
+      console.error('Auth middleware error:', err);
+      res.status(500).json({ message: 'Server error during authentication' });
     }
-    req.user = { id: user._id };
-    next();
-  } catch (err) {
-    console.error('Auth middleware error:', err);
-    res.status(500).json({ error: 'Server error during authentication' });
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
   }
 };
 

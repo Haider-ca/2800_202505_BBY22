@@ -1,0 +1,36 @@
+/* Toast Container */
+.toast-container {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Individual Toast */
+.toast-message {
+  background-color: rgba(33, 37, 41, 0.9);
+  color: #fff;
+  padding: 10px 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  animation: slideFadeIn 0.3s ease;
+}
+
+/* Animation */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
