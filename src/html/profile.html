@@ -24,9 +24,9 @@
             <div class="avatar">
                 <img id="avatar" src="/img/defaultUser.png" alt="User Avatar">
                 <div class="menu-icon"><i class="fa-solid fa-ellipsis-vertical"></i></div>
-                <div class="dropdown">
+                <div class="dropdown-menu">
                     <div onclick="showEditForm()">Edit profile</div>
-                    <div>Reset password</div>
+                    <div onclick="showResetPasswordModal()">Reset password</div>
                     <div onclick="deleteProfile()">Delete account</div>
                 </div>
             </div>
@@ -51,9 +51,26 @@
                     </div>
                 </form>
             </div>
+            <div id="resetPasswordModal">
+                <div>
+                    <h3>Reset Password</h3>
+                    <form id="resetPasswordForm">
+                        <div class="input-group">
+                            <input type="password" id="newPassword" placeholder="New password" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit">Save</button>
+                            <button type="button" onclick="cancelResetPassword()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </section>
     </div>
-    
+
     <div id="bottom-navbar-placeholder"></div>
 
     <script src="/public/config.js"></script>
