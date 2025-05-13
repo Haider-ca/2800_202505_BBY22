@@ -2,7 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const topEl = document.getElementById('navbar-placeholder');
   const botEl = document.getElementById('bottom-navbar-placeholder');
-
+  const userTheme = localStorage.getItem('theme') || 'system';
+  document.documentElement.setAttribute('data-theme', userTheme);
   if (topEl) {
     // ✅ Dynamically check login status instead of relying on data-nav
     fetch('/api/check-auth', { credentials: 'include' })

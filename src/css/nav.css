@@ -46,10 +46,6 @@ nav.navbar .navbar-brand img {
   margin-bottom: -35px;
 }
 
-nav.navbar,
-nav.navbar .nav-link,
-nav.navbar .navbar-brand,
-nav.navbar {
+.nav-link{
   color: var(--text-color) !important;
 }
-
