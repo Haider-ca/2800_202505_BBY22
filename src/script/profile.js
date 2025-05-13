@@ -1,5 +1,23 @@
+// Function to check authentication status
+async function checkAuth() {
+    const API_BASE_URL = '/api';
+    const response = await fetch(API_BASE_URL + '/check-auth', {
+        method: 'GET',
+        credentials: 'include'
+    });
+    const data = await response.json();
+    return data.loggedIn;
+}
+
 // Function to load user profile information from the server
 async function loadProfile() {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to view your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     const API_BASE_URL = '/api';
     const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
     if (!response.ok) {
@@ -17,6 +35,13 @@ async function loadProfile() {
 // Function to update user profile information and upload an image if provided
 async function updateProfile(event) {
     event.preventDefault(); // Prevent default form submission behavior (reload page)
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to update your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     const formData = new FormData();
     formData.append('email', document.getElementById('newEmail').value);
     formData.append('name', document.getElementById('newName').value);
@@ -38,12 +63,19 @@ async function updateProfile(event) {
         loadProfile(); // Reload profile information
     } else {
         const errorData = await response.json();
-        alert('Failed to update profile: ' + ('An unexpected error occurred')); // Display error message
+        alert('Failed to update profile: ' + (errorData.message || 'An unexpected error occurred')); // Display error message
     }
 }
 
 // Function to delete user profile after confirmation
 async function deleteProfile() {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to delete your profile.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
     if (confirm('Are you sure you want to delete your profile?')) {
         const API_BASE_URL = '/api';
         const response = await fetch(API_BASE_URL + '/profile', {
@@ -77,6 +109,7 @@ function cancelEdit() {
     if (editForm) {
         editForm.style.display = 'none'; // Hide the edit form
         document.getElementById('updateForm').reset(); // Reset form to initial state
+        removeAvatarPreview();
     } else {
         console.error('Edit form not found in DOM'); // Log error if form is not found
     }
@@ -103,6 +136,35 @@ function setupDropdown() {
     }
 }
 
+// Function to preview the selected avatar image
+function previewAvatar(event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('avatarPreviewContainer');
+    const previewImage = document.getElementById('avatarPreview');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewContainer.style.display = 'none';
+    }
+}
+
+// Function to remove the avatar preview and reset the file input
+function removeAvatarPreview() {
+    const previewContainer = document.getElementById('avatarPreviewContainer');
+    const previewImage = document.getElementById('avatarPreview');
+    const avatarInput = document.getElementById('avatarInput');
+
+    previewImage.src = '';
+    previewContainer.style.display = 'none';
+    avatarInput.value = '';
+}
+
 // Event listener for DOM content loaded: Initialize events when the page is fully loaded
 document.addEventListener("DOMContentLoaded", async() => {
     setupDropdown(); // Initialize dropdown functionality
@@ -111,6 +173,10 @@ document.addEventListener("DOMContentLoaded", async() => {
         updateForm.addEventListener('submit', updateProfile); // Attach submit event to form
     } else {
         console.error('Update form not found in DOM'); // Log error if form is not found
+    }
+    const avatarInput = document.getElementById('avatarInput');
+    if (avatarInput) {
+        avatarInput.addEventListener('change', previewAvatar);
     }
     await loadProfile(); // Load profile information on page load
 });
