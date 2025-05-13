@@ -3,6 +3,14 @@ const POI = require('../../models/POI');
 
 exports.createPOI = async (req, res) => {
   try {
+    // Check if user is logged in
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: 'Not logged in' });
+    }
+    
+    const userId = req.session.userId;
+    const username = req.session.name;
+
     const { title, description, lng, lat, tags } = req.body;
     const imageUrl = req.file.path;
     const coordinates = {
@@ -11,7 +19,14 @@ exports.createPOI = async (req, res) => {
     };
 
     const parsedTags = tags ? JSON.parse(tags) : [];
-    const newPOI = await poiService.createPOI({ title, description, imageUrl, coordinates, tags: parsedTags });
+    const newPOI = await poiService.createPOI({ 
+      userId, 
+      username,
+      title, 
+      description, 
+      imageUrl, 
+      coordinates, 
+      tags: parsedTags });
 
     res.status(201).json({ message: 'POI saved', poi: newPOI });
   } catch (err) {

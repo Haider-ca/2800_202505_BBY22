@@ -1,5 +1,19 @@
-// src/script/poi.js
-// POI MODULE — DO NOT MODIFY
+/**
+ * POI Form Module
+ * 
+ * Handles the dynamic loading and submission of the POI (Point of Interest) form,
+ * including image preview, form validation, marker placement, and form reset.
+ * 
+ * Key Features:
+ * - Loads POI form from HTML partial and injects into the page
+ * - Validates user inputs and displays inline error messages
+ * - Previews selected image before upload
+ * - Submits POI data via POST with FormData including coordinates and tags
+ * - Adds custom markers to Mapbox map upon successful submission
+ * - Uses toast notification for success/failure feedback
+ */
+
+import { showToast } from '../utils/toast.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("poi-form-container");
@@ -115,19 +129,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch(`/api/poi`, {
               method: "POST",
-              body: formData
+              body: formData,
+              credentials: 'include'
             })
-              .then(r => r.json())
+              .then(async res => {
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Failed to submit POI');
+                return data;
+              })
               .then(data => {
-                const toastEl = document.getElementById("poiToast");
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
                 console.log("POI response:", data);
                 // 1. Read coordinates
                 const { lng, lat } = window.clickedLatLng || {};
 
                 if (lng && lat) {
                   // 2. Create marker element
+                  // Generated with the help of ChatGPT (OpenAI)
                   const el = document.createElement('div');
                   el.className = 'custom-marker';
                   el.style.backgroundImage = `url(/icons/poi.png)`;
@@ -136,21 +153,25 @@ document.addEventListener("DOMContentLoaded", () => {
                   el.style.backgroundSize = 'contain';
 
                   // 3. Add marker to the map
+                  // Generated with the help of ChatGPT (OpenAI)
                   const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(window.pathpalMap);
                   if (window.userPOIMarkers) {
                     window.userPOIMarkers.push(marker);
                   }
                 }
 
-                // 4. Clear form
+                // 4. Show message
+                showToast('POI submitted successfully!', 'success');
+
+                // 5. Clear form
                 resetPOIForm();
 
-                // 5. Hide the form modal
+                // 6. Hide the form modal
                 if (modal) modal.style.display = "none";
               })
               .catch(err => {
                 console.error("POI submission error:", err);
-                alert("Failed to submit POI");
+                showToast(err.message || "Failed to submit POI", 'error');
               });
           });
         }

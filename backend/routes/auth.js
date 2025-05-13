@@ -49,8 +49,10 @@ router.post('/login', async (req, res) => {
      return res.status(401).json({ message: 'Incorrect password' });
    }
 
-   // ✅ Store user email in session after successful login
+   // Store user userId, email, name in session after successful login
+   req.session.userId  = user._id;
    req.session.email = user.email;
+   req.session.name  = user.name;
 
     // Login successful (you can add JWT/session here)
     res.json({ message: 'Login successful', user: user.email });
