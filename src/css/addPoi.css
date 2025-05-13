@@ -29,7 +29,6 @@
   
   /* Add POI button */
   .poi-btn {
-    outline: 4px dashed magenta !important;
     position: absolute;
     bottom: 30px;
     right: 10px;
