@@ -1,24 +1,23 @@
-// Load navbar on page ready
+// Load navbar and bottom navbar when the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   const topEl = document.getElementById('navbar-placeholder');
   const botEl = document.getElementById('bottom-navbar-placeholder');
 
   if (topEl) {
-    const frag = topEl.dataset.nav === 'after' ? 'navbarAfterLogin' : 'navbarBeforeLogin';
+    // ✅ Dynamically check login status instead of relying on data-nav
+    fetch('/api/check-auth', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        const frag = data.loggedIn ? 'navbarAfterLogin' : 'navbarBeforeLogin';
 
-    fetch(`/partials/${frag}.html`)
-      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-      .then(html => {
-        topEl.innerHTML = html;
+        // ✅ Load the correct navbar based on login status
+        fetch(`/partials/${frag}.html`)
+          .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+          .then(html => {
+            topEl.innerHTML = html;
 
-        // ✅ Inserted -> Now bind logout
-        bindLogout();
-
-        // ✅ Then fetch login info
-        fetch('/api/check-auth', { credentials: 'include' })
-          .then(res => res.json())
-          .then(data => {
             if (data.loggedIn) {
+              // ✅ Personalize navbar if user is logged in
               const nameSpan = document.getElementById('user-name');
               const homeLink = document.querySelector('.nav-link[href="/index.html"]');
               if (nameSpan) {
@@ -27,19 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
               if (homeLink) {
                 homeLink.setAttribute('href', '/html/home.html');
               }
+
+              // ✅ Bind logout button event
+              bindLogout();
             }
           });
       });
   }
 
   if (botEl) {
+    // ✅ Load bottom navbar if present
     fetch(`/partials/bottomNavbar.html`)
       .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
       .then(html => botEl.innerHTML = html);
   }
+
+  // ✅ Listen for logout events triggered from other tabs
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'logout-event') {
+      location.reload(); // Reload to update navbar after logout
+    }
+  });
 });
 
-// ✅ Bind logout functionality AFTER navbar is inserted
+// ✅ Bind logout functionality after navbar is loaded
 function bindLogout() {
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
@@ -52,12 +62,18 @@ function bindLogout() {
         });
 
         if (res.ok) {
-          // Replace with logged-out navbar
+          // ✅ Notify other tabs that logout occurred
+          localStorage.setItem('logout-event', Date.now());
+
+          // ✅ Load the "before login" navbar after logout
           fetch('/partials/navbarBeforeLogin.html')
             .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
             });
+
+          // ✅ Optional: Redirect to home page
+          // window.location.href = '/index.html';
         } else {
           alert('Logout failed.');
         }
@@ -69,3 +85,4 @@ function bindLogout() {
     console.warn('Logout button not found.');
   }
 }
+
