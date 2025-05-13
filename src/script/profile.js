@@ -96,7 +96,7 @@ function showEditForm() {
     const editForm = document.getElementById('editForm');
     if (editForm) {
         editForm.style.display = 'block'; // Show the edit form
-        const dropdown = document.querySelector(".dropdown");
+        const dropdown = document.querySelector(".dropdown-menu");
         if (dropdown) dropdown.classList.remove("show"); // Hide dropdown if visible
     } else {
         console.error('Edit form not found in DOM'); // Log error if form is not found
@@ -115,10 +115,70 @@ function cancelEdit() {
     }
 }
 
+// Function to show the reset password modal
+function showResetPasswordModal() {
+    const resetPasswordModal = document.getElementById('resetPasswordModal');
+    if (resetPasswordModal) {
+        resetPasswordModal.classList.add('show');
+        const dropdown = document.querySelector(".dropdown-menu");
+        if (dropdown) dropdown.classList.remove("show");
+    } else {
+        console.error('Reset password modal not found in DOM');
+    }
+}
+
+// Function to hide the reset password modal and reset it
+function cancelResetPassword() {
+    const resetPasswordModal = document.getElementById('resetPasswordModal');
+    if (resetPasswordModal) {
+        resetPasswordModal.classList.remove('show');
+        document.getElementById('resetPasswordForm').reset();
+    } else {
+        console.error('Reset password modal not found in DOM');
+    }
+}
+
+// Function to reset password
+async function resetPassword(event) {
+    event.preventDefault();
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        alert('Please log in to reset your password.');
+        window.location.href = '/src/html/login/login.html';
+        return;
+    }
+
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (newPassword !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+    }
+
+    const API_BASE_URL = '/api';
+    const response = await fetch(API_BASE_URL + '/profile/reset-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ newPassword }),
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        alert('Password reset successfully.');
+        cancelResetPassword();
+    } else {
+        const errorData = await response.json();
+        alert('Failed to reset password: ' + (errorData.message || 'An unexpected error occurred'));
+    }
+}
+
 // Function to set up dropdown menu behavior
 function setupDropdown() {
     const menuIcon = document.querySelector(".menu-icon");
-    const dropdown = document.querySelector(".dropdown");
+    const dropdown = document.querySelector(".dropdown-menu");
 
     if (menuIcon && dropdown) {
         menuIcon.addEventListener("click", (event) => {
@@ -166,7 +226,7 @@ function removeAvatarPreview() {
 }
 
 // Event listener for DOM content loaded: Initialize events when the page is fully loaded
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", () => {
     setupDropdown(); // Initialize dropdown functionality
     const updateForm = document.getElementById('updateForm');
     if (updateForm) {
@@ -178,5 +238,12 @@ document.addEventListener("DOMContentLoaded", async() => {
     if (avatarInput) {
         avatarInput.addEventListener('change', previewAvatar);
     }
-    await loadProfile(); // Load profile information on page load
+
+    const resetPasswordForm = document.getElementById('resetPasswordForm');
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener('submit', resetPassword);
+    } else {
+        console.error('Reset password form not found in DOM');
+    }
+    loadProfile(); // Load profile information on page load
 });
