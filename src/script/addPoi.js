@@ -1,4 +1,5 @@
 // src/script/addPoi.js
+import { requireLogin } from '../utils/auth.js';
 
 // shared module‐scope state
 let addingPOIMode  = false;
@@ -10,7 +11,7 @@ export function setupAddPOIFeature() {
   if (!map) {
     console.error('AddPOI: map not initialized yet');
     return;
-  }
+}
 
   // 1) inject the button & wire its click (helper uses those same state vars)
   createAddPOIButton();
@@ -42,7 +43,10 @@ function createAddPOIButton() {
 
   poiBtn.setAttribute("aria-label", "Add POI");
 
-  poiBtn.addEventListener("click", () => {
+  poiBtn.addEventListener("click", async() => {
+    const loggedIn = await requireLogin();
+    if (!loggedIn) return;
+
     addingPOIMode = true;
     showInstruction("Click a location on the map for your new POI.");
     // move the map to user's current location
