@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ✅ Listen for logout events triggered from other tabs
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'logout-event') {
-      location.reload(); // Reload to update navbar after logout
-    }
-  });
+  //window.addEventListener('storage', (e) => {
+  //  if (e.key === 'logout-event') {
+  //    location.reload(); // Reload to update navbar after logout
+  //  }
+  //});
 });
 
 // ✅ Bind logout functionality after navbar is loaded
@@ -75,6 +75,8 @@ function bindLogout() {
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
             });
+
+            location.reload();
 
           // ✅ Optional: Redirect to home page
           // window.location.href = '/index.html';
