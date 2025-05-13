@@ -1,4 +1,4 @@
-const { getProfile, updateProfile, deleteProfile } = require('../services/profileService');
+const { getProfile, updateProfile, deleteProfile, resetPassword } = require('../services/profileService');
 
 // Handler for retrieving the user's profile based on the session email
 const getProfileHandler = async (req, res) => {
@@ -23,7 +23,7 @@ const updateProfileHandler = async (req, res) => {
         // If an image file was uploaded, update the avatar path
         if (req.file) {
             updates.avatar = req.file.path;
-        } 
+        }
         // If image is expected but not properly uploaded
         else if (req.body.image) {
             return res.status(400).json({ error: 'Failed to upload image' });
@@ -54,8 +54,20 @@ const deleteProfileHandler = async (req, res) => {
     }
 };
 
-module.exports = {
-    getProfileHandler,
-    updateProfileHandler,
-    deleteProfileHandler,
+// Handler to reset the user's password
+const resetPasswordHandler = async (req, res) => {
+    try {
+        const { newPassword } = req.body;
+        await resetPassword(req.user.id, newPassword);
+        res.status(200).json({ message: 'Password reset successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message || 'Failed to reset password' });
+    }
+};
+
+module.exports = { 
+    getProfileHandler, 
+    updateProfileHandler, 
+    deleteProfileHandler, 
+    resetPasswordHandler 
 };
