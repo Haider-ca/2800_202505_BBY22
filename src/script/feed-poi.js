@@ -10,10 +10,12 @@ export async function loadPOIs({
     activeFilters,
     feedCards,
     loadMore,
-    setLoading
+    setLoading,
+    poiType = 'all'
   }) {
     setLoading(true);
     try {
+        const baseUrl = poiType === 'favorites' ? '/api/poi/favorites' : '/api/poi/all';
         const query = new URLSearchParams({
             page: currentPage,
             limit: limit,
@@ -25,7 +27,7 @@ export async function loadPOIs({
         if (searchQuery) {
             query.append('q', searchQuery);
         }
-        const res = await fetch(`/api/community?${query}`);
+        const res = await fetch(`${baseUrl}?${query}`, { credentials: 'include' });
         const data = await res.json();
 
         if (data.length === 0 && currentPage === 1) {
@@ -36,13 +38,10 @@ export async function loadPOIs({
             return;
         }
 
-        // const voterId = getOrCreateVoterId();
-
         // Render each post card
         data.forEach(poi => {
             const voteKey = `vote_${poi._id}`;
             const card = renderCard(poi, voteKey);
-            // container.insertBefore(card, loadMore);
             feedCards.appendChild(card);
         });
 

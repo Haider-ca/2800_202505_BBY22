@@ -61,7 +61,6 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 // API endpoints
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
-app.use('/api/community', require('./community/routes/communityRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
 app.use('/api', authRoutes);//add this for login features 
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
