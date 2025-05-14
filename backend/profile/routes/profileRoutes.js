@@ -26,7 +26,7 @@ router.post('/reset-password', authMiddleware, resetPasswordHandler);
 router.get('/pois', authMiddleware, getUserPOIsHandler);
 
 // Route to update a user's POI
-router.put('/pois/:id', authMiddleware, uploadSingle, updatePOIHandler);
+router.put('/pois/:id', authMiddleware, uploadSingleImage, updatePOIHandler);
 
 // Route to delete a user's POI
 router.delete('/pois/:id', authMiddleware, deletePOIHandler);
