@@ -31,7 +31,9 @@ description: {
     type: String,
     trim: true,
     default: ''
-}
+},
+savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+savedPOIs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'POI' }]
 });
 
 // Add a method to compare a given password with the stored hash

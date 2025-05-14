@@ -2,6 +2,8 @@ import { loadPOIs } from './feed-poi.js';
 import { loadPosts } from './feed-post.js';
 import { loadAnnouncements } from './feed-announcement.js';
 import { getOrCreateVoterId } from '../utils/helpers.js';
+import { handleVoteClick } from '../utils/vote.js';
+import { handleSaveClick } from '../utils/save.js';
 
 let currentPage = 1;
 const limit = 5;
@@ -12,16 +14,6 @@ const container = document.querySelector('.container');
 const feedCards = document.getElementById('feed-cards');
 const loadMore = document.querySelector('.text-center');
 let feedType = 'poi';
-
-function onLoadingStart() {
-  isLoading = true;
-  document.body.classList.add('loading');
-}
-
-function onLoadingEnd() {
-  isLoading = false;
-  document.body.classList.remove('loading');
-}
 
 // Get feed type from URL
 const params = new URLSearchParams(window.location.search);
@@ -49,13 +41,11 @@ function resetAndLoad() {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
-  // loadPOIs();
   loadFeed();
 
   // Set up infinite scroll
   const observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !isLoading) {
-      // loadPOIs();
       loadFeed();
     }
   }, { threshold: 0.5 });
@@ -72,31 +62,33 @@ function loadFeed() {
   switch (feedType) {
     case 'post':
       loadPosts({ currentPage, limit, sortBy, searchQuery, activeFilters, container, loadMore, setLoading })
-      .then(nextPage => {
-        if (nextPage) currentPage = nextPage;
-      });
+        .then(nextPage => {
+          if (nextPage) currentPage = nextPage;
+        });
       break;
     case 'announcement':
       loadAnnouncements({ currentPage, limit, sortBy, searchQuery, activeFilters, container, loadMore, setLoading })
-      .then(nextPage => {
-        if (nextPage) currentPage = nextPage;
-      });
+        .then(nextPage => {
+          if (nextPage) currentPage = nextPage;
+        });
       break;
     case 'poi':
     default:
       const subtype = new URLSearchParams(window.location.search).get('sub') || 'all';
-      loadPOIs({ currentPage, 
-        limit, 
-        sortBy, 
-        searchQuery, 
-        activeFilters, 
-        feedCards, 
+      loadPOIs({
+        currentPage,
+        limit,
+        sortBy,
+        searchQuery,
+        activeFilters,
+        feedCards,
         loadMore,
         setLoading,
-        poiType: subtype })
-    .then(nextPage => {
-      if (nextPage) currentPage = nextPage;
-    });
+        poiType: subtype
+      })
+        .then(nextPage => {
+          if (nextPage) currentPage = nextPage;
+        });
   }
 }
 
@@ -104,53 +96,21 @@ function loadFeed() {
 document.addEventListener('click', async (e) => {
   const likeBtn = e.target.closest('.like-btn');
   const dislikeBtn = e.target.closest('.dislike-btn');
-  if (!likeBtn && !dislikeBtn) return;
+  const saveBtn = e.target.closest('.save-btn');
 
-  const isLike = !!likeBtn;
-  const btn = isLike ? likeBtn : dislikeBtn;
-  const otherBtn = isLike
-    ? btn.parentElement.querySelector('.dislike-btn')
-    : btn.parentElement.querySelector('.like-btn');
+  if (likeBtn || dislikeBtn) {
+    const btn = likeBtn || dislikeBtn;
+    const type = btn.dataset.type || 'post';
+    await handleVoteClick(e, type);
+    return;
+  }
 
-  const postId = btn.dataset.id;
-  const voterId = getOrCreateVoterId();
-
-  try {
-    const res = await fetch(`/api/vote/${postId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: isLike ? 'like' : 'dislike', voterId })
-    });
-
-    const result = await res.json();
-    if (res.ok) {
-      // Update like/dislike count and icons
-      const countSpan = btn.querySelector('.count');
-      const otherCountSpan = otherBtn?.querySelector('.count');
-      const icon = btn.querySelector('i');
-      const otherIcon = otherBtn?.querySelector('i');
-      const voteKey = `vote_${postId}`;
-      const previousVote = localStorage.getItem(voteKey);
-
-      if (countSpan) countSpan.textContent = isLike ? result.likes : result.dislikes;
-      if (otherCountSpan) otherCountSpan.textContent = isLike ? result.dislikes : result.likes;
-
-      // Toggle local vote state
-      if (previousVote === (isLike ? 'like' : 'dislike')) {
-        if (icon) icon.className = 'bi ' + (isLike ? 'bi-hand-thumbs-up' : 'bi-hand-thumbs-down');
-        localStorage.removeItem(voteKey);
-      } else {
-        if (icon) icon.className = 'bi ' + (isLike ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-down-fill');
-        if (otherIcon) {
-          otherIcon.className = 'bi ' + (isLike ? 'bi-hand-thumbs-down' : 'bi-hand-thumbs-up');
-        }
-        localStorage.setItem(voteKey, isLike ? 'like' : 'dislike');
-      }
-    }
-  } catch (err) {
-    console.error('Vote failed:', err);
+  if (saveBtn) {
+    const type = saveBtn.dataset.type || 'post';
+    handleSaveClick(e, type);
   }
 });
+
 
 // Debounced search input handling
 let searchQuery = '';

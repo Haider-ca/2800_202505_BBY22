@@ -40,7 +40,7 @@ export async function loadPOIs({
         // Render each post card
         data.forEach(poi => {
             const voteKey = `vote_${poi._id}`;
-            const card = renderCard(poi, voteKey);
+            const card = renderCard(poi, voteKey, 'poi');
             feedCards.appendChild(card);
         });
 
