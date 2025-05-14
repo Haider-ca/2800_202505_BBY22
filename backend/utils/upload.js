@@ -3,19 +3,45 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary'); // upload fi
 const cloudinary = require('../config/cloudinary');
 
 // Setup Cloudinary storage engine
-const storage = new CloudinaryStorage({
+// Image uploader
+const imageStorage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'pathpal-images',
-    allowed_formats: ['jpg', 'png', 'jpeg']
+    resource_type: 'image'
   }
 });
 
-// Expose two middlewares: single and array
-const uploadSingle = multer({ storage }).single('image');
-const uploadMultiple = multer({ storage }).array('images', 5);
+// Video uploader
+const videoStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'pathpal-videos',
+    resource_type: 'video'
+  }
+});
+
+// Detect media type based on file (used for general post uploads)
+const autoStorage = new CloudinaryStorage({
+  cloudinary,
+  params: async (req, file) => {
+    const isVideo = file.mimetype.startsWith('video/');
+    return {
+      folder: isVideo ? 'pathpal-videos' : 'pathpal-images',
+      resource_type: isVideo ? 'video' : 'image'
+    };
+  }
+});
+
+// Expose middlewares
+const uploadSingleImage = multer({ storage: imageStorage }).single('image');
+const uploadMultipleImages = multer({ storage: imageStorage }).array('images', 5);
+const uploadVideo = multer({ storage: videoStorage }).single('video');
+const uploadSingleMedia = multer({ storage: autoStorage }).single('media');
 
 module.exports = {
-  uploadSingle,
-  uploadMultiple
+  uploadSingleImage,
+  uploadMultipleImages,
+  uploadVideo,
+  uploadSingleMedia
 };

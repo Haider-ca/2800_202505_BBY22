@@ -36,6 +36,7 @@ app.use(session({
     secure: false, 
     maxAge: 1000*60*60*24}
 }))
+
 // app.use(cors({
 //   origin: 'http://localhost:5000',  // Replace with your frontend port
 //   credentials: true
@@ -61,9 +62,10 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 app.use('/api/routes', require('./map/routes/routeRoutes'));
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
-app.use('/api/community', require('./community/routes/communityRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
+app.use('/api/post', require('./post/routes/postRoutes'));
+// mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
 
 app.use('/api', authRoutes);//add this for login features 

@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { uploadSingle } = require('../../utils/upload');
+const { uploadSingleImage } = require('../../utils/upload');
 const poiController = require('../controllers/poiController');
 
 // upload 
-router.post('/', uploadSingle, poiController.createPOI);
+router.post('/', uploadSingleImage, poiController.createPOI);
+
+// Get all POIs for markers
+router.get('/markers', poiController.getPOIMarkers);
 
 // Get all POIs
-router.get('/', poiController.getAllPOIs);
+router.get('/all', poiController.getAllPOIs);
+
+// Get favorites POIs
+// router.get('/favorites', poiController.getFavoritePOIs);
 
 module.exports = router;

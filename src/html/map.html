@@ -15,14 +15,14 @@
   <!-- Mapbox GL & Geocoder CSS -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css" rel="stylesheet"/>
   <link
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
-    rel="stylesheet"/>
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" rel="stylesheet"/>
 
   <!-- Other feature styles -->
   <link rel="stylesheet" href="/css/nav.css"/>
   <link rel="stylesheet" href="/css/addPoi.css"/>
   <link rel="stylesheet" href="/css/main.css"/>
   <link rel="stylesheet" href="/css/popup.css"/>
+  <link rel="stylesheet" href="/css/toast.css" />
 
   <!-- map.css last -->
   <link rel="stylesheet" href="/css/map.css"/>
@@ -128,5 +128,11 @@
   <script src="/script/saveRoute.js"></script>
   <script src="/script/app.js"></script>
   <script src="/script/location.js"></script>
+  <!-- Add POI feature -->
+  <script type="module" src="/script/poi.js"></script>
+  <script type="module">
+    import { setupAddPOIFeature } from '/script/addPoi.js';
+    setupAddPOIFeature();
+  </script>
 </body>
 </html>
