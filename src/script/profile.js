@@ -26,7 +26,7 @@ async function loadProfile() {
         return;
     }
     const data = await response.json();
-    document.getElementById('avatar').src = data.avatar || '/img/defaultUser.png';
+    document.getElementById('avatarProfile').src = data.avatar || '/img/defaultUser.png';
     document.getElementById('email').textContent = data.email || '';
     document.getElementById('name').textContent = data.name || '';
     document.getElementById('description').textContent = data.description || '';
@@ -96,7 +96,7 @@ function showEditForm() {
     const editForm = document.getElementById('editForm');
     if (editForm) {
         editForm.style.display = 'block'; // Show the edit form
-        const dropdown = document.querySelector(".dropdown-menu");
+        const dropdown = document.querySelector(".dropdownMenu");
         if (dropdown) dropdown.classList.remove("show"); // Hide dropdown if visible
     } else {
         console.error('Edit form not found in DOM'); // Log error if form is not found
@@ -120,7 +120,7 @@ function showResetPasswordModal() {
     const resetPasswordModal = document.getElementById('resetPasswordModal');
     if (resetPasswordModal) {
         resetPasswordModal.classList.add('show');
-        const dropdown = document.querySelector(".dropdown-menu");
+        const dropdown = document.querySelector(".dropdownMenu");
         if (dropdown) dropdown.classList.remove("show");
     } else {
         console.error('Reset password modal not found in DOM');
@@ -178,7 +178,7 @@ async function resetPassword(event) {
 // Function to set up dropdown menu behavior
 function setupDropdown() {
     const menuIcon = document.querySelector(".menu-icon");
-    const dropdown = document.querySelector(".dropdown-menu");
+    const dropdown = document.querySelector(".dropdownMenu");
 
     if (menuIcon && dropdown) {
         menuIcon.addEventListener("click", (event) => {
@@ -225,7 +225,121 @@ function removeAvatarPreview() {
     avatarInput.value = '';
 }
 
-// Event listener for DOM content loaded: Initialize events when the page is fully loaded
+// Function to load and display user POIs with pagination, search, sort, and filter
+async function loadUserPOIs() {
+    const feedContainer = document.getElementById('user-poi-feed');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const pageInfo = document.getElementById('page-info');
+
+    const limit = 3;
+    let currentPage = parseInt(localStorage.getItem('profilePage') || '1');
+    const searchQuery = document.getElementById('search-input').value.trim();
+    const sortBy = document.getElementById('sortToggleBtn').dataset.sort || 'createdAt';
+    const activeFilters = Array.from(document.querySelectorAll('.form-check-input:checked'))
+        .map(cb => cb.value);
+
+    try {
+        const profileResponse = await fetch('/api/profile', { credentials: 'include' });
+        if (!profileResponse.ok) {
+            throw new Error(`Failed to fetch profile: ${profileResponse.status}`);
+        }
+        const profileData = await profileResponse.json();
+        const userId = profileData._id;
+        if (!userId) {
+            throw new Error('User ID not found in profile data');
+        }
+
+        const query = new URLSearchParams({
+            userId,
+            limit,
+            page: currentPage,
+            sort: sortBy,
+        });
+        if (searchQuery) query.append('q', searchQuery);
+        if (activeFilters.length > 0) query.append('filter', activeFilters.join(','));
+
+        const res = await fetch(`/api/profile/pois?${query}`);
+        if (!res.ok) {
+            throw new Error(`Failed to fetch POIs: ${res.status}`);
+        }
+        const pois = await res.json();
+
+        feedContainer.innerHTML = '';
+
+        if (!pois.length && currentPage > 1) {
+            currentPage--;
+            localStorage.setItem('profilePage', currentPage);
+            loadUserPOIs();
+            return;
+        } else if (!pois.length) {
+            feedContainer.innerHTML = `<span class="text-muted">No POIs found for userId: ${userId}</span>`;
+            nextPageBtn.disabled = true;
+            return;
+        }
+
+        pois.forEach(poi => {
+            const card = document.createElement('div');
+            card.className = 'card mb-3 position-relative';
+            card.innerHTML = `
+                <div class="card-body">
+                    <!-- Nút Edit và Delete ở góc phải trên cùng -->
+                    <div class="position-absolute top-0 end-0 p-2 d-flex gap-1">
+                        <button class="btn btn-sm btn-outline-primary edit-btn" data-id="${poi._id}" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${poi._id}" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="avatar me-2">
+                            <img src="${poi.avatar || '/img/defaultUser.png'}" alt="User Avatar" style="width: 40px; height: 40px; border-radius: 50%;">
+                        </div>
+                        <div>
+                            <h6 class="mb-0">${poi.username || 'Anonymous'}</h6>
+                            <small class="text-muted">${new Date(poi.createdAt).toLocaleString()}</small>
+                        </div>
+                    </div>
+                    <img src="${poi.imageUrl}" class="card-img-top mb-2" alt="POI Image">
+                    <p>${poi.description}</p>
+                    <div class="d-flex justify-content-start gap-4 post-actions">
+                        <span class="like-btn" data-id="${poi._id}">
+                            <i class="bi bi-hand-thumbs-up"></i> <span class="count">${poi.likes || 0}</span>
+                        </span>
+                        <span class="dislike-btn" data-id="${poi._id}">
+                            <i class="bi bi-hand-thumbs-down"></i> <span class="count">${poi.dislikes || 0}</span>
+                        </span>
+                    </div>
+                </div>
+            `;
+            feedContainer.appendChild(card);
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const poiId = e.currentTarget.dataset.id;
+            });
+        });
+
+        // Thêm sự kiện cho nút Delete
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const poiId = e.currentTarget.dataset.id;
+            });
+        });
+
+        prevPageBtn.disabled = currentPage === 1;
+        pageInfo.textContent = `Page ${currentPage}`;
+        nextPageBtn.disabled = pois.length < limit;
+        localStorage.setItem('profilePage', currentPage);
+    } catch (err) {
+        console.error('Failed to fetch user POIs:', err);
+        feedContainer.innerHTML = '<span class="text-muted">Error loading POIs</span>';
+    }
+}
+
+// Event listener for DOM content loaded
 document.addEventListener("DOMContentLoaded", () => {
     setupDropdown(); // Initialize dropdown functionality
     const updateForm = document.getElementById('updateForm');
@@ -245,5 +359,53 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         console.error('Reset password form not found in DOM');
     }
-    loadProfile(); // Load profile information on page load
+    loadProfile();
+    loadUserPOIs();
+
+    // Setup search
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            localStorage.setItem('profilePage', 1);
+            loadUserPOIs();
+        });
+    }
+
+    // Setup sort
+    const sortToggleBtn = document.getElementById('sortToggleBtn');
+    if (sortToggleBtn) {
+        sortToggleBtn.addEventListener('click', () => {
+            const currentSort = sortToggleBtn.dataset.sort || 'createdAt';
+            sortToggleBtn.dataset.sort = currentSort === 'createdAt' ? 'likes' : 'createdAt';
+            document.getElementById('sortLabel').textContent = sortToggleBtn.dataset.sort === 'likes' ? 'Most liked' : 'Newest';
+            localStorage.setItem('profilePage', 1);
+            loadUserPOIs();
+        });
+    }
+
+    // Setup filter
+    document.querySelectorAll('.form-check-input').forEach(cb => {
+        cb.addEventListener('change', () => {
+            localStorage.setItem('profilePage', 1);
+            loadUserPOIs();
+        });
+    });
+
+    // Setup pagination
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    if (prevPageBtn && nextPageBtn) {
+        prevPageBtn.addEventListener('click', () => {
+            const currentPage = parseInt(localStorage.getItem('profilePage') || '1');
+            if (currentPage > 1) {
+                localStorage.setItem('profilePage', currentPage - 1);
+                loadUserPOIs();
+            }
+        });
+        nextPageBtn.addEventListener('click', () => {
+            const currentPage = parseInt(localStorage.getItem('profilePage') || '1');
+            localStorage.setItem('profilePage', currentPage + 1);
+            loadUserPOIs();
+        });
+    }
 });

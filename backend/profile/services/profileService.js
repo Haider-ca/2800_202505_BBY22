@@ -2,6 +2,7 @@ const User = require('../../models/user');
 const cloudinary = require('../../config/cloudinary');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const POI = require('../../models/POI');
 
 // Fetch user profile by email, excluding password hash
 const getProfile = async (email) => {
@@ -87,9 +88,36 @@ const deleteProfile = async (email) => {
   return { message: 'Profile deleted successfully' };
 };
 
+// Fetch user's POIs based on userId, with optional pagination, sorting, filtering, and search
+const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
+  const query = {};
+  let userIdStr = '';
+  if (userId && typeof userId === 'object' && userId.toString) {
+    userIdStr = userId.toString();
+  } else if (userId) {
+    userIdStr = userId;
+  } else {
+    throw new Error('userId is undefined or invalid');
+  }
+
+  query.userId = userIdStr;
+
+  if (q) query.description = { $regex: q, $options: 'i' };
+  if (filter) {
+    const filters = filter.split(',').map(f => f.trim());
+    query.tags = { $in: filters };
+  }
+  const skip = (page - 1) * (limit || 5);
+  return await POI.find(query)
+    .sort({ [sort || 'createdAt']: -1 })
+    .limit(limit ? parseInt(limit) : 5)
+    .skip(skip || 0);
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   deleteProfile,
-  resetPassword
+  resetPassword,
+  getUserPOIs
 };
