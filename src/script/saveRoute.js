@@ -3,6 +3,7 @@
     const saveBtn = document.getElementById('btn-save-route');
     if (!saveBtn) return;
 
+    let lastSavedGeometry = null;
     let isSaved = false;
     let lastSavedId = null;
 
@@ -69,6 +70,7 @@
           isSaved = true;
           updateSaveButton();
           showToast('Route saved successfully!');
+          lastSavedGeometry = JSON.parse(JSON.stringify(window.lastRouteGeoJSON.geometry));
         } catch (err) {
           alert('Something went wrong while saving.');
         }
@@ -78,6 +80,18 @@
         lastSavedId = null;
         updateSaveButton();
         showToast('Route removed successfully!');
+        lastSavedGeometry = null;
+
+      }
+    });
+
+        document.getElementById('dir-clear')?.addEventListener('click', () => {
+      if (isSaved) {
+        isSaved = false;
+        lastSavedId = null;
+        lastSavedGeometry = null;
+        updateSaveButton();
+        saveBtn.classList.remove('d-none'); 
       }
     });
 
@@ -89,9 +103,23 @@
       } else {
         saveBtn.textContent = '📌 Save This Route';
         saveBtn.classList.remove('btn-primary');
-        saveBtn.classList.add('btn-outline-success');
+        saveBtn.classList.add('btn-outline-light');
       }
     }
+  
+
+      document.getElementById('dir-go')?.addEventListener('click', () => {
+      // small delay so window.lastRouteGeoJSON has updated
+      setTimeout(() => {
+        const g = window.lastRouteGeoJSON?.geometry;
+        if (lastSavedGeometry && g && JSON.stringify(g) !== JSON.stringify(lastSavedGeometry)) {
+          isSaved           = false;
+          lastSavedId       = null;
+          lastSavedGeometry = null;
+          updateSaveButton();
+        }
+      }, 500);
+    });
   });
 
   function showSaveConfirmation(message, yesText = 'Yes') {
