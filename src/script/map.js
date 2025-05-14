@@ -244,7 +244,7 @@ async function loadPOIs() {
       makeMarkers(geo.features, seniorMarkers, 'senior');
     }
     if (filterUserPOI) {
-      const res = await fetch('/api/poi');
+      const res = await fetch('/api/poi/markers');
       const data = await res.json();
     
       // Convert to GeoJSON Feature format

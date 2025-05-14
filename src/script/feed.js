@@ -84,7 +84,16 @@ function loadFeed() {
       break;
     case 'poi':
     default:
-      loadPOIs({ currentPage, limit, sortBy, searchQuery, activeFilters, feedCards, loadMore, setLoading })
+      const subtype = new URLSearchParams(window.location.search).get('sub') || 'all';
+      loadPOIs({ currentPage, 
+        limit, 
+        sortBy, 
+        searchQuery, 
+        activeFilters, 
+        feedCards, 
+        loadMore,
+        setLoading,
+        poiType: subtype })
     .then(nextPage => {
       if (nextPage) currentPage = nextPage;
     });

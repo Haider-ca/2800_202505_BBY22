@@ -35,12 +35,29 @@ exports.createPOI = async (req, res) => {
   }
 };
 
-exports.getAllPOIs = async (req, res) => {
+exports.getPOIMarkers = async (req, res) => {
   try {
     const allPOIs = await POI.find({});
     res.json(allPOIs);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch POIs' });
+  }
+};
+
+exports.getAllPOIs = async (req, res) => {
+  try {
+    // Extract query parameters
+    const page   = parseInt(req.query.page) || 1;
+    const limit  = parseInt(req.query.limit) || 5;
+    const sort   = req.query.sort;
+    const filter = req.query.filter;
+    const search = req.query.q;
+
+    const pois = await poiService.fetchPOIs({ page, limit, sort, filter, search });
+    res.json(pois);
+  } catch (err) {
+    console.error('Failed to fetch POI posts:', err);
+    res.status(500).json({ error: 'Server error while fetching POI posts' });
   }
 };

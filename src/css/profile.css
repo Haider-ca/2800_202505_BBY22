@@ -12,7 +12,7 @@ body {
     color: #333;
 }
 
-.container {
+.containerProfile {
     max-width: 1200px;
     margin: 0 auto;
     padding: 25px;
@@ -25,12 +25,12 @@ body {
     padding: 20px;
 }
 
-.avatar {
+.avatarProfile {
     position: relative;
     margin-bottom: 20px;
 }
 
-.avatar img {
+.avatarProfile img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -54,11 +54,11 @@ body {
     color: #007bff;
 }
 
-.dropdown-menu {
+.dropdownMenu {
     display: none;
     position: absolute;
     top: 100%;
-    right: 40%;
+    right: 35%;
     background-color: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -68,7 +68,7 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
+@keyframes fadeIn1 {
     from {
         opacity: 0;
         transform: translateY(10px);
@@ -80,19 +80,19 @@ body {
     }
 }
 
-.dropdown-menu div {
+.dropdownMenu div {
     padding: 8px 15px;
     font-size: 14px;
     color: #333;
     cursor: pointer;
 }
 
-.dropdown-menu div:hover {
+.dropdownMenu div:hover {
     background-color: #f1f1f1;
     color: #007bff;
 }
 
-.dropdown-menu.show {
+.dropdownMenu.show {
     display: block;
 }
 
@@ -324,7 +324,7 @@ body {
     background-color: #c82333;
 }
 
-@keyframes fadeIn {
+@keyframes fadeIn2 {
     from {
         opacity: 0;
         transform: translate(-50%, -50%) translateY(10px);
@@ -333,6 +333,15 @@ body {
         opacity: 1;
         transform: translate(-50%, -50%) translateY(0);
     }
+}
+
+.edit-btn, .delete-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.edit-btn i, .delete-btn i {
+    font-size: 1rem;
 }
 
 /* Responsive Styles */
@@ -364,7 +373,7 @@ body {
         font-size: 24px;
     }
 
-    .dropdown-menu {
+    .dropdownMenu {
         right: 35%;
         top: 100%;
     }
@@ -383,12 +392,12 @@ body {
 }
 
 @media (max-width: 768px) {
-    .container {
+    .containerProfile {
         padding: 15px;
         max-width: 90%;
     }
 
-    .avatar img {
+    .avatarProfile img {
         width: 150px;
         height: 150px;
     }
@@ -400,7 +409,7 @@ body {
         padding: 5px;
     }
 
-    .dropdown-menu {
+    .dropdownMenu {
         top: 100%;
         right: 27%;
         min-width: 120px;
@@ -473,5 +482,14 @@ body {
         font-size: 13px;
         padding: 8px 12px;
         width: 100%;
+    }
+
+    .edit-btn, .delete-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    .edit-btn i, .delete-btn i {
+        font-size: 0.875rem;
     }
 }

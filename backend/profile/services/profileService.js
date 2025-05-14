@@ -2,6 +2,7 @@ const User = require('../../models/user');
 const cloudinary = require('../../config/cloudinary');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const POI = require('../../models/POI');
 
 // Fetch user profile by email, excluding password hash
 const getProfile = async (email) => {
@@ -87,9 +88,144 @@ const deleteProfile = async (email) => {
   return { message: 'Profile deleted successfully' };
 };
 
+// Fetch user's POIs based on userId, with optional pagination, sorting, filtering, and search
+const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
+  const query = {};
+  let userIdStr = '';
+  if (userId && typeof userId === 'object' && userId.toString) {
+    userIdStr = userId.toString();
+  } else if (userId) {
+    userIdStr = userId;
+  } else {
+    throw new Error('userId is undefined or invalid');
+  }
+
+  query.userId = userIdStr;
+
+  if (q) query.description = { $regex: q, $options: 'i' };
+  if (filter) {
+    const filters = filter.split(',').map(f => f.trim());
+    query.tags = { $in: filters };
+  }
+  const skip = (page - 1) * (limit || 5);
+
+  // Fetch POIs
+  const pois = await POI.find(query)
+    .sort({ [sort || 'createdAt']: -1 })
+    .limit(limit ? parseInt(limit) : 5)
+    .skip(skip || 0);
+
+  // Fetch user to get avatar
+  const user = await User.findById(userIdStr).select('avatar');
+  if (!user) throw new Error('User not found');
+
+  // Map POIs and include user's avatar
+  return pois.map(poi => ({
+    _id: poi._id,
+    userId: poi.userId,
+    username: poi.username || '',
+    title: poi.title || '',
+    description: poi.description || '',
+    imageUrl: poi.imageUrl || '',
+    coordinates: poi.coordinates,
+    tags: poi.tags || [],
+    likes: poi.likes || 0,
+    dislikes: poi.dislikes || 0,
+    comments: poi.comments || [],
+    createdAt: poi.createdAt,
+    avatar: user.avatar || '/public/img/defaultUser.png' // Add user's avatar to each POI
+  }));
+};
+
+// Update a user's POI based on email and POI ID
+const updatePOI = async (email, poiId, updates) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  const poi = await POI.findById(poiId);
+  if (!poi) throw new Error('POI not found');
+  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to update this POI');
+
+  // Handle image upload if a new file is provided
+  let imageUrl = poi.imageUrl; // Default to existing imageUrl
+  if (updates.filePath) {
+    try {
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(updates.filePath, { folder: 'pathpal-images' });
+      imageUrl = result.secure_url;
+
+      // Delete the old image from Cloudinary if it exists
+      if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+        const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+        try {
+          await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+        } catch (error) {
+          console.error('Failed to delete old image on Cloudinary:', error);
+        }
+      }
+    } catch (uploadError) {
+      console.error('Failed to upload new image to Cloudinary:', uploadError);
+      throw new Error('Failed to upload image to Cloudinary');
+    }
+  }
+
+  // Update other POI fields if provided
+  poi.title = updates.title || poi.title;
+  poi.description = updates.description || poi.description;
+  poi.tags = updates.tags || poi.tags;
+  if (updates.coordinates && Array.isArray(updates.coordinates) && updates.coordinates.length === 2) {
+    poi.coordinates = { type: 'Point', coordinates: updates.coordinates };
+  }
+  poi.imageUrl = imageUrl; // Update imageUrl with the new or existing value
+
+  // Save and return the updated POI
+  const updatedPOI = await POI.findByIdAndUpdate(poiId, poi, { new: true, runValidators: true });
+  return {
+    _id: updatedPOI._id,
+    userId: updatedPOI.userId,
+    username: updatedPOI.username || '',
+    title: updatedPOI.title || '',
+    description: updatedPOI.description || '',
+    imageUrl: updatedPOI.imageUrl || '',
+    coordinates: updatedPOI.coordinates,
+    tags: updatedPOI.tags || [],
+    likes: updatedPOI.likes || 0,
+    dislikes: updatedPOI.dislikes || 0,
+    comments: updatedPOI.comments || [],
+    createdAt: updatedPOI.createdAt
+  };
+};
+
+// Delete a user's POI based on email and POI ID
+const deletePOI = async (email, poiId) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  const poi = await POI.findById(poiId);
+  if (!poi) throw new Error('POI not found');
+  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to delete this POI');
+
+  // Delete the image from Cloudinary if it's hosted there
+  if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+    const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+    try {
+      await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+    } catch (error) {
+      console.error('Failed to delete image on Cloudinary:', error);
+    }
+  }
+
+  // Delete the POI from the database
+  await POI.findByIdAndDelete(poiId);
+  return { message: 'POI deleted successfully' };
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   deleteProfile,
-  resetPassword
+  resetPassword,
+  getUserPOIs,
+  updatePOI,
+  deletePOI
 };
