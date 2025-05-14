@@ -225,6 +225,33 @@ function removeAvatarPreview() {
     avatarInput.value = '';
 }
 
+// Function to preview the selected POI image in the edit modal
+function previewPoiImage(event, previewId) {
+    const file = event.target.files[0];
+    const previewImage = document.getElementById(previewId);
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewImage.style.display = 'none';
+    }
+}
+
+// Function to remove the POI image preview and reset the file input
+function removePoiImagePreview(previewId, inputId) {
+    const previewImage = document.getElementById(previewId);
+    const imageInput = document.getElementById(inputId);
+
+    previewImage.src = '';
+    previewImage.style.display = 'none';
+    imageInput.value = '';
+}
+
 // Function to load and display user POIs with pagination, search, sort, and filter
 async function loadUserPOIs() {
     const feedContainer = document.getElementById('user-poi-feed');
@@ -301,8 +328,9 @@ async function loadUserPOIs() {
                             <small class="text-muted">${new Date(poi.createdAt).toLocaleString()}</small>
                         </div>
                     </div>
+                    <h5 class="card-title">${poi.title || 'Untitled'}</h5>
                     <img src="${poi.imageUrl}" class="card-img-top mb-2" alt="POI Image">
-                    <p>${poi.description}</p>
+                    <p>${poi.description || 'No description'}</p>
                     <div class="d-flex justify-content-start gap-4 post-actions">
                         <span class="like-btn" data-id="${poi._id}">
                             <i class="bi bi-hand-thumbs-up"></i> <span class="count">${poi.likes || 0}</span>
@@ -317,12 +345,118 @@ async function loadUserPOIs() {
         });
 
         document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', async (e) => {
                 const poiId = e.currentTarget.dataset.id;
+                const poi = pois.find(p => p._id === poiId); // find the POI object by ID
+
+                // Get the list of tags from the filter checkboxes
+                const filterCheckboxes = document.querySelectorAll('.form-check-input');
+                const availableTags = Array.from(filterCheckboxes).map(cb => cb.value);
+                const tagCheckboxes = availableTags.map(tag => `
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="tags-${poiId}" value="${tag}" ${poi.tags.includes(tag) ? 'checked' : ''}>
+                        <label class="form-check-label">${tag}</label>
+                    </div>
+                `).join('');
+
+                //create modal for editing
+                const modal = document.createElement('div');
+                modal.className = 'modal fade';
+                modal.id = `editModal-${poiId}`;
+                modal.tabIndex = '-1';
+                modal.role = 'dialog';
+                modal.innerHTML = `
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit POI</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="editForm-${poiId}">
+                                    <div class="mb-3">
+                                        <label for="title-${poiId}" class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="title-${poiId}" value="${poi.title || ''}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description-${poiId}" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description-${poiId}" rows="3">${poi.description || ''}</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image-${poiId}" class="form-label">Image</label>
+                                        <input type="file" class="form-control" id="image-${poiId}" accept="image/*">
+                                        <div id="poiPreviewContainer-${poiId}" style="display: ${poi.imageUrl ? 'block' : 'none'}; margin-top: 10px;">
+                                            <img id="poiPreview-${poiId}" src="${poi.imageUrl || ''}" alt="POI Preview" style="max-width: 100%;">
+                                            <button type="button" class="btn btn-sm btn-danger mt-2" onclick="removePoiImagePreview('poiPreview-${poiId}', 'image-${poiId}')">Remove</button>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tags</label>
+                                        <div>
+                                            ${tagCheckboxes}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                //Initialize Bootstrap modal
+                const bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+
+                //Handle image preview
+                document.getElementById(`image-${poiId}`).addEventListener('change', (event) => {
+                    previewPoiImage(event, `poiPreview-${poiId}`);
+                });
+
+                // Handle form submission
+                document.getElementById(`editForm-${poiId}`).addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData();
+                    formData.append('title', document.getElementById(`title-${poiId}`).value);
+                    formData.append('description', document.getElementById(`description-${poiId}`).value);
+                    const tagInputs = document.querySelectorAll(`input[name="tags-${poiId}"]:checked`);
+                    const selectedTags = Array.from(tagInputs).map(input => input.value);
+                    formData.append('tags', JSON.stringify(selectedTags));
+                    const imageFile = document.getElementById(`image-${poiId}`).files[0];
+                    if (imageFile) {
+                        formData.append('image', imageFile);
+                    }
+
+                    try {
+                        const response = await fetch(`/api/profile/pois/${poiId}`, {
+                            method: 'PUT',
+                            body: formData,
+                            credentials: 'include'
+                        });
+
+                        if (response.ok) {
+                            console.log('POI updated successfully');
+                            bootstrapModal.hide();
+                            loadUserPOIs();
+                        } else {
+                            const errorData = await response.json();
+                            throw new Error(errorData.message || 'Failed to update POI');
+                        }
+                    } catch (err) {
+                        console.error('Error updating POI:', err);
+                        alert('Failed to update POI: ' + err.message);
+                    }
+                });
+
+                // Delete modal when hidden
+                modal.addEventListener('hidden.bs.modal', () => {
+                    modal.remove();
+                });
             });
         });
 
-        // Thêm sự kiện cho nút Delete
+        // Add event listener for delete button
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const poiId = e.currentTarget.dataset.id;

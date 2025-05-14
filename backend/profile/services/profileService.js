@@ -114,10 +114,63 @@ const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
     .skip(skip || 0);
 };
 
+// Update a user's POI based on email and POI ID
+const updatePOI = async (email, poiId, updates) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  const poi = await POI.findById(poiId);
+  if (!poi) throw new Error('POI not found');
+  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to update this POI');
+
+  // If imageUrl is being updated and it's different from the current one
+  if (updates.imageUrl && updates.imageUrl !== poi.imageUrl) {
+    // Delete the old image from Cloudinary if it's hosted there
+    if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+      const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+      try {
+        await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+      } catch (error) {
+        console.error('Failed to delete old image on Cloudinary:', error);
+      }
+    }
+    poi.imageUrl = updates.imageUrl;
+  } else if (!updates.imageUrl && poi.imageUrl) {
+    // Keep existing imageUrl if no new image is provided
+    updates.imageUrl = poi.imageUrl;
+  }
+
+  // Update other POI fields if provided
+  poi.title = updates.title || poi.title;
+  poi.description = updates.description || poi.description;
+  poi.tags = updates.tags || poi.tags;
+  if (updates.coordinates && Array.isArray(updates.coordinates) && updates.coordinates.length === 2) {
+    poi.coordinates = { type: 'Point', coordinates: updates.coordinates };
+  }
+
+  // Save and return the updated POI
+  const updatedPOI = await POI.findByIdAndUpdate(poiId, poi, { new: true, runValidators: true });
+  return {
+    _id: updatedPOI._id,
+    userId: updatedPOI.userId,
+    username: updatedPOI.username || '',
+    title: updatedPOI.title || '',
+    description: updatedPOI.description || '',
+    imageUrl: updatedPOI.imageUrl || '',
+    coordinates: updatedPOI.coordinates,
+    tags: updatedPOI.tags || [],
+    likes: updatedPOI.likes || 0,
+    dislikes: updatedPOI.dislikes || 0,
+    comments: updatedPOI.comments || [],
+    createdAt: updatedPOI.createdAt
+  };
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   deleteProfile,
   resetPassword,
-  getUserPOIs
+  getUserPOIs,
+  updatePOI
 };

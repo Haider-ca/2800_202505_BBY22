@@ -1,4 +1,4 @@
-const { getProfile, updateProfile, deleteProfile, resetPassword, getUserPOIs } = require('../services/profileService');
+const { getProfile, updateProfile, deleteProfile, resetPassword, getUserPOIs, updatePOI } = require('../services/profileService');
 
 // Handler for retrieving the user's profile based on the session email
 const getProfileHandler = async (req, res) => {
@@ -82,10 +82,51 @@ const getUserPOIsHandler = async (req, res) => {
   }
 };
 
+// Handler to update a user's POI
+const updatePOIHandler = async (req, res) => {
+    try {
+        // Check if session email exists
+        if (!req.session.email) {
+            throw new Error('Session email is missing. Please log in again.');
+        }
+
+        const poiId = req.params.id;
+        const updates = req.body;
+
+        const tags = updates.tags ? JSON.parse(updates.tags) : [];
+        const coordinates = updates.coordinates ? JSON.parse(updates.coordinates) : [];
+
+        // If an image file was uploaded, update the imageUrl
+        let imageUrl = null;
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path, { folder: 'pathpal-images' });
+            imageUrl = result.secure_url;
+        }
+        // If image is expected but not properly uploaded
+        else if (req.body.image) {
+            return res.status(400).json({ error: 'Failed to upload image' });
+        }
+
+        // Update the POI with new data
+        const updatedPOI = await updatePOI(req.session.email, poiId, {
+            title: updates.title,
+            description: updates.description,
+            tags: tags,
+            coordinates: coordinates,
+            imageUrl: imageUrl || undefined
+        });
+
+        res.json(updatedPOI);
+    } catch (error) {
+        res.status(400).json('Failed to update POI');
+    }
+};
+
 module.exports = { 
     getProfileHandler, 
     updateProfileHandler, 
     deleteProfileHandler, 
     resetPasswordHandler,
-    getUserPOIsHandler
+    getUserPOIsHandler,
+    updatePOIHandler
 };
