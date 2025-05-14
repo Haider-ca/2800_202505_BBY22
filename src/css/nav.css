@@ -1,21 +1,44 @@
-/* Push page content away from fixed navbars */
-body {
-  padding-top: 56px;    /* height of fixed-top navbar */
-  padding-bottom: 56px; /* height of fixed-bottom navbar */
+/* === Theme Variables === */
+:root[data-theme='light'] {
+  --bg-color: #fdfdfd;
+  --text-color: #111;
+  --navbar-bg: linear-gradient(to right, #ffffff, #d6d1d19c);
 }
 
-/* Ensure both navbars span full width and sit above map & controls */
+:root[data-theme='dark'] {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0 !important;
+  --navbar-bg: linear-gradient(to right,#a8a9ac, #4d4a4a, #0c0101);
+}
+
+:root[data-theme='system'] {
+  --bg-color: #fdfdfd;
+  --text-color: #101010;
+  --navbar-bg:linear-gradient(to right,#f3f4f7, #dcdbe2, #99b4cc);
+}
+
+/* === Base body style === */
+body {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+/* === Navbar (top and bottom) unified gradient style === */
+nav.navbar {
+  background: var(--navbar-bg) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Make sure both navbars span full width */
 #navbar-placeholder nav,
 #bottom-navbar-placeholder nav {
   width: 100%;
   z-index: 1030;
 }
 
-/* Allow the logo to overflow its container */
-nav.navbar {
-  overflow: visible;
-}
-/* Center a tall logo in the 56px bar */
+/* Responsive adjustments (optional, logo, spacing) */
 nav.navbar .navbar-brand img {
   height: 100px !important;
   width: auto;
@@ -23,44 +46,6 @@ nav.navbar .navbar-brand img {
   margin-bottom: -35px;
 }
 
-/* Top navbar (light) */
-.navbar-light.fixed-top {
-  background-color: #f8f9fa !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-.navbar-light.fixed-top .navbar-brand,
-.navbar-light.fixed-top .nav-link {
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-.navbar-light.fixed-top .nav-link:hover,
-.navbar-light.fixed-top .navbar-brand:hover {
-  color: #000 !important;
-}
-.navbar-light.fixed-top .navbar-toggler-icon {
-  filter: invert(0.2); /* ensure visibility on light bg */
-}
-
-/* Bottom navbar (light) */
-.navbar-light.fixed-bottom {
-  background-color: #f8f9fa !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-.navbar-light.fixed-bottom .nav-link {
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-.navbar-light.fixed-bottom .nav-link:hover {
-  color: #000 !important;
-}
-
-/* Fallback dark‐theme support */
-.navbar-dark {
-  background-color: #343a40 !important;
-}
-.navbar-dark .navbar-brand,
-.navbar-dark .nav-link {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-.navbar-dark .navbar-brand:hover,
-.navbar-dark .nav-link:hover {
-  color: #fff !important;
+.nav-link{
+  color: var(--text-color) !important;
 }
