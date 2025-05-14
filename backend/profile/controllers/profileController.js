@@ -96,16 +96,8 @@ const updatePOIHandler = async (req, res) => {
         const tags = updates.tags ? JSON.parse(updates.tags) : [];
         const coordinates = updates.coordinates ? JSON.parse(updates.coordinates) : [];
 
-        // If an image file was uploaded, update the imageUrl
-        let imageUrl = null;
-        if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, { folder: 'pathpal-images' });
-            imageUrl = result.secure_url;
-        }
-        // If image is expected but not properly uploaded
-        else if (req.body.image) {
-            return res.status(400).json({ error: 'Failed to upload image' });
-        }
+        // If a file was uploaded, pass the file path to the service
+        const filePath = req.file ? req.file.path : null;
 
         // Update the POI with new data
         const updatedPOI = await updatePOI(req.session.email, poiId, {
@@ -113,12 +105,13 @@ const updatePOIHandler = async (req, res) => {
             description: updates.description,
             tags: tags,
             coordinates: coordinates,
-            imageUrl: imageUrl || undefined
+            filePath: filePath // Pass file path to service for upload
         });
 
         res.json(updatedPOI);
     } catch (error) {
-        res.status(400).json('Failed to update POI');
+        console.error('Error updating POI:', error);
+        res.status(400).json({ message: error.message || 'Failed to update POI' });
     }
 };
 

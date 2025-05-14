@@ -146,21 +146,27 @@ const updatePOI = async (email, poiId, updates) => {
   if (!poi) throw new Error('POI not found');
   if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to update this POI');
 
-  // If imageUrl is being updated and it's different from the current one
-  if (updates.imageUrl && updates.imageUrl !== poi.imageUrl) {
-    // Delete the old image from Cloudinary if it's hosted there
-    if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
-      const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
-      try {
-        await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
-      } catch (error) {
-        console.error('Failed to delete old image on Cloudinary:', error);
+  // Handle image upload if a new file is provided
+  let imageUrl = poi.imageUrl; // Default to existing imageUrl
+  if (updates.filePath) {
+    try {
+      // Upload the new image to Cloudinary
+      const result = await cloudinary.uploader.upload(updates.filePath, { folder: 'pathpal-images' });
+      imageUrl = result.secure_url;
+
+      // Delete the old image from Cloudinary if it exists
+      if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+        const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+        try {
+          await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+        } catch (error) {
+          console.error('Failed to delete old image on Cloudinary:', error);
+        }
       }
+    } catch (uploadError) {
+      console.error('Failed to upload new image to Cloudinary:', uploadError);
+      throw new Error('Failed to upload image to Cloudinary');
     }
-    poi.imageUrl = updates.imageUrl;
-  } else if (!updates.imageUrl && poi.imageUrl) {
-    // Keep existing imageUrl if no new image is provided
-    updates.imageUrl = poi.imageUrl;
   }
 
   // Update other POI fields if provided
@@ -170,6 +176,7 @@ const updatePOI = async (email, poiId, updates) => {
   if (updates.coordinates && Array.isArray(updates.coordinates) && updates.coordinates.length === 2) {
     poi.coordinates = { type: 'Point', coordinates: updates.coordinates };
   }
+  poi.imageUrl = imageUrl; // Update imageUrl with the new or existing value
 
   // Save and return the updated POI
   const updatedPOI = await POI.findByIdAndUpdate(poiId, poi, { new: true, runValidators: true });
