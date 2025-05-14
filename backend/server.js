@@ -10,7 +10,7 @@ const connectDB = require('./config/db');
 const MongoStore = require('connect-mongo');
 
 const authRoutes = require('./routes/auth');//add this for login features 
-
+const aiRouter = require("./routes/ai"); 
 const app = express();
 connectDB();
 
@@ -65,7 +65,7 @@ app.use('/api/community', require('./community/routes/communityRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
 app.use('/api', authRoutes);//add this for login features 
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
-
+app.use("/api", aiRouter);//add this for ai feature
 
 // health-check
 app.get('/', (req, res) => res.send('API is running...'));
