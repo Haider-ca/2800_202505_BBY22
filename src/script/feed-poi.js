@@ -1,5 +1,4 @@
 import { renderCard } from '../utils/renderCard.js';
-import { getOrCreateVoterId } from '../utils/helpers.js';
 
 // Fetch POIs from DB
 export async function loadPOIs({

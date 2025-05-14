@@ -64,6 +64,7 @@ app.use('/api/poi', require('./poi/routes/poiRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
 app.use('/api', authRoutes);//add this for login features 
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
+app.use('/api/post', require('./post/routes/postRoutes'));
 
 
 // health-check

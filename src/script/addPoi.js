@@ -26,7 +26,7 @@ let addingPOIMode = false;
 let tempPOIMarker = null;
 
 export function setupAddPOIFeature() {
-  console.log('🔘 setupAddPOIFeature() called');
+  console.log('setupAddPOIFeature() called');
   const map = window.pathpalMap;
   if (!map) {
     console.error('AddPOI: map not initialized yet');
