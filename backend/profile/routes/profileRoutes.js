@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import controller functions for profile operations
-const { getProfileHandler, updateProfileHandler, deleteProfileHandler, resetPasswordHandler, getUserPOIsHandler, updatePOIHandler } = require('../controllers/profileController');
+const { getProfileHandler, updateProfileHandler, deleteProfileHandler, resetPasswordHandler, getUserPOIsHandler, updatePOIHandler, deletePOIHandler } = require('../controllers/profileController');
 
 // Import authentication middleware to protect the routes
 const { authMiddleware } = require('../../routes/auth');
@@ -27,5 +27,8 @@ router.get('/pois', authMiddleware, getUserPOIsHandler);
 
 // Route to update a user's POI
 router.put('/pois/:id', authMiddleware, uploadSingle, updatePOIHandler);
+
+// Route to delete a user's POI
+router.delete('/pois/:id', authMiddleware, deletePOIHandler);
 
 module.exports = router;

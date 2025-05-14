@@ -108,10 +108,33 @@ const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
     query.tags = { $in: filters };
   }
   const skip = (page - 1) * (limit || 5);
-  return await POI.find(query)
+
+  // Fetch POIs
+  const pois = await POI.find(query)
     .sort({ [sort || 'createdAt']: -1 })
     .limit(limit ? parseInt(limit) : 5)
     .skip(skip || 0);
+
+  // Fetch user to get avatar
+  const user = await User.findById(userIdStr).select('avatar');
+  if (!user) throw new Error('User not found');
+
+  // Map POIs and include user's avatar
+  return pois.map(poi => ({
+    _id: poi._id,
+    userId: poi.userId,
+    username: poi.username || '',
+    title: poi.title || '',
+    description: poi.description || '',
+    imageUrl: poi.imageUrl || '',
+    coordinates: poi.coordinates,
+    tags: poi.tags || [],
+    likes: poi.likes || 0,
+    dislikes: poi.dislikes || 0,
+    comments: poi.comments || [],
+    createdAt: poi.createdAt,
+    avatar: user.avatar || '/public/img/defaultUser.png' // Add user's avatar to each POI
+  }));
 };
 
 // Update a user's POI based on email and POI ID
@@ -166,11 +189,36 @@ const updatePOI = async (email, poiId, updates) => {
   };
 };
 
+// Delete a user's POI based on email and POI ID
+const deletePOI = async (email, poiId) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  const poi = await POI.findById(poiId);
+  if (!poi) throw new Error('POI not found');
+  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to delete this POI');
+
+  // Delete the image from Cloudinary if it's hosted there
+  if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+    const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+    try {
+      await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+    } catch (error) {
+      console.error('Failed to delete image on Cloudinary:', error);
+    }
+  }
+
+  // Delete the POI from the database
+  await POI.findByIdAndDelete(poiId);
+  return { message: 'POI deleted successfully' };
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   deleteProfile,
   resetPassword,
   getUserPOIs,
-  updatePOI
+  updatePOI,
+  deletePOI
 };

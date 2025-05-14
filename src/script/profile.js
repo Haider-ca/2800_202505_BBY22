@@ -344,6 +344,7 @@ async function loadUserPOIs() {
             feedContainer.appendChild(card);
         });
 
+        // Add event listeners to edit buttons
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 const poiId = e.currentTarget.dataset.id;
@@ -458,8 +459,27 @@ async function loadUserPOIs() {
 
         // Add event listener for delete button
         document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', async (e) => {
                 const poiId = e.currentTarget.dataset.id;
+                if (confirm('Are you sure you want to delete this POI?')) {
+                    try {
+                        const response = await fetch(`/api/profile/pois/${poiId}`, {
+                            method: 'DELETE',
+                            credentials: 'include'
+                        });
+
+                        if (response.ok) {
+                            alert('POI deleted successfully');
+                            loadUserPOIs();
+                        } else {
+                            const errorData = await response.json();
+                            throw new Error(errorData.message || 'Failed to delete POI');
+                        }
+                    } catch (err) {
+                        console.error('Error deleting POI:', err);
+                        alert('Failed to delete POI: ' + err.message);
+                    }
+                }
             });
         });
 

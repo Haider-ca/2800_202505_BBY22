@@ -1,4 +1,4 @@
-const { getProfile, updateProfile, deleteProfile, resetPassword, getUserPOIs, updatePOI } = require('../services/profileService');
+const { getProfile, updateProfile, deleteProfile, resetPassword, getUserPOIs, updatePOI, deletePOI } = require('../services/profileService');
 
 // Handler for retrieving the user's profile based on the session email
 const getProfileHandler = async (req, res) => {
@@ -67,19 +67,19 @@ const resetPasswordHandler = async (req, res) => {
 
 // Handler to get the user's POIs
 const getUserPOIsHandler = async (req, res) => {
-  try {
-    if (!req.user || !req.user._id) {
-      console.error('req.user or _id is undefined:', req.user);
-      return res.status(401).json({ message: 'User not authenticated or _id missing' });
+    try {
+        if (!req.user || !req.user._id) {
+            console.error('req.user or _id is undefined:', req.user);
+            return res.status(401).json({ message: 'User not authenticated or _id missing' });
+        }
+        const userId = req.user._id;
+        const { limit, page, sort, filter, q } = req.query;
+        const pois = await getUserPOIs(userId, limit, page, sort, filter, q);
+        res.status(200).json(pois);
+    } catch (error) {
+        console.error('Get user POIs error:', error);
+        res.status(500).json({ message: error.message || 'Failed to get user POIs' });
     }
-    const userId = req.user._id;
-    const { limit, page, sort, filter, q } = req.query;
-    const pois = await getUserPOIs(userId, limit, page, sort, filter, q);
-    res.status(200).json(pois);
-  } catch (error) {
-    console.error('Get user POIs error:', error);
-    res.status(500).json({ message: error.message || 'Failed to get user POIs' });
-  }
 };
 
 // Handler to update a user's POI
@@ -122,11 +122,25 @@ const updatePOIHandler = async (req, res) => {
     }
 };
 
-module.exports = { 
-    getProfileHandler, 
-    updateProfileHandler, 
-    deleteProfileHandler, 
+// Delete a user's POI
+const deletePOIHandler = async (req, res) => {
+    try {
+        const email = req.session.email;
+        const poiId = req.params.id;
+        const result = await deletePOI(email, poiId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error deleting POI:', error);
+        res.status(400).json({ message: error.message });
+    }
+};
+
+module.exports = {
+    getProfileHandler,
+    updateProfileHandler,
+    deleteProfileHandler,
     resetPasswordHandler,
     getUserPOIsHandler,
-    updatePOIHandler
+    updatePOIHandler,
+    deletePOIHandler
 };
