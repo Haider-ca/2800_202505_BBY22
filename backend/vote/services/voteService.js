@@ -1,7 +1,7 @@
 // services/voteService.js
 const Vote = require('../../models/Vote');
 const POI = require('../../models/POI');
-const Post = require('../../models/Post');
+const Post = require('../../models/post');
 
 exports.voteTarget = async (type, targetId, voteType, voterId) => {
   const Model = type === 'poi' ? POI : Post;

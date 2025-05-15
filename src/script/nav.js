@@ -16,16 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
           .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
           .then(html => {
             topEl.innerHTML = html;
+            const homeLink = botEl.querySelector('#home-link');
 
             if (data.loggedIn) {
               // ✅ Personalize navbar if user is logged in
               const nameSpan = document.getElementById('user-name');
-              const homeLink = document.querySelector('.nav-link[href="/index.html"]');
               if (nameSpan) {
                 nameSpan.innerHTML = `Hi, ${data.name}`;
               }
               if (homeLink) {
-                homeLink.setAttribute('href', '/html/home.html');
+                homeLink.setAttribute('href', '/html/feed.html?mode=community');
               }
 
               // ✅ Bind logout button event
@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // ✅ Bind theme switch button event
               bindThemeSwitcher(); 
+            }
+            else{
+              homeLink.setAttribute('href', '/html/home.html');
             }
           });
       });
@@ -74,6 +77,7 @@ function bindLogout() {
             .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
+              window.location.href = '/html/home.html';
             });
           location.reload();
           // ✅ Optional: Redirect to home page

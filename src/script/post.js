@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.ok) {
                 showToast('Boom! Your post is out there!', 'success');
                 setTimeout(() => {
-                    window.location.href = '/html/dashboard.html';
+                    window.location.href = '/html/feed.html?mode=community';
                 }, 1500);
             } else {
                 showToast(data.error || 'Failed to post', 'error');
