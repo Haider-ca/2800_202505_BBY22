@@ -37,8 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
                  // ✅ Load bottom navbar if present
                     fetch(`/partials/bottomNavbar.html`)
                    .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-                   .then(html => botEl.innerHTML = html);
+                   .then(bottomHtml => {
+                    botEl.innerHTML = bottomHtml;
+                    const homeLink = botEl.querySelector('#home-link');
+                    if (homeLink) {
+                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/home.html');
+                    }
+                   });
                }
+            }
+            else{
+              const homeLink = botEl.querySelector('#home-link');
+              homeLink.setAttribute('href', '/html/home.html');
             }
           });
       });
@@ -66,6 +76,7 @@ function bindLogout() {
             .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
+              window.location.href = '/html/home.html';
             });
 
          window.location.href = '/index.html';

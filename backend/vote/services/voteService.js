@@ -1,32 +1,45 @@
+// services/voteService.js
 const Vote = require('../../models/Vote');
 const POI = require('../../models/POI');
+const Post = require('../../models/post');
 
-exports.votePost = async (postId, type, voterId) => {
-  const existingVote = await Vote.findOne({ poiId: postId, voterId });
+exports.voteTarget = async (type, targetId, voteType, voterId) => {
+  const Model = type === 'poi' ? POI : Post;
+  const targetField = type === 'poi' ? 'poiId' : 'postId';
 
-  if (existingVote && existingVote.type === type) {
-    // If the same vote is cast again, treat it as a cancel
+  const existingVote = await Vote.findOne({ [targetField]: targetId, voterId });
+
+  if (existingVote && existingVote.type === voteType) {
     await Vote.deleteOne({ _id: existingVote._id });
-    await POI.findByIdAndUpdate(postId, {
-      $inc: { [type === 'like' ? 'likes' : 'dislikes']: -1 }
+    await Model.findByIdAndUpdate(targetId, {
+      $inc: { [voteType === 'like' ? 'likes' : 'dislikes']: -1 }
     });
   } else {
-    // If switching vote direction, first remove the previous vote
     if (existingVote) {
-      await POI.findByIdAndUpdate(postId, {
+      await Model.findByIdAndUpdate(targetId, {
         $inc: { [existingVote.type === 'like' ? 'likes' : 'dislikes']: -1 }
       });
       await Vote.deleteOne({ _id: existingVote._id });
     }
 
-    // Add new vote
-    await Vote.create({ poiId: postId, type, voterId });
-    await POI.findByIdAndUpdate(postId, {
-      $inc: { [type === 'like' ? 'likes' : 'dislikes']: 1 }
+    const voteData = {
+      voterId,
+      type: voteType
+    };
+    
+    if (type === 'post') {
+      voteData.postId = targetId;
+    } else if (type === 'poi') {
+      voteData.poiId = targetId;
+    }
+    
+    await Vote.create(voteData);
+    
+    await Model.findByIdAndUpdate(targetId, {
+      $inc: { [voteType === 'like' ? 'likes' : 'dislikes']: 1 }
     });
   }
 
-  // Return the latest vote count
-  const poi = await POI.findById(postId);
-  return poi;
+  const updated = await Model.findById(targetId);
+  return updated;
 };

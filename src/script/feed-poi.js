@@ -10,11 +10,11 @@ export async function loadPOIs({
     feedCards,
     loadMore,
     setLoading,
-    poiType = 'all'
+    favoritesMode = false
   }) {
     setLoading(true);
     try {
-        const baseUrl = poiType === 'favorites' ? '/api/poi/favorites' : '/api/poi/all';
+        const baseUrl = favoritesMode ? '/api/poi/favorites' : '/api/poi/all';
         const query = new URLSearchParams({
             page: currentPage,
             limit: limit,
@@ -40,15 +40,15 @@ export async function loadPOIs({
         // Render each post card
         data.forEach(poi => {
             const voteKey = `vote_${poi._id}`;
-            const card = renderCard(poi, voteKey);
+            const card = renderCard(poi, voteKey, 'poi');
             feedCards.appendChild(card);
         });
 
-        currentPage++;
+        return currentPage + 1;
     } catch (err) {
         console.error('Failed to fetch POIs:', err);
     } finally {
+        return currentPage;
         setLoading(false);
-        currentPage++;
     }
 }

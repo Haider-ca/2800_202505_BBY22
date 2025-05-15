@@ -47,7 +47,12 @@ app.use(express.json());
 
 // Home Page
 app.get('/', (req, res) => {
-  res.redirect('/html/map.html');
+  if (!req.session?.userId) {
+    res.redirect('/html/home.html');
+  }
+  else{
+    res.redirect('/html/feed.html?mode=community');
+  }
 });
 
 // static assets
@@ -68,6 +73,7 @@ app.use("/api", aiRouter);//add this for ai feature
 app.use('/api/post', require('./post/routes/postRoutes'));
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
+app.use('/api/save', require('./savePost/routes/savePostRoutes'));
 
 app.use('/api', authRoutes);//add this for login features 
 

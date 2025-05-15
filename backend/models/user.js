@@ -31,7 +31,9 @@ description: {
     type: String,
     trim: true,
     default: ''
-}
+},
+savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+savedPOIs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'POI' }]
 });
 
 // Add a method to compare a given password with the stored hash
@@ -39,4 +41,5 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
+module.exports = User;

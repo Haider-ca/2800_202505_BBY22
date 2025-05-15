@@ -23,8 +23,13 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  userId: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   username: String
 });
 
-module.exports = mongoose.model('Post', postSchema);
+const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
+module.exports = Post;
