@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
               //✅ adjust text size
               bindSizeSwitcher(); 
 
+              //✅ set up contact us pop up window
+              setupContactUsPopup();
+
               if (botEl) {
                  // ✅ Load bottom navbar if present
                     fetch(`/partials/bottomNavbar.html`)
@@ -167,4 +170,90 @@ function bindSizeSwitcher() {
       sizeBtn.textContent = `Size: ${labels[currentSizeIndex]}`;
     });
   }
+}
+
+
+//Set up the pop up window for contact us function
+function setupContactUsPopup() {
+  const existingPopup = document.getElementById('contact-popup');
+    if (existingPopup) {
+        existingPopup.remove();
+      }
+
+  const contactBtn = document.getElementById('contact-us');
+  if (!contactBtn) return;
+
+  contactBtn.addEventListener('click', () => {
+    const popup = document.createElement('div');
+    popup.innerHTML = `
+      <div id="contact-popup">
+        <h5>Contact Us</h5>
+        <input id="contact-title" placeholder="Title" />
+        <textarea id="contact-description" placeholder="Description"></textarea>
+        <div style="text-align: right; margin-top: 12px;">
+          <button id="contact-cancel">Cancel</button>
+          <button id="contact-submit">Submit</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+    makePopupDraggable(document.getElementById('contact-popup'));
+
+    document.getElementById('contact-cancel').onclick = () => popup.remove();
+
+    document.getElementById('contact-submit').onclick = async () => {
+      const title = document.getElementById('contact-title').value.trim();
+      const description = document.getElementById('contact-description').value.trim();
+      if (!title || !description) {
+        alert('Title and Description are required.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ title, description })
+        });
+
+        if (res.ok) {
+          alert('Thank you for your feedback!');
+          popup.remove();
+        } else {
+          alert('Submission failed. Please try again.');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Network error. Try again.');
+      }
+    };
+  });
+}
+
+function makePopupDraggable(popup) {
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  const header = popup.querySelector('h5');
+  header.style.cursor = 'move';
+
+  header.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    popup.style.transition = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      popup.style.left = `${e.clientX - offsetX}px`;
+      popup.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
 }

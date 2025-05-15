@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo');
 
 const authRoutes = require('./routes/auth');//add this for login features 
 const aiRouter = require("./routes/ai"); 
+const contactRoutes = require('./routes/contact');// add this for contact us information
 const app = express();
 connectDB();
 
@@ -70,12 +71,14 @@ app.use('/api/poi', require('./poi/routes/poiRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
 app.use("/api", aiRouter);//add this for ai feature
+app.use('/api/contact', contactRoutes);//add this for contact us information
 app.use('/api/post', require('./post/routes/postRoutes'));
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
 app.use('/api/save', require('./savePost/routes/savePostRoutes'));
 
 app.use('/api', authRoutes);//add this for login features 
+
 
 
 // global error handler
