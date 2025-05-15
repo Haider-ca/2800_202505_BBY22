@@ -1,350 +1,97 @@
-/* src/css/map.css */
+/* =============================================================================
+   src/css/map.css
+   ============================================================================= */
 
-/* ─── Base & Navbars ─── */
+/* 1) Base & Vars */
 html, body {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   overflow: hidden;
 }
-
-/* Map container */
-#map-container {
-  position: absolute;
-  top:    0;    /* no offset */
-  bottom: 0;    /* no offset */
-  left:   0;
-  right:  0;
+:root {
+  --nav-height:        70px;
+  --bottom-nav-height: 56px;
 }
 
-#map {
-  position: absolute;
-  top:    0;
-  bottom: 0;
-  left:   0;
-  right:  0;
-  width:  100%;
-  height: 100%;
-}
+/* 2) Fullscreen map */
+#map-container { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+#map           { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
 
+/* Nav placeholders */
 #navbar-placeholder,
 #bottom-navbar-placeholder {
-  position: fixed;
-  width: 100%;
-  z-index: 1000;    /* above the map */
+  position: fixed; width: 100%; z-index: 1000;
 }
 
-/* ========= DIRECTIONS PANEL ========= */
-#directions-panel {
-  position: absolute;
-  top: calc(var(--nav-height) + 12px);
-  left: 12px;
-  width: 600px;
-  max-height: 125px;
-  overflow-y: auto;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  overflow: visible;
-  z-index: 1000;
-  font-family: "Segoe UI", Roboto, sans-serif;
-}
-
-#dir-summary {
-  padding: 8px 12px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-bottom: 1px solid #e1e5eb;
-  margin-bottom: 8px;
-}
-
-/* Turn-by-Turn box – auto‐height and lifted up */
-#turn-by-turn {
-  position: absolute;
-  top: calc(var(--nav-height) + 140px);
-  left: 12px;
-  width: 320px;
-  background: rgba(255,255,255,0.95);
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  z-index: 1000;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-/* Mode Buttons */
-#mode-buttons {
-  display: flex;
-}
-#mode-buttons button {
-  flex: 1;
-  padding: 12px 0;
-  border: none;
-  background: #f2f4f7;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#mode-buttons button:hover { background: #e1e5eb; }
-#mode-buttons button.active {
-  background: #007cbf;
-  color: #fff;
-}
-#mode-buttons button:first-child  { border-top-left-radius: 8px; }
-#mode-buttons button:last-child   { border-top-right-radius: 8px; }
-
-/* Inputs Row */
-.inputs-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  gap: 8px;
-  padding: 12px;
-  overflow: visible;
-}
-.inputs-row .geocoder { width: 100%; }
-
-/* Start-wrapper & GeolocateControl styling */
-.start-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.start-wrapper .mapboxgl-ctrl-geolocate {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-
-
-/* ─── Geocoder (top-right) ─── */
+/* 3) Geocoder & weather */
 #geocoder-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-  width: 250px;
+  position: absolute; top: 1rem; right: 1rem;
+  z-index: 10; width: 250px;
 }
-
-/* ─── Smaller Modern Weather Card (bottom-left) ─── */
 #location-info {
   position: absolute;
-  bottom: 1rem;
   bottom: calc(var(--bottom-nav-height) + 1rem);
-  left:   1rem;
-  z-index: 10;
-  display:       flex;
-  align-items:   center;
-  background:    #f5f7fa;
-  border-radius: 8px;
-  box-shadow:    0 2px 8px rgba(0, 0, 0, 0.08);
-  padding:       0.5rem 0.75rem;
-  font-family:   'Segoe UI', Tahoma, sans-serif;
-  min-width:     120px;
-  max-width:     140px;
+  left: 1rem; z-index: 2000;
+  display: flex; align-items: center;
+  background: #f5f7fa; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  padding: .5rem .75rem;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  min-width: 120px; max-width: 140px;
 }
 #location-info::after {
   content: "";
   position: absolute;
-  bottom: -6px;
-  left:   16px;
-  border-width: 6px 6px 0;
-  border-style: solid;
-  border-color: #f5f7fa transparent transparent;
+  bottom: -6px; left: 16px;
+  border: 6px solid transparent;
+  border-top-color: #f5f7fa;
 }
 #weather-icon {
-  width:  40px;
-  height: 40px;
-  margin-right: 0.5rem;
+  width: 40px; height: 40px; margin-right: .5rem;
   filter:
-    drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
-    drop-shadow(0 0 1px rgba(0, 0, 0, 0.4))
-    brightness(1.2)
-    contrast(1.3);
+    drop-shadow(0 0 1px rgba(0,0,0,.4))
+    drop-shadow(0 0 1px rgba(0,0,0,.4))
+    brightness(1.2) contrast(1.3);
 }
 .weather-text {
-  display:        flex;
-  flex-direction: column;
-  line-height:    1;
+  display: flex; flex-direction: column; line-height: 1;
 }
-.weather-text #city {
-  font-size:    0.75rem;
-  font-weight:  500;
-  color:        #333;
-  margin-bottom: 0.2rem;
-}
-.weather-text #temp {
-  font-size:   1.25rem;
-  font-weight: 600;
-  color:       #111;
-}
-.weather-text #description {
-  font-size:      0.65rem;
-  color:          #555;
-  text-transform: capitalize;
+.weather-text #city        { font-size: .75rem; font-weight: 500; color: #333; }
+.weather-text #temp        { font-size: 1rem;   font-weight: 600; color: #111; }
+.weather-text #description { font-size: .65rem; color: #555; text-transform: capitalize; }
+
+/* 4) Compact cards */
+.small-card {
+  max-width: 500px; margin: 0 auto; font-size: .875rem;
 }
 
-/* ─── Custom markers (unchanged) ─── */
-.custom-marker {
-  background-size:   contain;
-  background-repeat: no-repeat;
-}
-
-
-/* ========= CONFIGURATION ========= */
-:root {
-  --nav-height: 70px;
-  --bottom-nav-height: 56px;
-}
-
-/* ========= RESET & LAYOUT =========
-html, body {
-  margin: 0; padding: 0;
-  width: 100%; height: 100%;
-  overflow: hidden;
-} */
-
-/* ========= DIRECTIONS PANEL ========= */
-#directions-panel {
+/* 5) Panels flex wrapper */
+#panels {
   position: absolute;
-  top: calc(var(--nav-height) + 12px);
-  left: 12px;
-  width: 600px;
-  max-height: 125px;
-  overflow-y: auto;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  overflow: visible;
+  top: var(--nav-height); left: 0; right: 0;
   z-index: 1000;
-  font-family: "Segoe UI", Roboto, sans-serif;
+  pointer-events: none;
+  display: flex; flex-direction: column;
+  padding: 1rem 1.5rem; gap: 1rem;
+}
+@media (min-width: 992px) {
+  #panels {
+    flex-direction: row; justify-content: flex-start;
+  }
+}
+#panels .card,
+#panels .turn-wrapper {
+  pointer-events: auto; flex: 1 1 0;
 }
 
-#dir-summary {
-  padding: 8px 12px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-bottom: 1px solid #e1e5eb;
-  margin-bottom: 8px;
+/* 6) Remove inner list scrollbar */
+#directions-steps {
+  /* allow the list to grow freely */
+  max-height: none !important;
+  overflow-y: visible !important;
 }
 
-/* Turn-by-Turn box – auto‐height and lifted up */
-#turn-by-turn {
-  position: absolute;
-  top: calc(var(--nav-height) + 140px);
-  left: 12px;
-  width: 320px;
-  background: rgba(255,255,255,0.95);
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  z-index: 1000;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-/* Mode Buttons */
-#mode-buttons {
-  display: flex;
-}
-#mode-buttons button {
-  flex: 1;
-  padding: 12px 0;
-  border: none;
-  background: #f2f4f7;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#mode-buttons button:hover { background: #e1e5eb; }
-#mode-buttons button.active {
-  background: #007cbf;
-  color: #fff;
-}
-#mode-buttons button:first-child  { border-top-left-radius: 8px; }
-#mode-buttons button:last-child   { border-top-right-radius: 8px; }
-
-/* Inputs Row */
-.inputs-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  gap: 8px;
-  padding: 12px;
-  overflow: visible;
-}
-.inputs-row .geocoder { width: 100%; }
-
-/* Start-wrapper & GeolocateControl styling */
-.start-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.start-wrapper .mapboxgl-ctrl-geolocate {
-  width: 32px;
-  height: 32px;
-  padding: 0;
-}
-.start-wrapper .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-  width: 100%;
-  height: 100%;
-  background-size: 24px;
-}
-
-/* Clear button */
-#dir-clear {
-  padding: 8px;
-  background: #e1e5eb;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  line-height: 1;
-}
-#dir-clear:hover {
-  background: #d0d4da;
-}
-
-/* Go button */
-#dir-go {
-  padding: 10px 20px;
-  background: #007cbf;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#dir-go:hover { background: #0066aa; }
-
-/* Spinner & Error */
-#dir-spinner, #dir-error {
-  padding: 0 12px;
-  font-size: 0.9rem;
-  text-align: center;
-}
-#dir-error { color: #d0454c; }
-.hidden { display: none !important; }
-
-/* Step List inside turn-by-turn */
-#turn-by-turn h5 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  font-weight: bold;
-}
-#turn-by-turn ul {
-  margin: 0;
-  padding: 0 0 0 1.2em;
-  list-style-type: decimal;
-}
-#turn-by-turn li {
-  margin-bottom: 0.8em;
-  line-height: 1.4;
-  font-size: 0.95rem;
-}
-
-/* Mapbox controls adjustments */
+/* 7) Mapbox controls under nav */
 #map > .mapboxgl-ctrl-geocoder {
   position: absolute !important;
   top: var(--nav-height) !important;
@@ -358,11 +105,53 @@ html, body {
 }
 .mapboxgl-ctrl { z-index: 4 !important; }
 
-/* Bottom nav placeholder */
-#bottom-navbar-placeholder {
-  position: absolute;
-  bottom: 0;
-  height: var(--bottom-nav-height);
-  width: 100%;
-  z-index: 6;
+/* 8) Final override for panels */
+#directions-panel,
+#turn-by-turn {
+  position: static !important;
+  width: auto !important;
+  top: auto; left: auto;
+}
+
+/* 9) Left-column for panels */
+.panel-col {
+  display: flex; flex-direction: column;
+  gap: 1rem; max-width: 500px;
+}
+
+/* 10) Only show circular geolocate control */
+.start-wrapper #btn-geolocate { display: none !important; }
+.start-wrapper .mapboxgl-ctrl-geolocate { display: inline-block; }
+
+/* ──────────────────────────────────────────────────────────
+   Positioning tweaks for hamburger toggle & scrollbar
+─────────────────────────────────────────────────────────── */
+
+/* 11) .turn-wrapper container */
+.turn-wrapper {
+  position: relative;
+  overflow: visible !important; /* allow the card to overflow */
+}
+
+/* 12) Pin the ☰ toggle above its card */
+#btn-hide-steps {
+  position: absolute !important;
+  top: 6px !important;           /* drop it by 6px for spacing */
+  left: .5rem !important;        /* align with card padding */
+  transform: translateY(-100%) !important;
+  width: 32px; height: 32px; padding: 0;
+  background: #f5f7fa; border: none;
+  z-index: 1001;
+}
+
+/* 13) Only the card itself scrolls */
+#turn-by-turn {
+  max-width: 300px;
+  max-height: 50vh;
+  overflow-y: auto !important;   /* single scrollbar here */
+}
+
+/* 14) Leave space for weather */
+@media (min-width: 768px) {
+  #panels .panel-col { margin-right: 160px; }
 }
