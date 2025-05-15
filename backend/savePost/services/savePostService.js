@@ -1,4 +1,4 @@
-const User = require('../../models/User');
+const User = require('../../models/user');
 
 exports.saveToUser = async (userId, type, targetId) => {
   const user = await User.findById(userId);

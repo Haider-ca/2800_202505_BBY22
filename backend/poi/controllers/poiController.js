@@ -1,6 +1,6 @@
 const poiService = require('../services/poiService');
 const POI = require('../../models/POI');
-const User = require('../../models/User');
+const User = require('../../models/user');
 
 exports.createPOI = async (req, res) => {
   try {

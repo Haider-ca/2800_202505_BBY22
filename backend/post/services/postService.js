@@ -1,5 +1,5 @@
 const Post = require('../../models/post');
-const User = require('../../models/User');
+const User = require('../../models/user');
 
 exports.createPost = async ({ title, body, mediaUrl, mediaType, userId, username }) => {
   const post = new Post({
