@@ -49,3 +49,16 @@ nav.navbar .navbar-brand img {
 .nav-link{
   color: var(--text-color) !important;
 }
+
+/* Text size */
+body.size-small {
+  font-size: 12px;
+}
+
+body.size-medium {
+  font-size: 16px;
+}
+
+body.size-large {
+  font-size: 20px;
+}
