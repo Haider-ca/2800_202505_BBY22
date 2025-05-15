@@ -48,7 +48,7 @@ app.use(express.json());
 // Home Page
 app.get('/', (req, res) => {
   if (!req.session?.userId) {
-    res.redirect('/html/home.html');
+    res.redirect('/index.html');
   }
   else{
     res.redirect('/html/feed.html?mode=community');
