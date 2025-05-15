@@ -76,7 +76,7 @@ function bindLogout() {
             .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
-              window.location.href = '/html/home.html';
+              window.location.href = '/index.html';
             });
 
          window.location.href = '/index.html';
