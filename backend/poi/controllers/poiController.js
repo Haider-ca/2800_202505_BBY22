@@ -1,5 +1,6 @@
 const poiService = require('../services/poiService');
 const POI = require('../../models/POI');
+const User = require('../../models/user');
 
 exports.createPOI = async (req, res) => {
   try {
@@ -55,9 +56,24 @@ exports.getAllPOIs = async (req, res) => {
     const search = req.query.q;
 
     const pois = await poiService.fetchPOIs({ page, limit, sort, filter, search });
+    await POI.populate(pois, { path: 'userId', select: 'avatar' });
     res.json(pois);
   } catch (err) {
     console.error('Failed to fetch POI posts:', err);
     res.status(500).json({ error: 'Server error while fetching POI posts' });
+  }
+};
+
+// Get saved POIs
+exports.getSavedPOIs = async (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) return res.status(401).json({ error: 'Not logged in' });
+
+  try {
+    const user = await User.findById(userId).populate('savedPOIs');
+    res.json(user.savedPOIs);
+  } catch (err) {
+    console.error('Failed to fetch saved POIs:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 };

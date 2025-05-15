@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../../models/user');
 const cloudinary = require('../../config/cloudinary');
 const bcrypt = require('bcrypt');
@@ -72,8 +73,23 @@ const resetPassword = async (userId, newPassword) => {
 
 // Delete a user profile and their avatar image if stored on Cloudinary
 const deleteProfile = async (email) => {
-  const user = await User.findOneAndDelete({ email });
+  const user = await User.findOne({ email });
   if (!user) throw new Error('User not found');
+
+  // Delete all POIs of the user before deleting the user
+  const userId = user._id;
+  const userPOIs = await POI.find({ userId });
+  for (const poi of userPOIs) {
+    if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
+      const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
+      try {
+        await cloudinary.uploader.destroy(`pathpal-images/${publicId}`);
+      } catch (error) {
+        console.error('Failed to delete POI image on Cloudinary:', error);
+      }
+    }
+  }
+  await POI.deleteMany({ userId });
 
   // Delete avatar from Cloudinary if it exists there
   if (user.avatar && user.avatar.startsWith('https://res.cloudinary.com')) {
@@ -85,22 +101,38 @@ const deleteProfile = async (email) => {
     }
   }
 
+  // Delete the user profile after deleting POIs
+  await User.findOneAndDelete({ email });
+
   return { message: 'Profile deleted successfully' };
 };
 
 // Fetch user's POIs based on userId, with optional pagination, sorting, filtering, and search
 const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
   const query = {};
-  let userIdStr = '';
-  if (userId && typeof userId === 'object' && userId.toString) {
-    userIdStr = userId.toString();
-  } else if (userId) {
-    userIdStr = userId;
-  } else {
-    throw new Error('userId is undefined or invalid');
+  let userIdObj;
+
+  if (!userId) {
+    throw new Error('userId is undefined or null');
   }
 
-  query.userId = userIdStr;
+  // Handle userId: If it's an ObjectId object, convert to string; then create a new ObjectId
+  let userIdStr = userId;
+  if (userId instanceof mongoose.Types.ObjectId) {
+    userIdStr = userId.toString();
+  } else if (typeof userId !== 'string') {
+    throw new Error(`Invalid userId type: ${typeof userId}, value: ${userId}`);
+  }
+
+  // Turn userId string into ObjectId
+  if (mongoose.Types.ObjectId.isValid(userIdStr)) {
+    userIdObj = new mongoose.Types.ObjectId(userIdStr);
+  } else {
+    throw new Error(`Invalid userId format: ${userIdStr}`);
+  }
+
+  // Use the ObjectId directly in the query
+  query.userId = userIdObj;
 
   if (q) query.description = { $regex: q, $options: 'i' };
   if (filter) {
@@ -116,7 +148,7 @@ const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
     .skip(skip || 0);
 
   // Fetch user to get avatar
-  const user = await User.findById(userIdStr).select('avatar');
+  const user = await User.findById(userIdObj).select('avatar');
   if (!user) throw new Error('User not found');
 
   // Map POIs and include user's avatar
@@ -127,7 +159,7 @@ const getUserPOIs = async (userId, limit, page, sort, filter, q) => {
     title: poi.title || '',
     description: poi.description || '',
     imageUrl: poi.imageUrl || '',
-    coordinates: poi.coordinates,
+    coordinates: poi.coordinates ? poi.coordinates.coordinates : [], // Extract [longitude, latitude] from GeoJSON
     tags: poi.tags || [],
     likes: poi.likes || 0,
     dislikes: poi.dislikes || 0,
@@ -143,11 +175,13 @@ const updatePOI = async (email, poiId, updates) => {
   if (!user) throw new Error('User not found');
 
   const poi = await POI.findById(poiId);
-  if (!poi) throw new Error('POI not found');
-  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to update this POI');
-
-  // Handle image upload if a new file is provided
-  let imageUrl = poi.imageUrl; // Default to existing imageUrl
+  if (!poi) {
+    throw new Error('POI not found');
+  }
+  if (poi.userId.toString() !== user._id.toString()) {
+    throw new Error('Unauthorized to update this POI');
+  }
+  let imageUrl = poi.imageUrl;
   if (updates.filePath) {
     try {
       // Upload the new image to Cloudinary
@@ -173,9 +207,6 @@ const updatePOI = async (email, poiId, updates) => {
   poi.title = updates.title || poi.title;
   poi.description = updates.description || poi.description;
   poi.tags = updates.tags || poi.tags;
-  if (updates.coordinates && Array.isArray(updates.coordinates) && updates.coordinates.length === 2) {
-    poi.coordinates = { type: 'Point', coordinates: updates.coordinates };
-  }
   poi.imageUrl = imageUrl; // Update imageUrl with the new or existing value
 
   // Save and return the updated POI
@@ -187,7 +218,7 @@ const updatePOI = async (email, poiId, updates) => {
     title: updatedPOI.title || '',
     description: updatedPOI.description || '',
     imageUrl: updatedPOI.imageUrl || '',
-    coordinates: updatedPOI.coordinates,
+    coordinates: updatedPOI.coordinates ? updatedPOI.coordinates.coordinates : [], // Extract [longitude, latitude] from GeoJSON
     tags: updatedPOI.tags || [],
     likes: updatedPOI.likes || 0,
     dislikes: updatedPOI.dislikes || 0,
@@ -202,10 +233,12 @@ const deletePOI = async (email, poiId) => {
   if (!user) throw new Error('User not found');
 
   const poi = await POI.findById(poiId);
-  if (!poi) throw new Error('POI not found');
-  if (poi.userId.toString() !== user._id.toString()) throw new Error('Unauthorized to delete this POI');
-
-  // Delete the image from Cloudinary if it's hosted there
+  if (!poi) {
+    throw new Error('POI not found');
+  }
+  if (poi.userId.toString() !== user._id.toString()) {
+    throw new Error('Unauthorized to delete this POI');
+  }
   if (poi.imageUrl && poi.imageUrl.startsWith('https://res.cloudinary.com')) {
     const publicId = poi.imageUrl.split('/').slice(-1)[0].split('.')[0];
     try {

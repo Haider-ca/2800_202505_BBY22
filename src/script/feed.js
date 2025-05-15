@@ -13,11 +13,49 @@ let sortBy = 'createdAt';
 const container = document.querySelector('.container');
 const feedCards = document.getElementById('feed-cards');
 const loadMore = document.querySelector('.text-center');
-let feedType = 'poi';
+
+const tabSets = {
+  community: [
+    { id: 'post', label: 'Community', type: 'post' },
+    { id: 'poi', label: 'POIs', type: 'poi' },
+    { id: 'announcement', label: 'Announcements', type: 'announcement' }
+  ],
+  favorites: [
+    { id: 'poi', label: 'POIs', type: 'poi' },
+    { id: 'post', label: 'Posts', type: 'post' },
+    { id: 'routes', label: 'Routes', type: 'routes' }
+  ]
+};
 
 // Get feed type from URL
 const params = new URLSearchParams(window.location.search);
-feedType = params.get('type') || 'poi';
+// feedType = params.get('type') || 'poi';
+const mode = params.get('mode') || 'community';
+const currentTabSet = tabSets[mode] || tabSets['community'];
+let feedType = currentTabSet[0].type;
+const tabGroup = document.getElementById('tab-group');
+function renderTabs() {
+  tabGroup.innerHTML = '';
+  currentTabSet.forEach((tab, index) => {
+    const li = document.createElement('li');
+    li.className = 'nav-item';
+    li.innerHTML = `
+      <button class="nav-link ${index === 0 ? 'active' : ''}" data-type="${tab.type}">
+        ${tab.label}
+      </button>
+    `;
+    tabGroup.appendChild(li);
+  });
+}
+
+function updateFilterVisibility() {
+  const filterBox = document.getElementById('filterBox');
+  const filterBtn = document.querySelector('button[data-bs-target="#filterBox"]');
+
+  const shouldShow = feedType === 'poi';
+  if (filterBox) filterBox.classList.toggle('d-none', !shouldShow);
+  if (filterBtn) filterBtn.classList.toggle('d-none', !shouldShow);
+}
 
 // Listen for filter and sort changes
 document.querySelectorAll('.form-check-input').forEach(cb => {
@@ -41,6 +79,8 @@ function resetAndLoad() {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
+  updateFilterVisibility(); // Filter feature only available for POI
+  renderTabs();
   loadFeed();
 
   // Set up infinite scroll
@@ -59,22 +99,28 @@ function setLoading(state) {
 
 // Fetch data from DB
 function loadFeed() {
+  const favoritesMode = mode === 'favorites';
   switch (feedType) {
     case 'post':
-      loadPosts({ currentPage, limit, sortBy, searchQuery, activeFilters, container, loadMore, setLoading })
+      loadPosts({ currentPage, 
+        limit, 
+        sortBy, 
+        searchQuery, 
+        activeFilters, 
+        feedCards, 
+        loadMore, 
+        setLoading, 
+        favoritesMode})
         .then(nextPage => {
           if (nextPage) currentPage = nextPage;
         });
       break;
     case 'announcement':
-      loadAnnouncements({ currentPage, limit, sortBy, searchQuery, activeFilters, container, loadMore, setLoading })
-        .then(nextPage => {
-          if (nextPage) currentPage = nextPage;
-        });
+      loadAnnouncements({ currentPage, limit, feedCards, loadMore, setLoading }).then(nextPage => {
+        if (nextPage) currentPage = nextPage;
+      });
       break;
     case 'poi':
-    default:
-      const subtype = new URLSearchParams(window.location.search).get('sub') || 'all';
       loadPOIs({
         currentPage,
         limit,
@@ -84,16 +130,30 @@ function loadFeed() {
         feedCards,
         loadMore,
         setLoading,
-        poiType: subtype
-      })
-        .then(nextPage => {
+        favoritesMode
+      }).then(nextPage => {
           if (nextPage) currentPage = nextPage;
         });
+        break;
   }
 }
 
-// Handle click events for like/dislike buttons
+// Handle click events for like/dislike and saved buttons
 document.addEventListener('click', async (e) => {
+  // Tab toggle
+  const tab = e.target.closest('#tab-group .nav-link');
+  if (tab) {
+    const newType = tab.getAttribute('data-type');
+    if (feedType !== newType) {
+      document.querySelectorAll('#tab-group .nav-link').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      feedType = newType;
+      updateFilterVisibility(); // Filter feature only available for POI
+      resetAndLoad();
+      return;
+    }
+  }
+
   const likeBtn = e.target.closest('.like-btn');
   const dislikeBtn = e.target.closest('.dislike-btn');
   const saveBtn = e.target.closest('.save-btn');
