@@ -20,12 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.loggedIn) {
               // ✅ Personalize navbar if user is logged in
               const nameSpan = document.getElementById('user-name');
-              const homeLink = document.querySelector('.nav-link[href="/index.html"]');
               if (nameSpan) {
                 nameSpan.innerHTML = `Hi, ${data.name}`;
-              }
-              if (homeLink) {
-                homeLink.setAttribute('href', '/html/home.html');
               }
 
               // ✅ Bind logout button event
@@ -33,24 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // ✅ Bind theme switch button event
               bindThemeSwitcher(); 
+
+              //✅ adjust text size
+              bindSizeSwitcher(); 
+
+              if (botEl) {
+                 // ✅ Load bottom navbar if present
+                    fetch(`/partials/bottomNavbar.html`)
+                   .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+                   .then(html => botEl.innerHTML = html);
+               }
             }
           });
       });
   }
-
-  if (botEl) {
-    // ✅ Load bottom navbar if present
-    fetch(`/partials/bottomNavbar.html`)
-      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-      .then(html => botEl.innerHTML = html);
-  }
-
-  // ✅ Listen for logout events triggered from other tabs
-  //window.addEventListener('storage', (e) => {
-  //  if (e.key === 'logout-event') {
-  //    location.reload(); // Reload to update navbar after logout
-  //  }
-  //});
 });
 
 // ✅ Bind logout functionality after navbar is loaded
@@ -75,9 +67,10 @@ function bindLogout() {
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
             });
-          location.reload();
-          // ✅ Optional: Redirect to home page
-          // window.location.href = '/index.html';
+
+         window.location.href = '/index.html';
+
+
         } else {
           alert('Logout failed.');
         }
@@ -131,4 +124,36 @@ function applyTheme(theme) {
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function bindSizeSwitcher() {
+  const sizeBtn = document.getElementById('size-btn');
+  const body = document.body;
+  const sizes = ['size-small', 'size-medium', 'size-large'];
+  const labels = ['Small', 'Medium', 'Large'];
+  let currentSizeIndex = 1; // Default is medium
+
+  const savedSize = localStorage.getItem('fontSizeClass');
+  if (savedSize && sizes.includes(savedSize)) {
+    body.classList.add(savedSize);
+    currentSizeIndex = sizes.indexOf(savedSize);
+  } else {
+    body.classList.add(sizes[currentSizeIndex]);
+  }
+
+  // Update button label initially
+  if (sizeBtn) {
+    sizeBtn.textContent = `Text Size: ${labels[currentSizeIndex]}`;
+
+    sizeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      body.classList.remove(sizes[currentSizeIndex]);
+      currentSizeIndex = (currentSizeIndex + 1) % sizes.length;
+      body.classList.add(sizes[currentSizeIndex]);
+      localStorage.setItem('fontSizeClass', sizes[currentSizeIndex]);
+
+      // Update button label after change
+      sizeBtn.textContent = `Size: ${labels[currentSizeIndex]}`;
+    });
+  }
 }
