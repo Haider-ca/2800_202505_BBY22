@@ -1,4 +1,6 @@
 const postService = require('../services/postService');
+const User = require('../../models/User');
+const Post = require('../../models/post');
 
 exports.createPost = async (req, res) => {
   try {
@@ -31,19 +33,44 @@ exports.createPost = async (req, res) => {
   }
 };
 
-// exports.getAllPOIs = async (req, res) => {
-//   try {
-//     // Extract query parameters
-//     const page   = parseInt(req.query.page) || 1;
-//     const limit  = parseInt(req.query.limit) || 5;
-//     const sort   = req.query.sort;
-//     const filter = req.query.filter;
-//     const search = req.query.q;
+exports.getAllPosts = async (req, res) => {
+  try {
+    // Extract query parameters
+    const page   = parseInt(req.query.page) || 1;
+    const limit  = parseInt(req.query.limit) || 5;
+    const sort   = req.query.sort;
+    const filter = req.query.filter;
+    const search = req.query.q;
 
-//     const pois = await poiService.fetchPOIs({ page, limit, sort, filter, search });
-//     res.json(pois);
-//   } catch (err) {
-//     console.error('Failed to fetch POI posts:', err);
-//     res.status(500).json({ error: 'Server error while fetching POI posts' });
-//   }
-// };
+    const posts = await postService.fetchPosts({
+      page, limit, sort, filter, search,
+      userId: req.session?.userId || null
+    });
+
+    // Get user avatar
+    await Post.populate(posts, { path: 'userId', select: 'avatar' });
+
+    res.json(posts);
+  } catch (err) {
+    console.error('Failed to fetch posts:', err);
+    res.status(500).json({ error: 'Server error while fetching posts' });
+  }
+};
+
+exports.getSavedPosts = async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    if (!userId) return res.status(401).json({ error: 'Not logged in' });
+
+    try {
+      const user = await User.findById(userId).populate('savedPosts');
+      res.json(user.savedPosts);
+    } catch (err) {
+      console.error('Failed to fetch saved posts:', err);
+      res.status(500).json({ error: 'Server error' });
+    }
+  } catch (err) {
+    console.error('Error fetching saved posts:', err);
+    res.status(500).json({ error: 'Failed to fetch saved posts' });
+  }
+};
