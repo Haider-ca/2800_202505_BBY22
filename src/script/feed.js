@@ -1,7 +1,6 @@
 import { loadPOIs } from './feed-poi.js';
 import { loadPosts } from './feed-post.js';
 import { loadAnnouncements } from './feed-announcement.js';
-import { getOrCreateVoterId } from '../utils/helpers.js';
 import { handleVoteClick } from '../utils/vote.js';
 import { handleSaveClick } from '../utils/save.js';
 
@@ -10,9 +9,10 @@ const limit = 5;
 let isLoading = false;
 let activeFilters = [];
 let sortBy = 'createdAt';
-const container = document.querySelector('.container');
 const feedCards = document.getElementById('feed-cards');
 const loadMore = document.querySelector('.text-center');
+let noMoreData = false; 
+let observer; 
 
 const tabSets = {
   community: [
@@ -29,7 +29,6 @@ const tabSets = {
 
 // Get feed type from URL
 const params = new URLSearchParams(window.location.search);
-// feedType = params.get('type') || 'poi';
 const mode = params.get('mode') || 'community';
 const currentTabSet = tabSets[mode] || tabSets['community'];
 let feedType = currentTabSet[0].type;
@@ -71,9 +70,13 @@ document.querySelector('.btn-sort')?.addEventListener('click', () => {
 // Reset and reload posts based on new filters/sorting
 function resetAndLoad() {
   currentPage = 1;
+  noMoreData = false;
+  isLoading = false;
   feedCards.innerHTML = '';
   loadMore.innerHTML = '';
   activeFilters = Array.from(document.querySelectorAll('.form-check-input:checked')).map(cb => cb.id.replace('filter', '').toLowerCase());
+  
+  observer?.observe(loadMore);
   loadFeed();
 }
 
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadFeed();
 
   // Set up infinite scroll
-  const observer = new IntersectionObserver((entries) => {
+  observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !isLoading) {
       loadFeed();
     }
@@ -99,6 +102,8 @@ function setLoading(state) {
 
 // Fetch data from DB
 function loadFeed() {
+  if (noMoreData) return;
+
   const favoritesMode = mode === 'favorites';
   switch (feedType) {
     case 'post':
@@ -112,12 +117,22 @@ function loadFeed() {
         setLoading, 
         favoritesMode})
         .then(nextPage => {
-          if (nextPage) currentPage = nextPage;
+          if (nextPage) {
+            currentPage = nextPage;
+          } else {
+            noMoreData = true;
+            observer?.unobserve(loadMore);
+          }
         });
       break;
     case 'announcement':
       loadAnnouncements({ currentPage, limit, feedCards, loadMore, setLoading }).then(nextPage => {
-        if (nextPage) currentPage = nextPage;
+          if (nextPage) {
+            currentPage = nextPage;
+          } else {
+            noMoreData = true;
+            observer?.unobserve(loadMore);
+          }
       });
       break;
     case 'poi':
@@ -132,7 +147,12 @@ function loadFeed() {
         setLoading,
         favoritesMode
       }).then(nextPage => {
-          if (nextPage) currentPage = nextPage;
+          if (nextPage) {
+            currentPage = nextPage;
+          } else {
+            noMoreData = true;
+            observer?.unobserve(loadMore);
+          }
         });
         break;
   }
