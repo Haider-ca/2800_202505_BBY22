@@ -3,6 +3,7 @@ import { loadPosts } from './feed-post.js';
 import { loadAnnouncements } from './feed-announcement.js';
 import { handleVoteClick } from '../utils/vote.js';
 import { handleSaveClick } from '../utils/save.js';
+import { loadRoutes } from './feed-routes.js';
 
 let currentPage = 1;
 const limit = 5;
@@ -155,6 +156,14 @@ function loadFeed() {
           }
         });
         break;
+    case 'routes':
+      loadRoutes({ currentPage, limit, feedCards, loadMore, setLoading })
+        .then(nextPage => {
+          noMoreData = true;
+          observer?.unobserve(loadMore);
+        });
+      break;
+
   }
 }
 
