@@ -6,6 +6,8 @@ function formatDate(dateString) {
     });
 }
 
+import { handleVoteClick } from "../utils/vote";
+
 export function createPopup({ coordinates, properties }) {
     const [lng, lat] = coordinates;
 
@@ -25,15 +27,21 @@ export function createPopup({ coordinates, properties }) {
         </div>
         <img src="${image}" alt="POI photo" class="popup-img" />
         <div class="popup-desc">${description}</div>
+
         <div class="popup-votes">
-          <span>👍 ${likes}</span>
+      <button class="like-btn" data-id="${properties._id || properties.id}">
+        👍 <span class="count">${likes}</span>
+      </button>
+      <button class="dislike-btn" data-id="${properties._id || properties.id}">
+        👎
+      </button>
           <span>💬 ${comments}</span>
         </div>
       </div>
     `;
 
     return new mapboxgl.Popup({
-        closeButton: false,
+        closeButton: true,
         closeOnClick: false,
         offset: 25,
     }).setHTML(content).setLngLat([lng, lat]);
