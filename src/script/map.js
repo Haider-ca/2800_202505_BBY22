@@ -3,7 +3,6 @@
 import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
 import { createPopup } from './popup.js';
-import { loadSavedRoutes } from './loadSavedRoute.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
@@ -247,8 +246,6 @@ map.on('load', () => {
       }
     });
   });
-  // Load saved routes
-  loadSavedRoutes(map);
 });
 
 // ─── 9) Initialize Add-POI feature ───

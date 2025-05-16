@@ -462,13 +462,6 @@ export function initDirections(map) {
 
       window.lastRouteGeoJSON = r;
       window.currentProfile = profile;
-      window.lastRouteSteps = r.legs[0].steps;
-      window.lastRouteSummary = {
-        distance: r.distance,
-        duration: r.duration
-      };
-      console.log();
-      window.lastRouteName = `${r.legs[0].steps[0]?.name || 'Start'} → ${r.legs[0].steps.at(-1)?.name || 'End'}`;
       document.getElementById('btn-save-route')?.classList.remove('d-none');
 
       if (profile === 'senior') await addBenches(r);
