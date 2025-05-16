@@ -12,8 +12,8 @@ let lastDestination = null;
 
 // ─── Marker arrays (must come _before_ we export them) ───
 const wheelchairMarkers = [];
-const seniorMarkers = [];
-const userPOIMarkers = [];
+const seniorMarkers     = [];
+const userPOIMarkers    = [];
 
 // ─── Export the *actual* arrays & map once they exist ───
 window.userPOIMarkers = userPOIMarkers;
@@ -75,14 +75,6 @@ const profileMap = {
 };
 
 map.on('load', () => {
-
-  map.loadImage('/icons/restroom.png', (err, img) => {
-    if (err) {
-      console.error('restroom.png load failed:', err);
-      return;
-    }
-    map.addImage('custom-restroom', img);
-  });
   // ─── 1) Load bench icon at native resolution ───
   map.loadImage('/icons/bench.png', (err, img) => {
     if (err) {
@@ -93,13 +85,6 @@ map.on('load', () => {
       map.addImage('bench-15', img);
     }
   });
-
-  // ─── preload ramp & restroom icons ───
-  map.loadImage('/icons/ramp.png', (err, img) => {
-    if (err) return console.error('ramp.png load error', err);
-    if (!map.hasImage('ramp-15')) map.addImage('ramp-15', img);
-  });
-
 
   // ─── 2) Live‑traffic source & layer (hidden by default) ───
   map.addSource('traffic', {
@@ -248,9 +233,9 @@ map.on('load', () => {
   });
 });
 
-// ─── 9) Initialize Add-POI feature ───
-console.log('🌐 map loaded, initializing POI feature');
-setupAddPOIFeature();
+  // ─── 9) Initialize Add-POI feature ───
+  console.log('🌐 map loaded, initializing POI feature');
+  setupAddPOIFeature();
 
 const closeDirBtn = document.getElementById('btn-close-directions');
 if (closeDirBtn) {
