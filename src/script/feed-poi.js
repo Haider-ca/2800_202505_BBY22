@@ -31,10 +31,10 @@ export async function loadPOIs({
 
         if (data.length === 0 && currentPage === 1) {
             loadMore.innerHTML = '<span class="text-muted">No results</span>';
-            return;
+            return null;
         } else if (data.length === 0) {
             loadMore.innerHTML = '<span class="text-muted">No more posts</span>';
-            return;
+            return null;
         }
 
         // Render each post card
@@ -44,11 +44,16 @@ export async function loadPOIs({
             feedCards.appendChild(card);
         });
 
+        if (data.length === 0 || data.length < limit) {
+            loadMore.innerHTML = '<span class="text-muted">No more posts</span>';
+            return null;
+        }
+          
         return currentPage + 1;
     } catch (err) {
         console.error('Failed to fetch POIs:', err);
+        return null;
     } finally {
-        return currentPage;
         setLoading(false);
     }
 }

@@ -10,24 +10,25 @@ export function renderCard(post, voteKey = '', postType = 'post') {
   const isHearted = localStorage.getItem(`hearted-${post._id}`) === 'true';
   const heartIconClass = isHearted ? 'bi-heart-fill text-danger' : 'bi-heart';
 
-  // saved
-  const isSaved = localStorage.getItem(`saved-${post._id}`) === 'true';
+  // saved (prioritize server isSaved, fallback to localStorage)
+  const isSaved = (typeof post.isSaved === 'boolean')
+  ? post.isSaved
+  : localStorage.getItem(`saved-${post._id}`) === 'true';
   const saveIconClass = isSaved ? 'bi-bookmark-fill text-primary' : 'bi-bookmark';
 
   const card = document.createElement('div');
   card.className = 'card mb-3';
-  
 
   // Media
   let mediaHTML = '';
   if (post.mediaUrl) {
     if (post.mediaType === 'video') {
-      mediaHTML = `<video controls class="card-img-top mb-2" src="${post.mediaUrl}"></video>`;
+      mediaHTML = `<video controls class="card-img-top mb-2 rounded" src="${post.mediaUrl}"></video>`;
     } else {
-      mediaHTML = `<img src="${post.mediaUrl}" class="card-img-top mb-2" alt="Post Image">`;
+      mediaHTML = `<img src="${post.mediaUrl}" class="card-img-top mb-2 rounded" alt="Post Image">`;
     }
   } else if (post.imageUrl) {
-    mediaHTML = `<img src="${post.imageUrl}" class="card-img-top mb-2" alt="POI Image">`;
+    mediaHTML = `<img src="${post.imageUrl}" class="card-img-top mb-2 rounded" alt="POI Image">`;
   }
 
   // Text
@@ -52,9 +53,9 @@ export function renderCard(post, voteKey = '', postType = 'post') {
           <small class="text-muted">${formatDate(post.createdAt)}</small>
         </div>
       </div>
-      ${mediaHTML}
       <h5 class="mt-2">${title}</h5>
       <p>${description}</p>
+      ${mediaHTML}
       <div class="d-flex justify-content-start gap-4 post-actions">
         <span class="like-btn" data-id="${post._id}" data-type="${postType}">
           <i class="bi ${likeIconClass}"></i> <span class="count">${post.likes || 0}</span>
