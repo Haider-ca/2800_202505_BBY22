@@ -19,26 +19,26 @@ export function createPopup({ coordinates, properties }) {
     const likes = properties.likes || 0;
     const comments = properties.comments || 0;
 
-    const content = `
-      <div class="custom-popup">
-        <div class="popup-header">
-          <strong class="popup-username">${username}</strong><br>
-          <span class="popup-time">${time}</span>
-        </div>
-        <img src="${image}" alt="POI photo" class="popup-img" />
-        <div class="popup-desc">${description}</div>
+ const content = `
+  <div class="custom-popup">
+    <div class="popup-header">
+      <strong class="popup-username">${username}</strong><br>
+      <span class="popup-time">${time}</span>
+    </div>
+    <img src="${image}" alt="POI photo" class="popup-img" />
+    <div class="popup-desc">${description}</div>
 
-        <div class="popup-votes">
+    <div class="popup-votes">
       <button class="like-btn" data-id="${properties._id || properties.id}">
         👍 <span class="count">${likes}</span>
       </button>
       <button class="dislike-btn" data-id="${properties._id || properties.id}">
         👎
       </button>
-          <span>💬 ${comments}</span>
-        </div>
-      </div>
-    `;
+      <span>💬 ${comments}</span>
+    </div>
+  </div>
+`;
 
     return new mapboxgl.Popup({
         closeButton: true,
