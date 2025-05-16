@@ -168,6 +168,7 @@ document.addEventListener('click', async (e) => {
       document.querySelectorAll('#tab-group .nav-link').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       feedType = newType;
+      resetUIState(); //Reset search,filter and sort button
       updateFilterVisibility(); // Filter feature only available for POI
       resetAndLoad();
       return;
@@ -205,4 +206,26 @@ function debounceSearch() {
   window._searchTimeout = setTimeout(() => {
     resetAndLoad();
   }, 300);
+}
+
+function resetUIState() {
+  // Reset search input
+  const searchInput = document.querySelector('input[placeholder="Search"]');
+  if (searchInput) {
+    searchInput.value = '';
+    searchQuery = '';
+  }
+
+  // Reset filters
+  document.querySelectorAll('.form-check-input:checked').forEach(cb => {
+    cb.checked = false;
+  });
+  activeFilters = [];
+
+  // Reset sort
+  sortBy = 'createdAt';
+  const sortLabel = document.getElementById('sortLabel');
+  if (sortLabel) {
+    sortLabel.textContent = 'Newest';
+  }
 }
