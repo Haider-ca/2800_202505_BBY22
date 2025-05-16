@@ -1,0 +1,6810 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2025-05-15T00:55:45Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/23811142",
+        "addr:housenumber": "231",
+        "addr:street": "East 15th Street",
+        "amenity": "hospital",
+        "emergency": "yes",
+        "healthcare": "hospital",
+        "name": "Lions Gate Hospital",
+        "operator": "Vancouver Coastal Health",
+        "operator:type": "public",
+        "phone": "+1-604-988-3131",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.vch.ca/en/location/lions-gate-hospital",
+        "wheelchair": "yes",
+        "wikidata": "Q96418816",
+        "wikipedia": "en:Lions Gate Hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0676719,
+          49.3209784
+        ]
+      },
+      "id": "way/23811142"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/24705904",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "777",
+        "addr:province": "BC",
+        "addr:street": "Pacific Boulevard",
+        "alt_name": "B.C. Place",
+        "building": "stadium",
+        "capacity": "54500",
+        "height": "60",
+        "leisure": "stadium",
+        "name": "BC Place",
+        "name:en": "BC Place",
+        "name:ko": "BC 플레이스",
+        "name:ru": "Би-Си Плэйс",
+        "phone": "+1-604-669-2300",
+        "sport": "canadian_football",
+        "start_date": "1983",
+        "toilets:wheelchair": "yes",
+        "type": "entertainment",
+        "website": "https://www.bcplace.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q612227",
+        "wikipedia": "en:BC Place",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1120068,
+          49.2767054
+        ]
+      },
+      "id": "way/24705904"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/24885751",
+        "addr:housenumber": "4500",
+        "addr:street": "Clarence Taylor Crescent",
+        "amenity": "townhall",
+        "building": "yes",
+        "building:colour": "white",
+        "name": "Delta City Hall",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0579306,
+          49.0846602
+        ]
+      },
+      "id": "way/24885751"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27318163",
+        "addr:housenumber": "1961",
+        "addr:street": "East Mall",
+        "amenity": "library",
+        "building": "yes",
+        "building:levels": "4",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:ssid": "ubcvisitor",
+        "name": "Irving K. Barber Learning Centre",
+        "opening_hours": "Mo-Su 06:00-23:00",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "wikidata": "Q6074643",
+        "wikipedia": "en:Irving K. Barber Learning Centre",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2527223,
+          49.267574
+        ]
+      },
+      "id": "way/27318163"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/61757623",
+        "amenity": "place_of_worship",
+        "building": "church",
+        "building:levels": "2",
+        "denomination": "catholic",
+        "name": "Sacred Heart",
+        "religion": "christian",
+        "service_times": "Sa 09:00, 17:00; Su 09:00, 11:00, 17:00; Mo-Fr 09:00",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0779471,
+          49.0750388
+        ]
+      },
+      "id": "way/61757623"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/74267954",
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1385889,
+          49.2939268
+        ]
+      },
+      "id": "way/74267954"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/76131966",
+        "addr:city": "Coquitlam",
+        "addr:housenumber": "575",
+        "addr:postcode": "V3J 6A9",
+        "addr:street": "Poirier Street",
+        "amenity": "library",
+        "branch": "Poirier Branch",
+        "building": "civic",
+        "building:levels": "1",
+        "email": "ask@coqlibrary.ca",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:ssid": "COQLibrary",
+        "name": "CPL: Poirier Branch",
+        "opening_hours": "Mo-Th 09:00-21:00; Fr 09:00-17:00; Sa-Su 10:00-17:00; PH off",
+        "operator": "Coquitlam Public Library",
+        "operator:type": "public",
+        "phone": "+1-604-554-7323",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.coqlibrary.ca/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8457436,
+          49.2534375
+        ]
+      },
+      "id": "way/76131966"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/76131968",
+        "amenity": "public_building",
+        "building": "yes",
+        "leisure": "sports_centre",
+        "sport": "swimming",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8458965,
+          49.254572
+        ]
+      },
+      "id": "way/76131968"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/85240507",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1055",
+        "addr:postcode": "V6C 0C3",
+        "addr:street": "Canada Place",
+        "amenity": "conference_centre",
+        "building": "yes",
+        "email": "info@vancouverconventioncentre.com",
+        "name": "Vancouver Convention Centre West",
+        "name:ko": "밴쿠버 컨벤션 센터 웨스트",
+        "old_name": "Vancouver Convention Centre",
+        "phone": "+1-604-689-8232",
+        "roof:colour": "#8c8885",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.vancouverconventioncentre.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q2742735",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1159516,
+          49.2890516
+        ]
+      },
+      "id": "way/85240507"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/87482996",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "check_date": "2024-03-13",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.925223,
+          49.290814
+        ]
+      },
+      "id": "way/87482996"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/88295811",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1426829,
+          49.3124167
+        ]
+      },
+      "id": "way/88295811"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/89915585",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "changing_table": "no",
+        "fee": "no",
+        "female": "yes",
+        "level": "0",
+        "male": "yes",
+        "operator": "BC Parks",
+        "operator:type": "government",
+        "operator:wikidata": "Q2876928",
+        "portable": "no",
+        "roof:levels": "0",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4515291,
+          49.3252497
+        ]
+      },
+      "id": "way/89915585"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/124311332",
+        "brand": "Safeway",
+        "brand:wikidata": "Q17111901",
+        "brand:wikipedia": "en:Safeway Inc.",
+        "building": "yes",
+        "name": "Safeway",
+        "shop": "supermarket",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8644183,
+          49.2493487
+        ]
+      },
+      "id": "way/124311332"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/129603143",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "2674",
+        "addr:street": "East Hastings Street",
+        "amenity": "library",
+        "building": "retail",
+        "name": "Hastings Branch",
+        "opening_hours": "Tu,We 10:00-21:00; Th-Sa 10:00-18:00; Su 13:00-17:00",
+        "operator": "Vancouver Public Library",
+        "operator:short": "VPL",
+        "operator:type": "public",
+        "operator:wikidata": "Q1376408",
+        "operator:wikipedia": "en:Vancouver Public Library",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.vpl.ca/location/hastings-branch",
+        "wheelchair": "yes",
+        "wikidata": "Q85704582",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0501438,
+          49.2808832
+        ]
+      },
+      "id": "way/129603143"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/131940358",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "opening_hours": "08:30-sunset",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9231152,
+          49.1944934
+        ]
+      },
+      "id": "way/131940358"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/133405603",
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "source": "Bing",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1286906,
+          49.0092619
+        ]
+      },
+      "id": "way/133405603"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/138867328",
+        "addr:housenumber": "801",
+        "addr:street": "West Georgia Street",
+        "brand": "Rosewood",
+        "brand:wikidata": "Q7368777",
+        "building": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Rosewood Hotel Georgia",
+        "official_name": "Rosewood Hotels & Resorts",
+        "phone": "+1-604-682-5566",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "https://www.rosewoodhotels.com/en/hotel-georgia-vancouver",
+        "wheelchair": "yes",
+        "wikidata": "Q111231429",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.119045,
+          49.2835501
+        ]
+      },
+      "id": "way/138867328"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/154377800",
+        "addr:housenumber": "2909",
+        "addr:street": "Grandview Highway",
+        "amenity": "fast_food",
+        "brand": "McDonald's",
+        "brand:wikidata": "Q38076",
+        "brand:wikipedia": "en:McDonald's",
+        "building": "retail",
+        "building:levels": "1",
+        "cuisine": "burger",
+        "drive_through": "yes",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "name": "McDonald's",
+        "opening_hours": "24/7",
+        "outdoor_seating": "no",
+        "roof:levels": "0",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0435763,
+          49.258685
+        ]
+      },
+      "id": "way/154377800"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/159463001",
+        "addr:housenumber": "3800",
+        "addr:postcode": "V7B 0A1",
+        "addr:street": "Cessna Drive",
+        "alt_name": "BCIT Aerospace Technology Campus",
+        "amenity": "college",
+        "faculty": "aerospace",
+        "name": "Aerospace Technology Campus",
+        "opening_hours": "Mo-Fr 08:00-16:00 open \"office\"",
+        "operator": "British Columbia Institute of Technology",
+        "phone": "+1-866-434-1610",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.bcit.ca/about/aerospace.shtml",
+        "wheelchair": "yes",
+        "wikidata": "Q820796",
+        "wikipedia": "en:British Columbia Institute of Technology",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1451385,
+          49.1854448
+        ]
+      },
+      "id": "way/159463001"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/163178308",
+        "addr:housenumber": "12161",
+        "addr:postcode": "V3W 2M1",
+        "addr:street": "72 Avenue",
+        "amenity": "cinema",
+        "brand": "Cineplex",
+        "brand:wikidata": "Q2972807",
+        "brand:wikipedia": "en:Cineplex Entertainment",
+        "building": "retail",
+        "is_in:city": "Surrey",
+        "name": "Cineplex Cinemas Strawberry Hill",
+        "operator": "Cineplex",
+        "phone": "+1-604-501-9400",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.cineplex.com/Theatre/cineplex-cinemas-strawberry-hill",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8859001,
+          49.1356014
+        ]
+      },
+      "id": "way/163178308"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/168949347",
+        "amenity": "toilets",
+        "building": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1137323,
+          49.3430391
+        ]
+      },
+      "id": "way/168949347"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/223089121",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1180",
+        "addr:postcode": "V6E 4R5",
+        "addr:street": "West Hastings Street",
+        "building": "yes",
+        "name": "Coast Coal Harbour Hotel by APA",
+        "phone": "+1-604-697-0202",
+        "roof:colour": "#99968f",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "https://www.coasthotels.com/hotels/bc/vancouver/coast-coal-harbour-hotel/",
+        "wheelchair": "yes",
+        "wheelchair:description": "Fully wheelchair accessible hotel room, toilet and shower.",
+        "wikidata": "Q111392009",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1221925,
+          49.288354
+        ]
+      },
+      "id": "way/223089121"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/240895668",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1160",
+        "addr:postcode": "V6E 1N1",
+        "addr:province": "BC",
+        "addr:street": "Davie Street",
+        "building": "yes",
+        "building:levels": "24",
+        "name": "Sandman Suites Vancouver on Davie",
+        "phone": "+1-604-681-7263",
+        "source": "local_knowledge",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "http://www.sandmanhotels.ca/hotels/vancouver-davie-street/",
+        "wheelchair": "yes",
+        "wikidata": "Q112025845",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1327531,
+          49.2810291
+        ]
+      },
+      "id": "way/240895668"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/246384111",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4340266,
+          49.0797811
+        ]
+      },
+      "id": "way/246384111"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/255867668",
+        "addr:city": "Surrey",
+        "addr:housenumber": "19219",
+        "addr:postcode": "V3S 8V9",
+        "addr:province": "British Columbia",
+        "addr:street": "56 Avenue",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "bar": "yes",
+        "building": "yes",
+        "capacity": "140",
+        "check_date": "2024-08-19",
+        "cuisine": "indian",
+        "delivery": "yes",
+        "highchair": "yes",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:ssid": "Sahotas Live Grill -Guest",
+        "level": "0",
+        "name": "Sahota's Live Grill",
+        "opening_hours": "Mo-Su 10:00-24:00",
+        "outdoor_seating": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-503-3223",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.sahotaslivegrill.com/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6905463,
+          49.1049388
+        ]
+      },
+      "id": "way/255867668"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/261805580",
+        "addr:city": "Richmond",
+        "addr:housenumber": "3320",
+        "addr:postcode": "V6V 1Z6",
+        "addr:province": "BC",
+        "addr:street": "Jacombs Road",
+        "air_conditioning": "yes",
+        "branch": "Richmond",
+        "brand": "IKEA",
+        "brand:wikidata": "Q54078",
+        "brand:wikipedia": "en:IKEA",
+        "building": "retail",
+        "building:levels": "3",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "IKEA",
+        "opening_hours": "Mo-Fr 10:00-21:00; Sa 10:00-20:00; Su 10:00-19:00",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-866-866-4532",
+        "shop": "furniture",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.ikea.com/ca/en/stores/richmond/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0791148,
+          49.1893172
+        ]
+      },
+      "id": "way/261805580"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/285378362",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0194077,
+          49.2320131
+        ]
+      },
+      "id": "way/285378362"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/289809375",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "opening_hours": "dawn-dusk",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.15362,
+          49.2745364
+        ]
+      },
+      "id": "node/289809375"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/303264356",
+        "amenity": "toilets",
+        "building": "yes",
+        "fee": "no",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0674277,
+          49.2717493
+        ]
+      },
+      "id": "way/303264356"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/305206585",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1193",
+        "addr:province": "BC",
+        "addr:street": "Granville Street",
+        "building": "retail",
+        "building:levels": "1",
+        "cuisine": "hotpot",
+        "diet:vegetarian": "yes",
+        "email": "info@coldtearestaurant.com",
+        "indoor_seating": "yes",
+        "opening_hours": "Sa, Su 11:00-23:00; Mo-Fr 12:00-23:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-423-2653",
+        "roof:colour": "#7a7a7c",
+        "roof:shape": "flat",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1262848,
+          49.2774203
+        ]
+      },
+      "id": "way/305206585"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/305651077",
+        "amenity": "townhall",
+        "building": "yes",
+        "name": "Port Coquitlam City Hall",
+        "toilets:wheelchair": "yes",
+        "townhall:type": "city",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7805633,
+          49.2621829
+        ]
+      },
+      "id": "way/305651077"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/313854844",
+        "addr:housenumber": "5186",
+        "addr:street": "Ladner Trunk Road",
+        "brand": "Save-On-Foods",
+        "brand:wikidata": "Q7427974",
+        "brand:wikipedia": "en:Save-On-Foods",
+        "name": "Save-On-Foods",
+        "shop": "supermarket",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0793639,
+          49.0890631
+        ]
+      },
+      "id": "node/313854844"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/330380168",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5755396,
+          49.1732698
+        ]
+      },
+      "id": "way/330380168"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/355966380",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "building:levels": "1",
+        "name": "Rice Lake Gate Washroom",
+        "roof:levels": "0",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0147788,
+          49.3503853
+        ]
+      },
+      "id": "way/355966380"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/378846280",
+        "addr:city": "Surrey",
+        "addr:housenumber": "15330",
+        "addr:postcode": "V3R 0B3",
+        "addr:street": "102A Avenue",
+        "amenity": "pub",
+        "building": "yes",
+        "description": "he Taphouse is a modern tavern. Our menu and craft beer selection make it the perfect place for lunch and a quick pint. Or settle in with some friends and watch the big game, then stick around for great live music and dancing. With 48 flat screen tv's and",
+        "email": "info@thetaphouse.ca",
+        "name": "The Taphouse",
+        "name:en": "The Taphouse",
+        "opening_hours": "Mo-Tu 11:00-24:00; We 11:00-01:00; Th-Sa 11:00-02:00; Su 10:00-24:00",
+        "phone": "+1-604-583-8828",
+        "toilets:wheelchair": "yes",
+        "website": "https://thetaphouse.ca/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7971742,
+          49.1884685
+        ]
+      },
+      "id": "way/378846280"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/413043579",
+        "amenity": "toilets",
+        "attribution": "Contains information licensed under the Open Government License – British Columbia",
+        "building": "toilets",
+        "fee": "no",
+        "name": "Oxford Comfort Station",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8127247,
+          49.0232761
+        ]
+      },
+      "id": "way/413043579"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/414385582",
+        "addr:housenumber": "1400",
+        "addr:street": "152 Street",
+        "alt_name": "The Bay",
+        "brand": "Hudson's Bay",
+        "brand:wikidata": "Q641129",
+        "brand:wikipedia": "en:Hudson's Bay (department store)",
+        "name": "Hudson's Bay",
+        "operator": "The Bay",
+        "shop": "department_store",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.802993,
+          49.1905749
+        ]
+      },
+      "id": "node/414385582"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/415424284",
+        "building": "no",
+        "landuse": "commercial",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1420895,
+          49.171155
+        ]
+      },
+      "id": "way/415424284"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/428214457",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "900",
+        "addr:postcode": "V6Z 3G5",
+        "addr:province": "BC",
+        "addr:street": "Burrard Street",
+        "amenity": "cinema",
+        "brand": "Cineplex",
+        "brand:wikidata": "Q2972807",
+        "brand:wikipedia": "en:Cineplex Entertainment",
+        "check_date:opening_hours": "2023-12-19",
+        "is_in:city": "Vancouver",
+        "name": "Scotiabank Theatre Vancouver",
+        "opening_hours": "Mo-Sa 10:00-18:00+; Su 11:00-18:00+",
+        "operator": "Cineplex",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-630-1407",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.cineplex.com/Theatre/scotiabank-theatre-vancouver",
+        "wheelchair": "yes",
+        "wikidata": "Q38378292"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.124346,
+          49.2819978
+        ]
+      },
+      "id": "node/428214457"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/455259023",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8203826,
+          49.1837801
+        ]
+      },
+      "id": "way/455259023"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/476099421",
+        "addr:city": "Coquitlam",
+        "addr:housenumber": "580",
+        "addr:street": "Clarke Road",
+        "brand": "Safeway",
+        "brand:wikidata": "Q17111901",
+        "brand:wikipedia": "en:Safeway (Canada)",
+        "building": "yes",
+        "building:levels": "3",
+        "check_date": "2025-01-30",
+        "name": "Safeway",
+        "shop": "supermarket",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.887878,
+          49.2626438
+        ]
+      },
+      "id": "way/476099421"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/479618014",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "operator": "City of Surrey",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8635272,
+          49.0523222
+        ]
+      },
+      "id": "way/479618014"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/482697092",
+        "addr:housenumber": "6574",
+        "addr:street": "Hastings Street",
+        "amenity": "restaurant",
+        "check_date": "2024-06-19",
+        "cuisine": "fish_and_chips",
+        "diet:halal": "no",
+        "diet:vegan": "no",
+        "diet:vegetarian": "yes",
+        "email": "info@cockneykings.ca",
+        "highchair": "yes",
+        "name": "Cockney Kings Fish & Chips",
+        "opening_hours": "Mo-Th 11:00-20:00; Fr 11:00-21:00; Sa 11:00-20:00; Su 12:00-20:00",
+        "outdoor_seating": "no",
+        "phone": "+1-604-291-1323",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://cockneykings.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.966568,
+          49.2800457
+        ]
+      },
+      "id": "node/482697092"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/484769517",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "fee": "no",
+        "note": "Poorly maintained - unsanitary.",
+        "shower": "hot",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.94266,
+          49.1451688
+        ]
+      },
+      "id": "way/484769517"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/492799165",
+        "amenity": "toilets",
+        "building": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6809776,
+          49.210141
+        ]
+      },
+      "id": "way/492799165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/518120632",
+        "addr:housenumber": "4191",
+        "addr:street": "Hastings Street",
+        "addr:unit": "101",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "changing_table": "yes",
+        "check_date": "2024-01-05",
+        "cuisine": "coffee_shop",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "outdoor_seating": "yes",
+        "phone": "+1-604-293-1366",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.starbucks.com/store-locator/store/1101/carlton-square-4191-hastings-street-burnaby-bc-v-5-c-2-j-3-ca",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.012161,
+          49.2812107
+        ]
+      },
+      "id": "node/518120632"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/538377965",
+        "addr:city": "Mission",
+        "addr:housenumber": "32786",
+        "addr:province": "BC",
+        "addr:street": "Lougheed Highway",
+        "amenity": "restaurant",
+        "building": "retail",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Rocko's Family Diner",
+        "opening_hours": "24/7",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://rockosdiner.com/",
+        "wikidata": "Q106900727",
+        "wikipedia": "en:Rocko's Diner",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3168651,
+          49.1327308
+        ]
+      },
+      "id": "way/538377965"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/648735253",
+        "amenity": "toilets",
+        "source": "survey",
+        "source:location": "gps",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1216139,
+          49.2898896
+        ]
+      },
+      "id": "node/648735253"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/652992171",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1015",
+        "addr:postcode": "V6Z 1Y5",
+        "addr:province": "BC",
+        "addr:street": "Burrard Street",
+        "email": "reserve@century-plaza.com",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Century Plaza Hotel and Spa",
+        "phone": "+1-604-687-0575",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "https://www.century-plaza.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q111392023"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1270521,
+          49.2808331
+        ]
+      },
+      "id": "node/652992171"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/711146821",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7340528,
+          49.2850611
+        ]
+      },
+      "id": "way/711146821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/747517054",
+        "addr:city": "Burnaby",
+        "addr:housenumber": "4300",
+        "addr:province": "BC",
+        "addr:street": "Kingsway",
+        "addr:unit": "5",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "bar": "no",
+        "changing_table": "yes",
+        "contact:phone": "+1-604-436-5000",
+        "contact:website": "https://www.saffroncuisine.ca/",
+        "cuisine": "indian",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "email": "saffroncuisine@shaw.ca",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Saffron Indian Cuisine",
+        "opening_hours": "Mo-Su 11:30-22:00",
+        "outdoor_seating": "patio",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.008436,
+          49.2311658
+        ]
+      },
+      "id": "node/747517054"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/759940343",
+        "access:covid19": "no",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "name": "Memorial Park Comfort Station",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8055519,
+          49.0211451
+        ]
+      },
+      "id": "way/759940343"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/808637385",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "check_date": "2023-06-19",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0775706,
+          49.1127941
+        ]
+      },
+      "id": "way/808637385"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/849264099",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "opening_hours": "dawn-dusk",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5350998,
+          49.0377395
+        ]
+      },
+      "id": "way/849264099"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/879500055",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1715129,
+          49.1014994
+        ]
+      },
+      "id": "way/879500055"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/893249270",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "yes",
+        "indoor": "yes",
+        "male": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1299587,
+          49.0083509
+        ]
+      },
+      "id": "node/893249270"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/903915609",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "name": "Washrooms",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7857006,
+          49.2876757
+        ]
+      },
+      "id": "way/903915609"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/931114508",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8545835,
+          49.2432661
+        ]
+      },
+      "id": "way/931114508"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/953151935",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8161177,
+          49.2869004
+        ]
+      },
+      "id": "way/953151935"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/953151936",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8161685,
+          49.2869179
+        ]
+      },
+      "id": "way/953151936"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/980238015",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "toilets",
+        "fee": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3472905,
+          49.0255787
+        ]
+      },
+      "id": "way/980238015"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/980238020",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "toilets",
+        "fee": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3471868,
+          49.0255758
+        ]
+      },
+      "id": "way/980238020"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1006079345",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5864157,
+          49.3020285
+        ]
+      },
+      "id": "way/1006079345"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1015607829",
+        "amenity": "toilets",
+        "check_date": "2022-07-24",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.907957,
+          49.2160537
+        ]
+      },
+      "id": "node/1015607829"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1099471278",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "description": "Public toilet closed at night time till dawn",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2000133,
+          49.257876
+        ]
+      },
+      "id": "way/1099471278"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1137750472",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0501016,
+          49.2605597
+        ]
+      },
+      "id": "way/1137750472"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1153890038",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9216267,
+          49.2898972
+        ]
+      },
+      "id": "node/1153890038"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1155831288",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.213883,
+          49.2189116
+        ]
+      },
+      "id": "node/1155831288"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1206479116",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0571083,
+          49.1269908
+        ]
+      },
+      "id": "way/1206479116"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1212917276",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.758205,
+          49.0274454
+        ]
+      },
+      "id": "way/1212917276"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1212940932",
+        "addr:city": "Bowen Island",
+        "addr:housenumber": "580",
+        "addr:postcode": "V0N1G2",
+        "addr:province": "BC",
+        "addr:street": "Bowen Island Trunk Road",
+        "amenity": "community_centre",
+        "building": "community_centre",
+        "email:room_rentals": "rentals@bimbc.ca",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:password": "no",
+        "name": "Bowen Island Community Centre",
+        "name:en": "Bowen Island Community Centre",
+        "official_name": "Bowen Island Community Centre",
+        "opening_hours": "Mo-Fr 06:00-21:00; Sa-Su 08:00-18:00",
+        "opening_hours:municipal_services": "Mo-Fr 08:30-16:30; Sa-Su off",
+        "opening_hours:recreation_desk": "Mo-Fr 08:00-18:00; Sa-Su 10:00-17:30",
+        "operator": "Bowen Island Municipality",
+        "operator:type": "government",
+        "operator:website": "https://bowenislandmunicipality.ca/",
+        "operator:wikidata": "Q895413",
+        "phone": "+1-604-947-0613",
+        "phone:municipal_services": "+1-604-947-4255",
+        "phone:recreation_desk": "+1-604-947-2216",
+        "phone:room_rentals": "+1-604-947-0613",
+        "short_name": "BICC",
+        "toilets": "yes",
+        "toilets:access": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://bowenislandmunicipality.ca/community-centre/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.3402416,
+          49.3805821
+        ]
+      },
+      "id": "way/1212940932"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1227292655",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8568541,
+          49.3392057
+        ]
+      },
+      "id": "way/1227292655"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1227292656",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8566019,
+          49.3392787
+        ]
+      },
+      "id": "way/1227292656"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1262627138",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-01",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.179161,
+          49.19808
+        ]
+      },
+      "id": "node/1262627138"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1262631309",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2024-08-14",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.181056,
+          49.198769
+        ]
+      },
+      "id": "node/1262631309"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1262643075",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1771088,
+          49.1968711
+        ]
+      },
+      "id": "node/1262643075"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1297907348",
+        "addr:housenumber": "15976",
+        "addr:street": "108 Avenue",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "check_date": "2024-08-20",
+        "check_date:smoking": "2024-08-20",
+        "cuisine": "coffee_shop",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "int_name": "Starbucks Coffee Co",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "outdoor_seating": "patio",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.779565,
+          49.1985695
+        ]
+      },
+      "id": "node/1297907348"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1303079754",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "check_date": "2024-08-02",
+        "fee": "no",
+        "level": "0",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6898144,
+          49.0526131
+        ]
+      },
+      "id": "way/1303079754"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1303750205",
+        "addr:city": "Township of Langley",
+        "addr:housenumber": "23430",
+        "addr:postcode": "V1M 2S2",
+        "addr:province": "BC",
+        "addr:street": "Mavis Avenue",
+        "amenity": "community_centre",
+        "building": "civic",
+        "building:levels": "3",
+        "community_centre": "cultural_centre",
+        "name": "salishan Place",
+        "operator": "Township of Langley",
+        "operator:type": "public",
+        "phone": "+1 604-532-3536",
+        "toilets": "yes",
+        "toilets:access": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.tol.ca/en/salishanplace.aspx",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5742186,
+          49.1682097
+        ]
+      },
+      "id": "way/1303750205"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1304277576",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "2533",
+        "addr:province": "BC",
+        "addr:street": "East Hastings Street",
+        "amenity": "bar",
+        "name": "Blind Rabbit",
+        "toilets:wheelchair": "yes",
+        "website": "https://blindrabbit.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.053702,
+          49.2812816
+        ]
+      },
+      "id": "node/1304277576"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1338765330",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "operator": "Metro Vancouver Regional Parks",
+        "operator:type": "government",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6026337,
+          49.0114315
+        ]
+      },
+      "id": "way/1338765330"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1363418927",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1088",
+        "addr:postcode": "V6Z 2R9",
+        "addr:province": "BC",
+        "addr:street": "Burrard Street",
+        "air_conditioning": "yes",
+        "brand": "Sheraton",
+        "brand:wikidata": "Q634831",
+        "brand:wikipedia": "en:Sheraton Hotels and Resorts",
+        "internet_access": "wlan",
+        "name": "Sheraton Vancouver Wall Centre Hotel",
+        "note": "Most of this site is dedicated to hotel use, including parts of each tower and underground.",
+        "operator": "Sheraton",
+        "phone": "+1-604-331-1000",
+        "rooms": "733",
+        "stars": "4",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "https://www.marriott.com/en-us/hotels/yvrws-sheraton-vancouver-wall-centre/overview/",
+        "website:map": "https://www.marriott.com/marriottassets/marriott/YVRWS/PDF/2019_Sheraton_Vancouver_Wall_Centre_Floor_Plans_-_Booklet-FINAL.pdf",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1262671,
+          49.2803114
+        ]
+      },
+      "id": "way/1363418927"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1364806384",
+        "amenity": "toilets",
+        "check_date": "2023-05-16",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0698616,
+          49.2737772
+        ]
+      },
+      "id": "node/1364806384"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1372248067",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "operator": "Township of Langley",
+        "operator:type": "government",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5923164,
+          49.1752106
+        ]
+      },
+      "id": "way/1372248067"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1378120763",
+        "amenity": "toilets",
+        "female": "yes",
+        "indoor": "room",
+        "level": "0",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.137705,
+          49.1677866
+        ]
+      },
+      "id": "way/1378120763"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1378120764",
+        "amenity": "toilets",
+        "female": "yes",
+        "indoor": "room",
+        "level": "0",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1394508,
+          49.1662077
+        ]
+      },
+      "id": "way/1378120764"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1379030735",
+        "amenity": "toilets",
+        "female": "yes",
+        "indoor": "room",
+        "level": "1",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1383357,
+          49.1675263
+        ]
+      },
+      "id": "way/1379030735"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1379167701",
+        "amenity": "toilets",
+        "female": "yes",
+        "indoor": "room",
+        "level": "0",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1376889,
+          49.1651571
+        ]
+      },
+      "id": "way/1379167701"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1379390436",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7285349,
+          49.1944025
+        ]
+      },
+      "id": "way/1379390436"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1379390437",
+        "access": "yes",
+        "amenity": "toilets",
+        "building": "yes",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7283841,
+          49.1944234
+        ]
+      },
+      "id": "way/1379390437"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1379500220",
+        "access": "yes",
+        "addr:housenumber": "450",
+        "addr:street": "Powell Street",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0937429,
+          49.2826455
+        ]
+      },
+      "id": "node/1379500220"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1379500234",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0937778,
+          49.2826203
+        ]
+      },
+      "id": "node/1379500234"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1383816989",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "636",
+        "addr:postcode": "V6B 2G5",
+        "addr:province": "BC",
+        "addr:street": "Davie Street",
+        "amenity": "restaurant",
+        "cuisine": "pasta",
+        "name": "Basil Pasta Bar",
+        "opening_hours": "Su-Th 11:30-23:00; Fr-Sa 11:30-02:00",
+        "payment:interac": "yes",
+        "phone": "+1-604-568-3106",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.basilpastabar.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1258792,
+          49.2767875
+        ]
+      },
+      "id": "node/1383816989"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1386561458",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1095",
+        "addr:province": "BC",
+        "addr:street": "Hornby Street",
+        "amenity": "fast_food",
+        "brand": "Subway",
+        "brand:wikidata": "Q244457",
+        "brand:wikipedia": "en:Subway (restaurant)",
+        "cuisine": "sandwich",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "name": "Subway",
+        "opening_hours": "Mo-Sa 08:00-23:00; Su 09:00-22:00",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.126535,
+          49.2796822
+        ]
+      },
+      "id": "node/1386561458"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1692226702",
+        "amenity": "toilets",
+        "level": "1",
+        "source": "survey",
+        "source:location": "extrapolation",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1801668,
+          49.1948567
+        ]
+      },
+      "id": "node/1692226702"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1724634998",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "brewery": "Asahi;Kokanee;Sapporo;Kirin",
+        "cuisine": "korean",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:password": "elenasong",
+        "internet_access:ssid": "Hanwoori",
+        "name": "Hanwoori Korean Restaurant",
+        "opening_hours": "Mo-Su 11:00-23:00",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9806709,
+          49.2217132
+        ]
+      },
+      "id": "node/1724634998"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1743204350",
+        "addr:housenumber": "7280",
+        "addr:street": "Marine Way",
+        "amenity": "pharmacy",
+        "brand": "London Drugs",
+        "brand:wikidata": "Q3258955",
+        "brand:wikipedia": "en:London Drugs",
+        "check_date": "2025-02-16",
+        "check_date:opening_hours": "2022-07-23",
+        "dispensing": "yes",
+        "drive_through": "no",
+        "healthcare": "pharmacy",
+        "insurance": "yes",
+        "name": "London Drugs",
+        "opening_hours": "Mo-Sa 09:00-22:00; PH,Su 10:00-20:00",
+        "payment:alipay": "yes",
+        "payment:american_express": "yes",
+        "payment:cash": "yes",
+        "payment:debit_cards": "yes",
+        "payment:jcb": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "payment:wechat": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.londondrugs.com/stores/marine-way-and-byrne/s/071",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9810252,
+          49.1992983
+        ]
+      },
+      "id": "node/1743204350"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1749451569",
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9110615,
+          49.2003639
+        ]
+      },
+      "id": "node/1749451569"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1817017411",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9045334,
+          49.2038194
+        ]
+      },
+      "id": "node/1817017411"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1841754053",
+        "amenity": "toilets",
+        "check_date": "2023-06-19",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0188547,
+          49.343206
+        ]
+      },
+      "id": "node/1841754053"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1863804435",
+        "amenity": "toilets",
+        "female": "yes",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5155131,
+          49.1453352
+        ]
+      },
+      "id": "node/1863804435"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1934829660",
+        "addr:housenumber": "1661",
+        "addr:street": "Napier Street",
+        "amenity": "library",
+        "name": "VPL Britannia Branch",
+        "opening_hours": "Mo,Th-Sa 09:00-18:00; Tu-We 09:00-21:00; Su 13:00-17:00",
+        "operator": "Vancouver Public Library",
+        "operator:short": "VPL",
+        "operator:type": "public",
+        "operator:wikidata": "Q1376408",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.vpl.ca/location/britannia-branch",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0707081,
+          49.2749646
+        ]
+      },
+      "id": "node/1934829660"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1938712088",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "207",
+        "addr:province": "BC",
+        "addr:street": "West Hastings Street",
+        "amenity": "restaurant",
+        "cuisine": "lebanese",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Nuba",
+        "opening_hours": "Mo-Th 11:30-21:00; Fr 11:30-22:00; Sa 11:00-22:00; Su 11:00-21:00",
+        "outdoor_seating": "no",
+        "phone": "+1-604-688-1655",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.nuba.ca/",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.109648,
+          49.2827611
+        ]
+      },
+      "id": "node/1938712088"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1938712091",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "175",
+        "addr:postcode": "V6B 1H4",
+        "addr:province": "BC",
+        "addr:street": "West Hastings Street",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "name": "Bean Around The World",
+        "opening_hours": "Mo 07:00-18:00; Tu-Fr 07:00-19:00; Sa 09:00-19:00; Su 09:00-18:00",
+        "toilets:wheelchair": "yes",
+        "website": "http://www.fuelledbycaffeine.com",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1092922,
+          49.2825279
+        ]
+      },
+      "id": "node/1938712091"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1944642492",
+        "addr:city": "Vancouver",
+        "addr:province": "BC",
+        "amenity": "restaurant",
+        "changing_table": "yes",
+        "indoor_seating": "yes",
+        "name": "Sal y Limon",
+        "outdoor_seating": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0694236,
+          49.2688079
+        ]
+      },
+      "id": "node/1944642492"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1947105624",
+        "addr:housenumber": "715",
+        "addr:street": "Columbia Street",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "brand": "Waves Coffee House",
+        "brand:wikidata": "Q114096538",
+        "cuisine": "coffee_shop",
+        "indoor_seating": "yes",
+        "internet_access": "yes",
+        "internet_access:fee": "no",
+        "name": "Waves Coffee House",
+        "opening_hours": "Mo-Fr 07:00, PH,Sa,Su 08:00-19:00",
+        "outdoor_seating": "yes",
+        "phone": "+1-604-529-9283",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://wavescoffee.com/locations/columbia.html",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9104153,
+          49.2020291
+        ]
+      },
+      "id": "node/1947105624"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2017454969",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "level": "1",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1743867,
+          49.1974486
+        ]
+      },
+      "id": "node/2017454969"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2062674536",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1124",
+        "addr:province": "BC",
+        "addr:street": "Davie Street",
+        "amenity": "restaurant",
+        "cuisine": "greek",
+        "indoor_seating": "yes",
+        "name": "Stepho's Greek Restaurant",
+        "opening_hours": "Mo-Sa 11:30-23:30; Su 11:30-23:00",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.131961,
+          49.2807022
+        ]
+      },
+      "id": "node/2062674536"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2070416873",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "947",
+        "addr:province": "BC",
+        "addr:street": "Hornby Street",
+        "amenity": "cafe",
+        "brand": "Tim Hortons",
+        "brand:wikidata": "Q175106",
+        "brand:wikipedia": "en:Tim Hortons",
+        "cuisine": "coffee_shop",
+        "delivery": "no",
+        "diet:vegan": "limited",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "name": "Tim Hortons",
+        "opening_hours": "Mo-Sa 06:00-21:00; Su,PH 07:00-21:00",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1242959,
+          49.2811674
+        ]
+      },
+      "id": "node/2070416873"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2070418346",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "905",
+        "addr:province": "BC",
+        "addr:street": "Hornby Street",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "brand": "Earls",
+        "brand:wikidata": "Q5326525",
+        "changing_table": "no",
+        "cuisine": "american",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Earls",
+        "opening_hours": "Su-Th 11:30-00:00; Fr-Sa 11:30-01:00",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.123754,
+          49.2815936
+        ]
+      },
+      "id": "node/2070418346"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2184649835",
+        "amenity": "toilets",
+        "fee": "no",
+        "level": "0",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.91132,
+          49.2002917
+        ]
+      },
+      "id": "node/2184649835"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2230406849",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1213228,
+          49.2995358
+        ]
+      },
+      "id": "node/2230406849"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2232022866",
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2022-10-02",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.131411,
+          49.2978092
+        ]
+      },
+      "id": "node/2232022866"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2331296242",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "male": "yes",
+        "source": "survey",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1508312,
+          49.2958067
+        ]
+      },
+      "id": "node/2331296242"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2331296245",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "yes",
+        "source": "survey",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1505213,
+          49.2954885
+        ]
+      },
+      "id": "node/2331296245"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2331296247",
+        "amenity": "toilets",
+        "fee": "no",
+        "source": "survey",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1379316,
+          49.2788833
+        ]
+      },
+      "id": "node/2331296247"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2349993397",
+        "addr:housenumber": "1200",
+        "addr:street": "56th Street",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "L'aromas",
+        "outdoor_seating": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.066881,
+          49.0248531
+        ]
+      },
+      "id": "node/2349993397"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2389079681",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.17752,
+          49.1461269
+        ]
+      },
+      "id": "node/2389079681"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2410285546",
+        "access": "yes",
+        "amenity": "toilets",
+        "source": "local_knowledge",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.155883,
+          49.3031425
+        ]
+      },
+      "id": "node/2410285546"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2465885998",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1123",
+        "addr:province": "BC",
+        "addr:street": "Davie Street",
+        "amenity": "doctors",
+        "healthcare": "doctor",
+        "name": "Care Point Medical Clinic",
+        "opening_hours": "Mo,We,Th 08:00-16:00; Tu,Fr 08:00-15:00",
+        "phone": "+1-604-915-9517",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.carepoint.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.131291,
+          49.2808178
+        ]
+      },
+      "id": "node/2465885998"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2489224114",
+        "amenity": "toilets",
+        "check_date": "2023-08-11",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2726667,
+          49.3718333
+        ]
+      },
+      "id": "node/2489224114"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2600954698",
+        "access": "customers",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2718016,
+          49.3756209
+        ]
+      },
+      "id": "node/2600954698"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2795625366",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.636068,
+          49.0996254
+        ]
+      },
+      "id": "node/2795625366"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2960324271",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "yes",
+        "male": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1075477,
+          49.2644635
+        ]
+      },
+      "id": "node/2960324271"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2967173884",
+        "addr:city": "Surrey",
+        "addr:housenumber": "10608",
+        "addr:postcode": "V3R 1J8",
+        "addr:street": "151A Street",
+        "name": "Sandman Suites Surrey-Guildford",
+        "phone": "+1-604-582-7263",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "http://www.sandmanhotels.ca/hotels/surrey-guildford/",
+        "wheelchair": "yes",
+        "wikidata": "Q111887116"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.801592,
+          49.1950162
+        ]
+      },
+      "id": "node/2967173884"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3046658942",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1308",
+        "addr:postcode": "V6Z 2B7",
+        "addr:province": "BC",
+        "addr:street": "Burrard Street",
+        "air_conditioning": "no",
+        "amenity": "cafe",
+        "changing_table": "no",
+        "check_date:opening_hours": "2024-10-03",
+        "cuisine": "sandwich",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "internet_access": "yes",
+        "name": "Number e Food",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-559-6863",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.numefood.com/",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.130968,
+          49.2777096
+        ]
+      },
+      "id": "node/3046658942"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3254064169",
+        "addr:city": "Richmond",
+        "addr:housenumber": "7331",
+        "addr:street": "Westminster Highway",
+        "check_date": "2024-11-09",
+        "name": "Executive Airport Plaza Hotel Richmond",
+        "phone": "+1-604-278-5555",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "website": "https://www.executivehotels.net/mobile/vancouver-airport-hotel/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1451494,
+          49.1704466
+        ]
+      },
+      "id": "node/3254064169"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3401085132",
+        "addr:city": "Coquitlam",
+        "addr:housenumber": "1980",
+        "addr:postcode": "V3J 3R3",
+        "addr:street": "Como Lake Avenue",
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "cuisine": "coffee_shop",
+        "internet_access": "wlan",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "opening_hours": "Mo-Fr 05:30-23:00; Sa-Su 06:00-23:00",
+        "phone": "+1-604-937-7781",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8387733,
+          49.2631287
+        ]
+      },
+      "id": "node/3401085132"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3488251117",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "female": "yes",
+        "opening_hours": "10:00-dusk",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.125319,
+          49.2724113
+        ]
+      },
+      "id": "node/3488251117"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3488258244",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.092834,
+          49.2748918
+        ]
+      },
+      "id": "node/3488258244"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3496678491",
+        "access": "yes",
+        "amenity": "toilets",
+        "description": "Toilets are on lower floor, accessed from outside",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.934885,
+          49.2830056
+        ]
+      },
+      "id": "node/3496678491"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3548684533",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.847112,
+          49.1837712
+        ]
+      },
+      "id": "node/3548684533"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3610591964",
+        "access": "yes",
+        "amenity": "toilets",
+        "male": "yes",
+        "name": "Beecher Place - Men's Toilet",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8849551,
+          49.0519419
+        ]
+      },
+      "id": "node/3610591964"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3611753532",
+        "access": "yes",
+        "amenity": "toilets",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9228691,
+          49.1218036
+        ]
+      },
+      "id": "node/3611753532"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3633748593",
+        "amenity": "toilets",
+        "female": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3244784,
+          49.0621894
+        ]
+      },
+      "id": "node/3633748593"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3651425224",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0343193,
+          49.2825332
+        ]
+      },
+      "id": "node/3651425224"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3662280932",
+        "addr:housenumber": "4603",
+        "addr:street": "Kingsway",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "changing_table": "no",
+        "cuisine": "japanese",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "level": "-1",
+        "name": "Isami Sushi",
+        "opening_hours": "Tu-Fr 11:30-14:00, Tu-Su 17:00-21:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-434-1212",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0019032,
+          49.22987
+        ]
+      },
+      "id": "node/3662280932"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3673185994",
+        "amenity": "toilets",
+        "check_date": "2022-03-25",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1486902,
+          49.2935974
+        ]
+      },
+      "id": "node/3673185994"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3690636461",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "opening_hours": "24/7",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.130672,
+          49.2833897
+        ]
+      },
+      "id": "node/3690636461"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3712939934",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1121",
+        "addr:postcode": "V6E 4T9",
+        "addr:province": "BC",
+        "addr:street": "Alberni Street",
+        "amenity": "restaurant",
+        "branch": "The Keg Steakhouse + Bar Alberni Street",
+        "brand": "The Keg",
+        "brand:wikidata": "Q7744066",
+        "cuisine": "steak_house",
+        "indoor_seating": "yes",
+        "name": "The Keg",
+        "opening_hours": "Su-Th 15:00-23:00; Fr,Sa 15:00-24:00",
+        "outdoor_seating": "no",
+        "phone": "+1-604-685-4388",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "website": "https://thekeg.com/en/locations/alberni",
+        "website:en": "https://thekeg.com/en/locations/alberni",
+        "website:fr": "https://thekeg.com/fr/restaurants/alberni",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.124206,
+          49.2861606
+        ]
+      },
+      "id": "node/3712939934"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3726903757",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "check_date": "2024-08-05",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9359462,
+          49.2442052
+        ]
+      },
+      "id": "node/3726903757"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3734942644",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "981",
+        "addr:postcode": "V6Z 3B6",
+        "addr:province": "BC",
+        "addr:street": "Nelson Street",
+        "amenity": "school",
+        "check_date": "2024-03-04",
+        "email": "info@pattisonhighschool.ca",
+        "grades": "9-12",
+        "name": "Pattison High School",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.pattisonhighschool.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.124905,
+          49.2809046
+        ]
+      },
+      "id": "node/3734942644"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3744957508",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7612734,
+          49.1779684
+        ]
+      },
+      "id": "node/3744957508"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3797415481",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "check_date:opening_hours": "2023-10-27",
+        "fee": "no",
+        "opening_hours": "24/7",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1201005,
+          49.2816352
+        ]
+      },
+      "id": "node/3797415481"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3892520727",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1306",
+        "addr:province": "BC",
+        "addr:street": "Burrard Street",
+        "amenity": "fast_food",
+        "cuisine": "sushi",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "name": "Sushi Coen",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.130932,
+          49.2777387
+        ]
+      },
+      "id": "node/3892520727"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3900328464",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-21",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1848662,
+          49.1955946
+        ]
+      },
+      "id": "node/3900328464"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3938307873",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.099774,
+          49.2731416
+        ]
+      },
+      "id": "node/3938307873"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3945290782",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "845",
+        "addr:province": "BC",
+        "addr:street": "Hornby Street",
+        "amenity": "restaurant",
+        "diet:vegan": "no",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Bacchus",
+        "opening_hours": "We-Sa 12:00-09:45, Su 16:00-09:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1225427,
+          49.2823081
+        ]
+      },
+      "id": "node/3945290782"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3946271319",
+        "addr:city": "North Vancouver",
+        "addr:housenumber": "8",
+        "addr:postcode": "V7L 0B2",
+        "addr:street": "Lonsdale Avenue",
+        "amenity": "restaurant",
+        "cuisine": "regional",
+        "indoor_seating": "yes",
+        "name": "Tap & Barrel",
+        "name:en": "Tap & Barrel",
+        "opening_hours": "11:00-24:00",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.080058,
+          49.3101585
+        ]
+      },
+      "id": "node/3946271319"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4000060601",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "3377",
+        "addr:postcode": "V5R 5K6",
+        "addr:street": "Kingsway",
+        "addr:unit": "2",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "cuisine": "taiwanese",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "customers",
+        "internet_access:password": "bubbletea",
+        "level": "0",
+        "name": "Bubble World",
+        "opening_hours": "Fr,Sa 12:00-01:00, Su-Th 12:00-24:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "no",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-451-7658",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://bubbleworld.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0331799,
+          49.2329556
+        ]
+      },
+      "id": "node/4000060601"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4080673735",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5927905,
+          49.1853851
+        ]
+      },
+      "id": "node/4080673735"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4098802731",
+        "name": "Kin's Farm Market",
+        "shop": "greengrocer",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8386923,
+          49.2626227
+        ]
+      },
+      "id": "node/4098802731"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4132104089",
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9986842,
+          49.191781
+        ]
+      },
+      "id": "node/4132104089"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4139599943",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "fee": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.727912,
+          49.1950277
+        ]
+      },
+      "id": "node/4139599943"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4143807314",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.040723,
+          49.0149401
+        ]
+      },
+      "id": "node/4143807314"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4164198045",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6326281,
+          49.2052414
+        ]
+      },
+      "id": "node/4164198045"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4173564191",
+        "amenity": "toilets",
+        "check_date": "2024-07-25",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3806367,
+          49.0223275
+        ]
+      },
+      "id": "node/4173564191"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4232369893",
+        "addr:housenumber": "6133",
+        "addr:street": "University Boulevard",
+        "amenity": "pub",
+        "check_date": "2023-08-09",
+        "layer": "-1",
+        "name": "The Pit",
+        "opening_hours": "Mo,Tu,Th 11:30-23:00; We 11:30-02:00; Fr 11:30-01:00",
+        "phone": "+1-604-822-6511",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.ams.ubc.ca/foodanddrink/the-pit/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2501701,
+          49.2665769
+        ]
+      },
+      "id": "node/4232369893"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4238778397",
+        "amenity": "toilets",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3244786,
+          49.0622043
+        ]
+      },
+      "id": "node/4238778397"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4278411093",
+        "amenity": "toilets",
+        "female": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3246255,
+          49.0621792
+        ]
+      },
+      "id": "node/4278411093"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4278566889",
+        "amenity": "toilets",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3246254,
+          49.0621993
+        ]
+      },
+      "id": "node/4278566889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4304851993",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1795",
+        "addr:province": "BC",
+        "addr:street": "Pendrell Street",
+        "amenity": "restaurant",
+        "cuisine": "persian",
+        "indoor_seating": "yes",
+        "name": "Zeitoon",
+        "opening_hours": "Mo-Th 11:30-22:00; Fr-Su 11:00-23:00",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.140435,
+          49.2879187
+        ]
+      },
+      "id": "node/4304851993"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4345249028",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "pitlatrine",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.451589,
+          49.0095135
+        ]
+      },
+      "id": "node/4345249028"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4348064639",
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2025-01-09",
+        "check_date:wheelchair": "2025-01-09",
+        "drinking_water": "fountain",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1958653,
+          49.1556897
+        ]
+      },
+      "id": "node/4348064639"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4368953793",
+        "addr:housenumber": "999",
+        "addr:street": "Canada Place",
+        "amenity": "conference_centre",
+        "check_date": "2023-01-23",
+        "email": "info@vancouverconventioncentre.com",
+        "name": "Vancouver Convention Centre East",
+        "name:en": "Vancouver Convention Centre East",
+        "phone": "+1-604-689-8232",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.vancouverconventioncentre.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1125685,
+          49.2883318
+        ]
+      },
+      "id": "node/4368953793"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4386013157",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1805974,
+          49.1940766
+        ]
+      },
+      "id": "node/4386013157"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4396978115",
+        "amenity": "toilets",
+        "check_date": "2025-01-05",
+        "check_date:wheelchair": "2025-01-05",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1101262,
+          49.3566141
+        ]
+      },
+      "id": "node/4396978115"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4416958605",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "pitlatrine",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4516001,
+          49.0095357
+        ]
+      },
+      "id": "node/4416958605"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4441414695",
+        "addr:housenumber": "2711",
+        "addr:street": "192 Street",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "brand": "Tim Hortons",
+        "brand:wikidata": "Q175106",
+        "brand:wikipedia": "en:Tim Hortons",
+        "changing_table": "yes",
+        "check_date": "2024-06-02",
+        "cuisine": "coffee_shop",
+        "drive_through": "yes",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "name": "Tim Hortons",
+        "opening_hours": "24/7",
+        "outdoor_seating": "no",
+        "phone": "+1-604-536-4775",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6919116,
+          49.0513627
+        ]
+      },
+      "id": "node/4441414695"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4505500391",
+        "addr:housenumber": "2425",
+        "addr:postcode": "V5N 5E5",
+        "addr:street": "Nanaimo Street",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "changing_table": "no",
+        "check_date": "2024-06-17",
+        "cuisine": "chinese;dimsum",
+        "highchair": "yes",
+        "name": "Golden Seafood Restaurant",
+        "phone": "+1-604-568-8268",
+        "reservation": "yes",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.goldenseafoodvancouver.com/",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.056921,
+          49.2628286
+        ]
+      },
+      "id": "node/4505500391"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4547660189",
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.133261,
+          49.1859666
+        ]
+      },
+      "id": "node/4547660189"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4562142991",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-21",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1818515,
+          49.1946855
+        ]
+      },
+      "id": "node/4562142991"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4562212191",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-21",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1835037,
+          49.1956532
+        ]
+      },
+      "id": "node/4562212191"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4610664085",
+        "amenity": "toilets",
+        "check_date": "2023-08-04",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0987599,
+          49.3720401
+        ]
+      },
+      "id": "node/4610664085"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4610670682",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.083275,
+          49.3792809
+        ]
+      },
+      "id": "node/4610670682"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4682097803",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1102",
+        "addr:postcode": "V5L 3X2",
+        "addr:street": "Commercial Drive",
+        "amenity": "cafe",
+        "cuisine": "coffee",
+        "indoor_seating": "yes",
+        "name": "Moja Coffee",
+        "opening_hours": "07:00-19:00",
+        "outdoor_seating": "yes",
+        "phone": "+1-604-879-6652",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0692817,
+          49.2747084
+        ]
+      },
+      "id": "node/4682097803"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4684608889",
+        "addr:city": "Surrey",
+        "addr:housenumber": "1815",
+        "addr:street": "152 Street",
+        "amenity": "library",
+        "check_date": "2024-07-19",
+        "internet_access": "wlan",
+        "name": "Semiahmoo Library",
+        "name:en": "Semiahmoo Library",
+        "opening_hours": "Mo-Th 09:30-21:00; Fr 09:30-17:00; Sa 10:00-17:00; Su 13:00-17:00",
+        "operator": "Surrey Libraries",
+        "phone": "+1-604-592-6900",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.surreylibraries.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8014365,
+          49.0351454
+        ]
+      },
+      "id": "node/4684608889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4726948838",
+        "access": "yes",
+        "amenity": "toilets",
+        "opening_hours": "Dawn-Dusk",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.175468,
+          49.2452874
+        ]
+      },
+      "id": "node/4726948838"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4730140903",
+        "amenity": "toilets",
+        "female": "yes",
+        "level": "1",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9975972,
+          49.2259388
+        ]
+      },
+      "id": "node/4730140903"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4730147422",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "cuisine": "japanese",
+        "indoor_seating": "yes",
+        "level": "1",
+        "name": "Kawawa",
+        "name:en": "Kawawa",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0000139,
+          49.2273734
+        ]
+      },
+      "id": "node/4730147422"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4730148398",
+        "amenity": "toilets",
+        "family": "yes",
+        "level": "1",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9978328,
+          49.2254646
+        ]
+      },
+      "id": "node/4730148398"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4731543579",
+        "amenity": "toilets",
+        "check_date": "2025-01-16",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8961527,
+          49.2509926
+        ]
+      },
+      "id": "node/4731543579"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4751320327",
+        "amenity": "toilets",
+        "check_date": "2023-06-06",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.177362,
+          49.1966293
+        ]
+      },
+      "id": "node/4751320327"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4785087824",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1217537,
+          49.3358416
+        ]
+      },
+      "id": "node/4785087824"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4787535421",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "level": "1",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1745847,
+          49.1978301
+        ]
+      },
+      "id": "node/4787535421"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4828058822",
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9221133,
+          49.1988004
+        ]
+      },
+      "id": "node/4828058822"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4835604492",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.875797,
+          49.1261176
+        ]
+      },
+      "id": "node/4835604492"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4874953362",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5791707,
+          49.24131
+        ]
+      },
+      "id": "node/4874953362"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4874953385",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5790188,
+          49.2406699
+        ]
+      },
+      "id": "node/4874953385"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4934620770",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6288473,
+          49.1594958
+        ]
+      },
+      "id": "node/4934620770"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4971477446",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "3312",
+        "addr:street": "Kingsway",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "check_date": "2024-09-17",
+        "cuisine": "chinese;hongkong",
+        "name": "Happy Day Cafe",
+        "name:en": "Happy Day Cafe",
+        "name:zh-Hans": "喜相逢",
+        "opening_hours": "Mo-Su 08:00-22:00",
+        "phone": "+1-604-307-6868",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.happydaycafe.ca/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.03531,
+          49.2336484
+        ]
+      },
+      "id": "node/4971477446"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4976343550",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "815",
+        "addr:province": "BC",
+        "addr:street": "Denman Street",
+        "amenity": "restaurant",
+        "indoor_seating": "yes",
+        "name": "Ukrainian Village Restaurant",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.135787,
+          49.2914
+        ]
+      },
+      "id": "node/4976343550"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4976349582",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "851",
+        "addr:street": "Denman Street",
+        "amenity": "restaurant",
+        "cuisine": "persian",
+        "indoor_seating": "yes",
+        "name": "Khaghan Restaurant",
+        "opening_hours": "Su-Fr 11:00-22:00",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.13675,
+          49.2907749
+        ]
+      },
+      "id": "node/4976349582"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4998186222",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.527003,
+          49.2129096
+        ]
+      },
+      "id": "node/4998186222"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5145439626",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1355",
+        "addr:province": "BC",
+        "addr:street": "Hornby Street",
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "indoor_seating": "yes",
+        "name": "RV's Butter Kitchen",
+        "opening_hours": "Mo-Th 10:00-22:00; Fr 11:00-23:00; Sa 16:00-23:00",
+        "outdoor_seating": "no",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1307852,
+          49.2769143
+        ]
+      },
+      "id": "node/5145439626"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5187434521",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "check_date": "2024-01-29",
+        "fee": "no",
+        "opening_hours": "06:00-22:00",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.119938,
+          49.2829104
+        ]
+      },
+      "id": "node/5187434521"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5231664520",
+        "addr:city": "North Vancouver City",
+        "addr:housenumber": "91",
+        "addr:street": "Lonsdale Avenue",
+        "amenity": "restaurant",
+        "cuisine": "seafood",
+        "indoor_seating": "yes",
+        "name": "Fishworks",
+        "outdoor_seating": "yes",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0790782,
+          49.3117439
+        ]
+      },
+      "id": "node/5231664520"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5304204523",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1174834,
+          49.2834346
+        ]
+      },
+      "id": "node/5304204523"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5314283727",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5589318,
+          49.1993144
+        ]
+      },
+      "id": "node/5314283727"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5357032522",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "2220",
+        "addr:province": "BC",
+        "addr:street": "Cambie Street",
+        "air_conditioning": "yes",
+        "brand": "Best Buy",
+        "brand:wikidata": "Q533415",
+        "brand:wikipedia": "en:Best Buy",
+        "level": "-1",
+        "name": "Best Buy",
+        "opening_hours": "Mo-Sa 11:00-19:00; Su 11:00-18:00",
+        "phone": "+1 866-237-8289",
+        "shop": "electronics",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://stores.bestbuy.ca/en-ca/bc/vancouver/2220-cambie-st",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.114317,
+          49.2655438
+        ]
+      },
+      "id": "node/5357032522"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5394641422",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "980",
+        "addr:province": "BC",
+        "addr:street": "Howe Street",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Pallet Coffee Roasters",
+        "opening_hours": "Mo-Fr 07:00-18:00; Sa,Su 09:00-16:00",
+        "outdoor_seating": "pedestrian_zone",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-336-9612",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.palletcoffeeroasters.com",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.123637,
+          49.2798788
+        ]
+      },
+      "id": "node/5394641422"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5552233440",
+        "addr:city": "Port Coquitlam",
+        "addr:province": "BC",
+        "shop": "convenience",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.770677,
+          49.2350139
+        ]
+      },
+      "id": "node/5552233440"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5570346981",
+        "addr:city": "Burnaby",
+        "addr:housenumber": "4501",
+        "addr:street": "Kingsway",
+        "addr:unit": "104",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "changing_table": "yes",
+        "check_date": "2024-08-01",
+        "cuisine": "chinese",
+        "highchair": "yes",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Dinesty Dumpling House",
+        "name:zh-Hans": "聚",
+        "opening_hours": "Mo-Su 11:30-15:00,17:30-21:15",
+        "outdoor_seating": "no",
+        "phone": "+1-604-439-0009",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://dinesty.ca/our-locations/burnaby-kingsway/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.003696,
+          49.2300571
+        ]
+      },
+      "id": "node/5570346981"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5606180821",
+        "addr:city": "vancouver",
+        "amenity": "toilets",
+        "fee": "no",
+        "name": "Net Loft Handicap Toilet",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes",
+        "wheelchair:description": "Automatic door"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1356132,
+          49.2716969
+        ]
+      },
+      "id": "node/5606180821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5608189222",
+        "addr:city": "Vancouver, BC, Canada",
+        "addr:postcode": "V6T 1Z2",
+        "addr:street": "6393 NW Marine Drive",
+        "amenity": "toilets",
+        "name": "MOA handicap toilets",
+        "phone": "+1-604-822-5087",
+        "toilets:wheelchair": "yes",
+        "website": "https://moa.ubc.ca",
+        "wheelchair": "yes",
+        "wheelchair:description": "Manual door. Toilets are opposite gift shop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2594723,
+          49.2692292
+        ]
+      },
+      "id": "node/5608189222"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5660055037",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0938552,
+          49.2826289
+        ]
+      },
+      "id": "node/5660055037"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5715672407",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0787292,
+          49.3813152
+        ]
+      },
+      "id": "node/5715672407"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5726108080",
+        "access": "yes",
+        "amenity": "toilets",
+        "operator": "Washington State Parks and Recreation Commission",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7542331,
+          49.0017203
+        ]
+      },
+      "id": "node/5726108080"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5728692422",
+        "addr:city": "Surrey",
+        "addr:housenumber": "1611",
+        "addr:postcode": "V4A 3V2",
+        "addr:street": "128 Street",
+        "amenity": "bank",
+        "brand": "TD Canada Trust",
+        "brand:wikidata": "Q1080670",
+        "brand:wikipedia": "en:TD Canada Trust",
+        "name": "TD Canada Trust",
+        "phone": "+1-778-777-5026",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.867875,
+          49.0315076
+        ]
+      },
+      "id": "node/5728692422"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5827984711",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1038",
+        "addr:postcode": "V6C 0B9",
+        "addr:province": "BC",
+        "addr:street": "Canada Place",
+        "amenity": "restaurant",
+        "check_date": "2023-01-25",
+        "cuisine": "international;regional",
+        "delivery": "no",
+        "email": "info@botanistrestaurant.com",
+        "name": "Botanist",
+        "note": "The restaurant is located inside the Fairmont Pacific Rim hotel. It features a dining room, outside sitting into the hotel garden as well as a bar/lounge.",
+        "opening_hours": "Mo-Fr 06:30-22:00; Sa-Su 07:00-22:00",
+        "outdoor_seating": "yes",
+        "phone": "+1-604-695-5500",
+        "takeaway": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.117124,
+          49.2881797
+        ]
+      },
+      "id": "node/5827984711"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5851857261",
+        "addr:housenumber": "16010",
+        "addr:street": "24 Avenue",
+        "addr:unit": "105",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "brand": "Starbucks",
+        "brand:wikidata": "Q37158",
+        "brand:wikipedia": "en:Starbucks",
+        "changing_table": "yes",
+        "cuisine": "coffee_shop",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "highchair": "no",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "level": "0",
+        "name": "Starbucks",
+        "official_name": "Starbucks Coffee",
+        "opening_hours": "Mo-Sa 05:00-21:30; Su 06:00-21:30",
+        "outdoor_seating": "terrace",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.778652,
+          49.0448257
+        ]
+      },
+      "id": "node/5851857261"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5862689185",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "1017",
+        "addr:postcode": "V6E 0C4",
+        "addr:province": "BC",
+        "addr:street": "West Hastings Street",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "changing_table": "yes",
+        "check_date": "2024-07-06",
+        "check_date:opening_hours": "2023-10-12",
+        "cuisine": "salad",
+        "email": "info@hawknightingale.com",
+        "highchair": "yes",
+        "indoor_seating": "yes",
+        "name": "Nightingale",
+        "opening_hours:signed": "no",
+        "outdoor_seating": "no",
+        "phone": "+1-604-695-9500",
+        "reservation": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.hawknightingale.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.117594,
+          49.2874308
+        ]
+      },
+      "id": "node/5862689185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5905565486",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2713413,
+          49.3758232
+        ]
+      },
+      "id": "node/5905565486"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5964809588",
+        "addr:city": "Vancouver",
+        "addr:province": "BC",
+        "amenity": "restaurant",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Notch8",
+        "opening_hours": "Su-Th 06:30-23:00; Fr,Sa 06:30-24:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.12091,
+          49.283799
+        ]
+      },
+      "id": "node/5964809588"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5980075494",
+        "amenity": "toilets",
+        "check_date": "2025-04-13",
+        "check_date:wheelchair": "2025-04-13",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9053958,
+          49.2147769
+        ]
+      },
+      "id": "node/5980075494"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5980075495",
+        "amenity": "toilets",
+        "check_date": "2025-04-13",
+        "check_date:wheelchair": "2025-04-13",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9057958,
+          49.2145834
+        ]
+      },
+      "id": "node/5980075495"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6256993340",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "no",
+        "indoor": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1301453,
+          49.0082126
+        ]
+      },
+      "id": "node/6256993340"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6256993685",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "indoor": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.129917,
+          49.0083763
+        ]
+      },
+      "id": "node/6256993685"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6331958487",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "opening_hours": "24/7",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.133147,
+          49.2819997
+        ]
+      },
+      "id": "node/6331958487"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6340912184",
+        "amenity": "toilets",
+        "female": "yes",
+        "level": "0",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0653691,
+          49.2548778
+        ]
+      },
+      "id": "node/6340912184"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6340912798",
+        "amenity": "toilets",
+        "female": "yes",
+        "level": "1",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0651133,
+          49.2554884
+        ]
+      },
+      "id": "node/6340912798"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6501376122",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4076573,
+          49.1932101
+        ]
+      },
+      "id": "node/6501376122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6501376147",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4077412,
+          49.1932259
+        ]
+      },
+      "id": "node/6501376147"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6615738613",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9258346,
+          49.3121596
+        ]
+      },
+      "id": "node/6615738613"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6728292297",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7730966,
+          49.1838002
+        ]
+      },
+      "id": "node/6728292297"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6742253716",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-21",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1804497,
+          49.1925174
+        ]
+      },
+      "id": "node/6742253716"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6742319750",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1824286,
+          49.1925116
+        ]
+      },
+      "id": "node/6742319750"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6742326099",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.184101,
+          49.1924317
+        ]
+      },
+      "id": "node/6742326099"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6742336396",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "check_date": "2023-06-21",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1806106,
+          49.1925517
+        ]
+      },
+      "id": "node/6742336396"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6874510820",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "male": "yes",
+        "opening_hours": "10:00-dusk",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.125471,
+          49.2723131
+        ]
+      },
+      "id": "node/6874510820"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6946451516",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "fee": "no",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0583412,
+          49.2682954
+        ]
+      },
+      "id": "node/6946451516"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6955825941",
+        "amenity": "toilets",
+        "fee": "no",
+        "opening_hours": "dawn-dusk",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1503021,
+          49.2774404
+        ]
+      },
+      "id": "node/6955825941"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7016378132",
+        "addr:city": "Burnaby",
+        "addr:housenumber": "6231",
+        "addr:province": "BC",
+        "addr:street": "Kingsway",
+        "addr:unit": "101",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "bar": "no",
+        "branch": "Fresh Tea & Juice",
+        "brand": "CoCo",
+        "brand:wikidata": "Q65084369",
+        "brand:wikipedia": "en:CoCo Fresh Tea & Juice",
+        "changing_table": "no",
+        "contact:phone": "+1-604-423-3660",
+        "cuisine": "bubble_tea",
+        "drive_through": "no",
+        "highchair": "no",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:password": "6044233660",
+        "internet_access:ssid": "COCO guest",
+        "level": "0",
+        "name": "CoCo Fresh Tea & Juice",
+        "opening_hours": "Mo-Su 12:00-23:00",
+        "outdoor_seating": "no",
+        "short_name": "CoCo",
+        "smoking": "no",
+        "takeaway": "yes",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.973346,
+          49.220423
+        ]
+      },
+      "id": "node/7016378132"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7472397110",
+        "access": "permissive",
+        "amenity": "toilets",
+        "toilets:disposal": "chemical",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7085322,
+          49.0249551
+        ]
+      },
+      "id": "node/7472397110"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7863899173",
+        "addr:city": "Burnaby",
+        "addr:housenumber": "7090",
+        "addr:province": "BC",
+        "addr:street": "Kingsway",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "changing_table": "yes",
+        "cuisine": "vietnamese",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "email": "info@bdvietcuisine.ca",
+        "indoor_seating": "yes",
+        "internet_access": "no",
+        "level": "0",
+        "name": "B&D Viet Cuisine",
+        "opening_hours": "11:00-23:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-553-6688",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.bdvietcuisine.ca/",
+        "website:booking": "https://www.waitlist.me/w/bdvietcuisine",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.957809,
+          49.2182153
+        ]
+      },
+      "id": "node/7863899173"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7888910499",
+        "addr:city": "Vancouver",
+        "addr:housenumber": "2808",
+        "addr:province": "BC",
+        "addr:street": "Cambie Street",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "brand:wikidata": "Q3269017",
+        "changing_table": "no",
+        "check_date": "2024-07-27",
+        "cuisine": "chinese;beijing",
+        "email": "info@quanjude1864.com",
+        "name": "iDen & Quanjude",
+        "opening_hours": "Mo-Su 11:00-22:30",
+        "phone": "+1-236-477-7777",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://quanjudevancouver.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1146941,
+          49.2602034
+        ]
+      },
+      "id": "node/7888910499"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7982028214",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "name": "Beecher Place - Women's Toilet",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8849356,
+          49.0518956
+        ]
+      },
+      "id": "node/7982028214"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8156258515",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0596604,
+          49.0919859
+        ]
+      },
+      "id": "node/8156258515"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8156258516",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0596358,
+          49.0919703
+        ]
+      },
+      "id": "node/8156258516"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8156385617",
+        "access": "yes",
+        "amenity": "toilets",
+        "male": "yes",
+        "power_supply": "no",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.059667,
+          49.0918962
+        ]
+      },
+      "id": "node/8156385617"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8241208317",
+        "access": "yes",
+        "amenity": "toilets",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1051262,
+          49.2717078
+        ]
+      },
+      "id": "node/8241208317"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8285228466",
+        "access": "yes",
+        "amenity": "toilets",
+        "description": "Newly renovated public bathrooms are wheelchair accessible on second floor",
+        "level": "1",
+        "start_date": "2020",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.085661,
+          49.0912491
+        ]
+      },
+      "id": "node/8285228466"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8296146595",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8426782,
+          49.1615567
+        ]
+      },
+      "id": "node/8296146595"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8355840461",
+        "amenity": "toilets",
+        "check_date": "2025-04-28",
+        "toilets:disposal": "chemical",
+        "toilets:wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9188537,
+          49.2464514
+        ]
+      },
+      "id": "node/8355840461"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8581826302",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9227772,
+          49.1218025
+        ]
+      },
+      "id": "node/8581826302"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8707916360",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1725486,
+          49.2566702
+        ]
+      },
+      "id": "node/8707916360"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8719953584",
+        "addr:housenumber": "6848",
+        "addr:street": "Jubilee Avenue",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "cuisine": "coffee_shop",
+        "diet:vegan": "no",
+        "diet:vegetarian": "yes",
+        "drive_through": "no",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "level": "0",
+        "name": "La foret",
+        "opening_hours": "Mo-Fr 08:00-21:00; PH,Sa,Su 09:00-21:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "https://www.cafelaforet.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.995504,
+          49.2213927
+        ]
+      },
+      "id": "node/8719953584"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8822681772",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4505423,
+          49.3264787
+        ]
+      },
+      "id": "node/8822681772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8822681879",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4516473,
+          49.3254399
+        ]
+      },
+      "id": "node/8822681879"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8954957001",
+        "amenity": "toilets",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0815466,
+          49.2644974
+        ]
+      },
+      "id": "node/8954957001"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9008644237",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.838077,
+          49.0973391
+        ]
+      },
+      "id": "node/9008644237"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9027095266",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0837682,
+          49.3095891
+        ]
+      },
+      "id": "node/9027095266"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9222917662",
+        "amenity": "toilets",
+        "fee": "no",
+        "female": "no",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1075467,
+          49.2645054
+        ]
+      },
+      "id": "node/9222917662"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9265021301",
+        "access": "private",
+        "amenity": "toilets",
+        "check_date": "2023-09-22",
+        "male": "yes",
+        "opening_hours:covid19": "restricted",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9576758,
+          49.2108999
+        ]
+      },
+      "id": "node/9265021301"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9265021302",
+        "access": "private",
+        "amenity": "toilets",
+        "check_date": "2023-09-22",
+        "female": "yes",
+        "opening_hours:covid19": "restricted",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9576641,
+          49.2108887
+        ]
+      },
+      "id": "node/9265021302"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9575778910",
+        "amenity": "toilets",
+        "fee": "no",
+        "wheelchair": "designated"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6380561,
+          49.1005173
+        ]
+      },
+      "id": "node/9575778910"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9654710915",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.117626,
+          49.283201
+        ]
+      },
+      "id": "node/9654710915"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9717243818",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.5356357,
+          49.2455531
+        ]
+      },
+      "id": "node/9717243818"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9780201265",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.584039,
+          49.1682994
+        ]
+      },
+      "id": "node/9780201265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9818732971",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1770902,
+          49.1973609
+        ]
+      },
+      "id": "node/9818732971"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9875680006",
+        "access": "yes",
+        "amenity": "toilets",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6597882,
+          49.1678816
+        ]
+      },
+      "id": "node/9875680006"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9904771060",
+        "access": "yes",
+        "amenity": "toilets",
+        "level": "0",
+        "opening_hours": "24/7",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1274459,
+          49.1966374
+        ]
+      },
+      "id": "node/9904771060"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9937735065",
+        "access": "private",
+        "amenity": "toilets",
+        "level": "0",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3789493,
+          49.0242191
+        ]
+      },
+      "id": "node/9937735065"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9956022076",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1190025,
+          49.2790429
+        ]
+      },
+      "id": "node/9956022076"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9956022077",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1189741,
+          49.2790407
+        ]
+      },
+      "id": "node/9956022077"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10046261686",
+        "addr:housenumber": "1901",
+        "addr:postcode": "V5C 6R6",
+        "addr:street": "Rosser Avenue",
+        "addr:unit": "106",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "contact:email": "info@menyakokoro.com",
+        "cuisine": "japanese",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "internet_access": "no",
+        "name": "Kokoro Tokyo Mazesoba",
+        "opening_hours": "Mo-Su 11:30-22:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+1-604-416-4576",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "website": "http://menyakokoro.com/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.006264,
+          49.266816
+        ]
+      },
+      "id": "node/10046261686"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10049761818",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.922431,
+          49.2124166
+        ]
+      },
+      "id": "node/10049761818"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10109161292",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1806412,
+          49.1950085
+        ]
+      },
+      "id": "node/10109161292"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10219030759",
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2023-08-20",
+        "fee": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1224495,
+          49.2519287
+        ]
+      },
+      "id": "node/10219030759"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10979775405",
+        "access": "yes",
+        "amenity": "toilets",
+        "operator": "Township of Langley",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6569579,
+          49.1227733
+        ]
+      },
+      "id": "node/10979775405"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10995553134",
+        "access": "yes",
+        "amenity": "toilets",
+        "check_date": "2023-06-21",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1825269,
+          49.1952323
+        ]
+      },
+      "id": "node/10995553134"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11051846396",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0788945,
+          49.3099311
+        ]
+      },
+      "id": "node/11051846396"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11072559948",
+        "addr:city": "Langley",
+        "addr:housenumber": "19705",
+        "addr:province": "BC",
+        "addr:street": "Fraser Highway",
+        "addr:unit": "525",
+        "alt_name": "AO Ramen Bar",
+        "amenity": "restaurant",
+        "branch": "Willowbrook",
+        "brand": "AO Ramen and Sushi",
+        "cuisine": "japanese;ramen;sushi",
+        "indoor": "yes",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "AO Ramen and Sushi",
+        "smoking": "no",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:wheelchair": "yes",
+        "website": "https://aoramen.com"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6753229,
+          49.1153723
+        ]
+      },
+      "id": "node/11072559948"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11113291506",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "pitlatrine",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7051218,
+          49.0531461
+        ]
+      },
+      "id": "node/11113291506"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11145153076",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "female": "yes",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6181926,
+          49.2071613
+        ]
+      },
+      "id": "node/11145153076"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11203481930",
+        "access": "yes",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2721924,
+          49.3738485
+        ]
+      },
+      "id": "node/11203481930"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11218195638",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1345071,
+          49.272364
+        ]
+      },
+      "id": "node/11218195638"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11333658711",
+        "access": "permissive",
+        "amenity": "toilets",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.103559,
+          49.2778717
+        ]
+      },
+      "id": "node/11333658711"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11333658712",
+        "access": "permissive",
+        "amenity": "toilets",
+        "female": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1036842,
+          49.2778722
+        ]
+      },
+      "id": "node/11333658712"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11378789667",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "level": "2",
+        "level:ref": "3",
+        "male": "yes",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0166453,
+          49.2495542
+        ]
+      },
+      "id": "node/11378789667"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11378835869",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "female": "yes",
+        "level": "2",
+        "level:ref": "3",
+        "toilets:disposal": "flush",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0166482,
+          49.2495775
+        ]
+      },
+      "id": "node/11378835869"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11815516326",
+        "access": "permissive",
+        "amenity": "toilets",
+        "fee": "no",
+        "level": "0",
+        "opening_hours": "09:00-",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:paper_supplied": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8015242,
+          49.0321546
+        ]
+      },
+      "id": "node/11815516326"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11815516329",
+        "access": "permissive",
+        "amenity": "toilets",
+        "fee": "no",
+        "level": "0",
+        "opening_hours": "10:00-",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:paper_supplied": "yes",
+        "toilets:position": "seated;urinal",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8018031,
+          49.0326833
+        ]
+      },
+      "id": "node/11815516329"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11877233569",
+        "amenity": "toilets",
+        "female": "yes",
+        "level": "0",
+        "male": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1174563,
+          49.2901431
+        ]
+      },
+      "id": "node/11877233569"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11931546928",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4983188,
+          49.2835858
+        ]
+      },
+      "id": "node/11931546928"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11931546929",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4982892,
+          49.2835749
+        ]
+      },
+      "id": "node/11931546929"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11938416234",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "no",
+        "operator": "BC Parks",
+        "toilets:disposal": "pitlatrine",
+        "toilets:handwashing": "no",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3835382,
+          49.2443926
+        ]
+      },
+      "id": "node/11938416234"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12106677780",
+        "access": "permissive",
+        "amenity": "toilets",
+        "level": "0",
+        "toilets:disposal": "flush",
+        "unisex": "unisex",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8184189,
+          49.0398037
+        ]
+      },
+      "id": "node/12106677780"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12111570743",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1823284,
+          49.1988185
+        ]
+      },
+      "id": "node/12111570743"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12125680542",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "fee": "no",
+        "female": "yes",
+        "male": "yes",
+        "portable": "no",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1851067,
+          49.1956246
+        ]
+      },
+      "id": "node/12125680542"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12228199733",
+        "access": "yes",
+        "amenity": "toilets",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1144259,
+          49.273073
+        ]
+      },
+      "id": "node/12228199733"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12407692513",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0851435,
+          49.311735
+        ]
+      },
+      "id": "node/12407692513"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12628772941",
+        "access": "yes",
+        "amenity": "toilets",
+        "changing_table": "yes",
+        "toilets:disposal": "flush",
+        "unisex": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1080586,
+          49.243893
+        ]
+      },
+      "id": "node/12628772941"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12734586133",
+        "amenity": "toilets",
+        "female": "yes",
+        "male": "yes",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0863081,
+          49.0379197
+        ]
+      },
+      "id": "node/12734586133"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12734586148",
+        "amenity": "toilets",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0880743,
+          49.0361138
+        ]
+      },
+      "id": "node/12734586148"
+    }
+  ]
+}

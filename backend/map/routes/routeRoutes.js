@@ -10,4 +10,8 @@ router.post('/', routeCtrl.createRoute);
 
 router.get('/:routeId', routeCtrl.getRouteById);
 
+router.delete('/:routeId', routeCtrl.deleteRouteById);
+
+router.get('/', routeCtrl.getAllRoutes);
+
 module.exports = router;
