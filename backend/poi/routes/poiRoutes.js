@@ -13,6 +13,6 @@ router.get('/markers', poiController.getPOIMarkers);
 router.get('/all', poiController.getAllPOIs);
 
 // Get favorites POIs
-// router.get('/favorites', poiController.getFavoritePOIs);
+router.get('/favorites', poiController.getSavedPOIs);
 
 module.exports = router;

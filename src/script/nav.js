@@ -20,12 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.loggedIn) {
               // ✅ Personalize navbar if user is logged in
               const nameSpan = document.getElementById('user-name');
-              const homeLink = document.querySelector('.nav-link[href="/index.html"]');
               if (nameSpan) {
                 nameSpan.innerHTML = `Hi, ${data.name}`;
-              }
-              if (homeLink) {
-                homeLink.setAttribute('href', '/html/home.html');
               }
 
               // ✅ Bind logout button event
@@ -33,24 +29,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // ✅ Bind theme switch button event
               bindThemeSwitcher(); 
+
+              //✅ adjust text size
+              bindSizeSwitcher(); 
+
+              //✅ set up contact us pop up window
+              setupContactUsPopup();
+
+              if (botEl) {
+                 // ✅ Load bottom navbar if present
+                    fetch(`/partials/bottomNavbar.html`)
+                   .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
+                   .then(bottomHtml => {
+                    botEl.innerHTML = bottomHtml;
+                    const homeLink = botEl.querySelector('#home-link');
+                    if (homeLink) {
+                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/home.html');
+                    }
+                   });
+               }
+            }
+            else{
+              const homeLink = botEl.querySelector('#home-link');
+              homeLink.setAttribute('href', '/html/home.html');
             }
           });
       });
   }
-
-  if (botEl) {
-    // ✅ Load bottom navbar if present
-    fetch(`/partials/bottomNavbar.html`)
-      .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
-      .then(html => botEl.innerHTML = html);
-  }
-
-  // ✅ Listen for logout events triggered from other tabs
-  //window.addEventListener('storage', (e) => {
-  //  if (e.key === 'logout-event') {
-  //    location.reload(); // Reload to update navbar after logout
-  //  }
-  //});
 });
 
 // ✅ Bind logout functionality after navbar is loaded
@@ -74,10 +79,12 @@ function bindLogout() {
             .then(r => r.ok ? r.text() : Promise.reject(r.statusText))
             .then(html => {
               document.getElementById('navbar-placeholder').innerHTML = html;
+              window.location.href = '/index.html';
             });
-          location.reload();
-          // ✅ Optional: Redirect to home page
-          // window.location.href = '/index.html';
+
+         window.location.href = '/index.html';
+
+
         } else {
           alert('Logout failed.');
         }
@@ -131,4 +138,122 @@ function applyTheme(theme) {
 
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function bindSizeSwitcher() {
+  const sizeBtn = document.getElementById('size-btn');
+  const body = document.body;
+  const sizes = ['size-small', 'size-medium', 'size-large'];
+  const labels = ['Small', 'Medium', 'Large'];
+  let currentSizeIndex = 1; // Default is medium
+
+  const savedSize = localStorage.getItem('fontSizeClass');
+  if (savedSize && sizes.includes(savedSize)) {
+    body.classList.add(savedSize);
+    currentSizeIndex = sizes.indexOf(savedSize);
+  } else {
+    body.classList.add(sizes[currentSizeIndex]);
+  }
+
+  // Update button label initially
+  if (sizeBtn) {
+    sizeBtn.textContent = `Text Size: ${labels[currentSizeIndex]}`;
+
+    sizeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      body.classList.remove(sizes[currentSizeIndex]);
+      currentSizeIndex = (currentSizeIndex + 1) % sizes.length;
+      body.classList.add(sizes[currentSizeIndex]);
+      localStorage.setItem('fontSizeClass', sizes[currentSizeIndex]);
+
+      // Update button label after change
+      sizeBtn.textContent = `Size: ${labels[currentSizeIndex]}`;
+    });
+  }
+}
+
+
+//Set up the pop up window for contact us function
+function setupContactUsPopup() {
+  const existingPopup = document.getElementById('contact-popup');
+    if (existingPopup) {
+        existingPopup.remove();
+      }
+
+  const contactBtn = document.getElementById('contact-us');
+  if (!contactBtn) return;
+
+  contactBtn.addEventListener('click', () => {
+    const popup = document.createElement('div');
+    popup.innerHTML = `
+      <div id="contact-popup">
+        <h5>Contact Us</h5>
+        <input id="contact-title" placeholder="Title" />
+        <textarea id="contact-description" placeholder="Description"></textarea>
+        <div style="text-align: right; margin-top: 12px;">
+          <button id="contact-cancel">Cancel</button>
+          <button id="contact-submit">Submit</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+    makePopupDraggable(document.getElementById('contact-popup'));
+
+    document.getElementById('contact-cancel').onclick = () => popup.remove();
+
+    document.getElementById('contact-submit').onclick = async () => {
+      const title = document.getElementById('contact-title').value.trim();
+      const description = document.getElementById('contact-description').value.trim();
+      if (!title || !description) {
+        alert('Title and Description are required.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ title, description })
+        });
+
+        if (res.ok) {
+          alert('Thank you for your feedback!');
+          popup.remove();
+        } else {
+          alert('Submission failed. Please try again.');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Network error. Try again.');
+      }
+    };
+  });
+}
+
+function makePopupDraggable(popup) {
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  const header = popup.querySelector('h5');
+  header.style.cursor = 'move';
+
+  header.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    popup.style.transition = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      popup.style.left = `${e.clientX - offsetX}px`;
+      popup.style.top = `${e.clientY - offsetY}px`;
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
 }
