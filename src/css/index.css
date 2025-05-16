@@ -71,6 +71,79 @@ body {
   box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
 }
 
+/* Carousel wrapper container */
+
+.carousel-wrapper {
+  overflow: visible;
+  padding-inline: 6rem;
+}
+
+/* Carousel card container styling */
+.carousel-card {
+  width: 70vw;                          /* Responsive card width */
+  height: 45vh;                         /* Responsive card height */
+  
+  /* Metallic-style layered gradient background */
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), transparent 60%),
+    linear-gradient(135deg, #fafbfc, #ebf2fa, #30c7ec, #93f9b9, #2782b6);
+  background-blend-mode: screen;
+
+  border-radius: 25px;                 /* Rounded corners */
+  padding: 2rem;                       /* Inner spacing */
+  margin: 0 auto 4rem auto;            /* Bottom margin to make room for shadow */
+  
+  display: flex;                       /* Center content */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #000;                         /* Text color */
+  position: relative;                 /* Required for shadow positioning */
+  /*z-index: 1;                         /* Ensure content stays above pseudo-elements */
+
+  box-shadow: 10px 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Card text colors */
+.carousel-card h2,
+.carousel-card p {
+  color: #000;                       /* Black text for contrast */
+}
+
+/* Carousel arrow controls */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;                         /* Arrow button size */
+  top: 50%;                          /* Vertically center */
+  transform: translateY(-50%);       /* Adjust exact center alignment */
+  position: absolute;                /* Place outside the carousel card */
+  z-index: 1;                        /* Ensure on top */
+}
+
+/* Left arrow positioned to the left of the card */
+.carousel-control-prev {
+  left: calc(50% - 32.5vw - 8rem);    /* 32.5vw is half of 65vw (card width) + margin */
+}
+
+/* Right arrow positioned to the right of the card */
+.carousel-control-next {
+  right: calc(50% - 32.5vw - 8rem);  
+}
+
+/* Arrow icon styling */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(90%);               /* Light gray arrow color */
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.carousel-inner,
+.carousel-item {
+  overflow: visible !important;
+}
+
 
 @media (max-width: 768px) {
   .grid-container {

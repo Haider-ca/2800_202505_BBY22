@@ -14,6 +14,17 @@ const routeSchema = new Schema({
     },
     coordinates: { type: [[Number]], required: true }
   },
+  steps: [
+    {
+      instruction: String,
+      distance: String,
+      duration: String
+    }
+  ],
+  summary: {
+    distance: String,
+    duration: String
+  },
   createdAt: { type: Date, default: Date.now }
 });
 
