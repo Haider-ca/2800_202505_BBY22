@@ -140,7 +140,7 @@ html, body {
   left: .5rem !important;        /* align with card padding */
   transform: translateY(-100%) !important;
   width: 32px; height: 32px; padding: 0;
-  background: #f5f7fa; border: none;
+  background: #007bff !important; color: white !important; border: none;
   z-index: 1001;
 }
 

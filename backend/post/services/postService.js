@@ -14,7 +14,7 @@ exports.createPost = async ({ title, body, mediaUrl, mediaType, userId, username
   return await post.save();
 };
 
-// Fetch Posts with pagination, sorting, filtering, and optional search
+// Fetch All posts with pagination, sorting, filtering, and optional search
 exports.fetchPosts = async ({ page, limit, sort, filter, search, userId }) => {
   // Calculate how many documents to skip for pagination
   const skip = (page - 1) * limit;
@@ -28,11 +28,19 @@ exports.fetchPosts = async ({ page, limit, sort, filter, search, userId }) => {
 
   const filterQuery = {};
 
-  // If filters are provided, match POIs with any of the specified tags
+  // If filters are provided, match posts with any of the specified tags
   if (filters.length > 0) {
     filterQuery.tags = { $in: filters };
   }
 
+  // If search term is provided, perform a case-insensitive search in title or body
+  if (search) {
+    filterQuery.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { body:  { $regex: search, $options: 'i' } }
+    ];
+  }
+  
   const posts = await Post.find(filterQuery)
     .sort(sortOption)
     .skip(skip)
@@ -46,6 +54,39 @@ exports.fetchPosts = async ({ page, limit, sort, filter, search, userId }) => {
       post.isSaved = savedSet.has(post._id.toString());
     });
   }
+
+  return posts;
+};
+
+// Fetch saved posts with pagination, sorting, filtering, and optional search
+exports.fetchSavedPosts = async ({ userId, page, limit, sort, search }) => {
+  const user = await User.findById(userId);
+  const savedPostIds = user.savedPosts || [];
+  const skip = (page - 1) * limit;
+  const sortOption = sort === 'likes' ? { likes: -1 } : { createdAt: -1 };
+
+  const query = { _id: { $in: savedPostIds } };
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { body: { $regex: search, $options: 'i' } }
+    ];
+  }
+
+  const posts = await Post.find(query)
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit)
+    .lean();
+
+  await Post.populate(posts, { path: 'userId', select: 'avatar' });
+
+  // Mark saved flag
+  const savedSet = new Set(savedPostIds.map(p => p.toString()));
+  posts.forEach(post => {
+    post.isSaved = savedSet.has(post._id.toString());
+  });
 
   return posts;
 };

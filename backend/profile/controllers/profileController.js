@@ -94,7 +94,6 @@ const updatePOIHandler = async (req, res) => {
         const updates = req.body;
 
         const tags = updates.tags ? JSON.parse(updates.tags) : [];
-        const coordinates = updates.coordinates ? JSON.parse(updates.coordinates) : [];
 
         // If a file was uploaded, pass the file path to the service
         const filePath = req.file ? req.file.path : null;
@@ -104,7 +103,6 @@ const updatePOIHandler = async (req, res) => {
             title: updates.title,
             description: updates.description,
             tags: tags,
-            coordinates: coordinates,
             filePath: filePath // Pass file path to service for upload
         });
 

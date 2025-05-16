@@ -41,11 +41,15 @@ export async function loadPosts({
       feedCards.appendChild(card);
     });
 
-    currentPage++;
+    if (data.length === 0 || data.length < limit) {
+      loadMore.innerHTML = '<span class="text-muted">No more posts</span>';
+      return null;
+    }
+
+    return currentPage + 1;
   } catch (err) {
     console.error('Failed to fetch Posts:', err);
   } finally {
     setLoading(false);
-    // currentPage++;
   }
 }

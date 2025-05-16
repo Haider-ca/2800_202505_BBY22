@@ -310,7 +310,6 @@ async function loadUserPOIs() {
             card.className = 'card mb-3 position-relative';
             card.innerHTML = `
                 <div class="card-body">
-                    <!-- Nút Edit và Delete ở góc phải trên cùng -->
                     <div class="position-absolute top-0 end-0 p-2 d-flex gap-1">
                         <button class="btn btn-sm btn-outline-primary edit-btn" data-id="${poi._id}" title="Edit">
                             <i class="bi bi-pencil"></i>
@@ -424,6 +423,7 @@ async function loadUserPOIs() {
                     const tagInputs = document.querySelectorAll(`input[name="tags-${poiId}"]:checked`);
                     const selectedTags = Array.from(tagInputs).map(input => input.value);
                     formData.append('tags', JSON.stringify(selectedTags));
+
                     const imageFile = document.getElementById(`image-${poiId}`).files[0];
                     if (imageFile) {
                         formData.append('image', imageFile);
@@ -437,7 +437,6 @@ async function loadUserPOIs() {
                         });
 
                         if (response.ok) {
-                            console.log('POI updated successfully');
                             bootstrapModal.hide();
                             loadUserPOIs();
                         } else {

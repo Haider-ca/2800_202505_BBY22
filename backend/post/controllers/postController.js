@@ -1,5 +1,4 @@
 const postService = require('../services/postService');
-const User = require('../../models/user');
 const Post = require('../../models/post');
 
 exports.createPost = async (req, res) => {
@@ -36,9 +35,9 @@ exports.createPost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     // Extract query parameters
-    const page   = parseInt(req.query.page) || 1;
-    const limit  = parseInt(req.query.limit) || 5;
-    const sort   = req.query.sort;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const sort = req.query.sort;
     const filter = req.query.filter;
     const search = req.query.q;
 
@@ -62,13 +61,14 @@ exports.getSavedPosts = async (req, res) => {
     const userId = req.session.userId;
     if (!userId) return res.status(401).json({ error: 'Not logged in' });
 
-    try {
-      const user = await User.findById(userId).populate('savedPosts');
-      res.json(user.savedPosts);
-    } catch (err) {
-      console.error('Failed to fetch saved posts:', err);
-      res.status(500).json({ error: 'Server error' });
-    }
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const sort = req.query.sort;
+    const search = req.query.q;
+
+    const posts = await postService.fetchSavedPosts({ userId, page, limit, sort, search });
+    res.json(posts);
+
   } catch (err) {
     console.error('Error fetching saved posts:', err);
     res.status(500).json({ error: 'Failed to fetch saved posts' });
