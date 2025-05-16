@@ -32,6 +32,15 @@
       }).show();
     };
 
+    // Utility formatters
+    function formatDistance(meters) {
+      return meters >= 1000 ? `${(meters / 1000).toFixed(1)} km` : `${Math.round(meters)} m`;
+    }
+    function formatDuration(seconds) {
+      const mins = Math.round(seconds / 60);
+      return `${mins} min`;
+    }
+
     saveBtn.addEventListener('click', async () => {
       if (!window.lastRouteGeoJSON || !window.currentProfile) {
         alert('No active route to save.');
@@ -47,10 +56,19 @@
 
       if (!isSaved) {
         const payload = {
-          name: 'Saved Route',
+          name: window.lastRouteName || 'Saved Route',
           description: '',
           profile: window.currentProfile,
-          geometry: window.lastRouteGeoJSON.geometry
+          geometry: window.lastRouteGeoJSON.geometry,
+          steps: (window.lastRouteSteps || []).map(step => ({
+            instruction: step.maneuver?.instruction || '—',
+            distance: formatDistance(step.distance),
+            duration: formatDuration(step.duration)
+          })),
+          summary: {
+            distance: formatDistance(window.lastRouteSummary?.distance),
+            duration: formatDuration(window.lastRouteSummary?.duration)
+          }
         };
 
         try {
@@ -76,22 +94,35 @@
         }
 
       } else {
-        isSaved = false;
-        lastSavedId = null;
-        updateSaveButton();
-        showToast('Route removed successfully!');
-        lastSavedGeometry = null;
+        try {
+          const res = await fetch(`/api/map/${lastSavedId}`, {
+            method: 'DELETE'
+          });
+
+          if (!res.ok) {
+            alert('Route removed failed');
+            return;
+          }
+
+          isSaved = false;
+          lastSavedId = null;
+          updateSaveButton();
+          showToast('Route removed successfully!');
+          lastSavedGeometry = null;
+        } catch (err) {
+          alert('Something went wrong while removing.');
+        }
 
       }
     });
 
-        document.getElementById('dir-clear')?.addEventListener('click', () => {
+    document.getElementById('dir-clear')?.addEventListener('click', () => {
       if (isSaved) {
         isSaved = false;
         lastSavedId = null;
         lastSavedGeometry = null;
         updateSaveButton();
-        saveBtn.classList.remove('d-none'); 
+        saveBtn.classList.remove('d-none');
       }
     });
 
@@ -106,15 +137,15 @@
         saveBtn.classList.add('btn-outline-light');
       }
     }
-  
 
-      document.getElementById('dir-go')?.addEventListener('click', () => {
+
+    document.getElementById('dir-go')?.addEventListener('click', () => {
       // small delay so window.lastRouteGeoJSON has updated
       setTimeout(() => {
         const g = window.lastRouteGeoJSON?.geometry;
         if (lastSavedGeometry && g && JSON.stringify(g) !== JSON.stringify(lastSavedGeometry)) {
-          isSaved           = false;
-          lastSavedId       = null;
+          isSaved = false;
+          lastSavedId = null;
           lastSavedGeometry = null;
           updateSaveButton();
         }
