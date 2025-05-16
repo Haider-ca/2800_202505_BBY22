@@ -1,12 +1,12 @@
 // src/script/mapDirections.js
 export function initDirections(map) {
-  let coordStart    = null,
-      coordEnd      = null,
-      profile       = 'driving',
-      startMarker   = null,
-      endMarker     = null,
-      _watchId      = null,
-      _liveCount    = 0;
+  let coordStart = null,
+    coordEnd = null,
+    profile = 'driving',
+    startMarker = null,
+    endMarker = null,
+    _watchId = null,
+    _liveCount = 0;
 
   // ─── Voice helper & live-tracking ───
   function speak(text) {
@@ -113,37 +113,56 @@ export function initDirections(map) {
   });
 
   // ─── 4) UI refs & helpers ───
-  const spinnerEl  = document.getElementById('dir-spinner'),
-        errorEl    = document.getElementById('dir-error'),
-        summaryEl  = document.getElementById('dir-summary'),
-        stepsEl    = document.getElementById('directions-steps'),
-        collapseEl = document.getElementById('turn-content');
+  const spinnerEl = document.getElementById('dir-spinner'),
+    errorEl = document.getElementById('dir-error'),
+    summaryEl = document.getElementById('dir-summary'),
+    stepsEl = document.getElementById('directions-steps'),
+    collapseEl = document.getElementById('turn-content');
 
   const showSpinner = () => spinnerEl.classList.remove('d-none');
   const hideSpinner = () => spinnerEl.classList.add('d-none');
-  const showError   = msg => { errorEl.textContent = msg; errorEl.classList.remove('d-none'); };
-  const clearError  = () => { errorEl.textContent = ''; errorEl.classList.add('d-none'); };
+  const showError = msg => { errorEl.textContent = msg; errorEl.classList.remove('d-none'); };
+  const clearError = () => { errorEl.textContent = ''; errorEl.classList.add('d-none'); };
 
   // ─── 5) clearLayers(): remove route & benches, KEEP markers ───
   function clearLayers() {
-    if (map.getLayer('route-line'))    map.removeLayer('route-line');
-    if (map.getSource('route-line'))   map.removeSource('route-line');
-    if (map.getLayer('benches-layer')) map.removeLayer('benches-layer');
-    if (map.getSource('benches'))      map.removeSource('benches');
+    const style = map.getStyle();
+
+    if (style.layers.some(l => l.id === 'route-line')) {
+      map.removeLayer('route-line');
+      map.removeSource('route-line');
+    }
+    if (style.layers.some(l => l.id === 'benches-layer')) {
+      map.removeLayer('benches-layer');
+      map.removeSource('benches');
+    }
+    if (style.layers.some(l => l.id === 'wheelchair-facilities-layer')) {
+      map.removeLayer('wheelchair-facilities-layer');
+      map.removeSource('wheelchair-facilities');
+    }
+    if (style.layers.some(l => l.id === 'ramps-layer')) {
+      map.removeLayer('ramps-layer');
+      map.removeSource('ramps');
+    }
+    if (style.layers.some(l => l.id === 'restrooms-layer')) {
+      map.removeLayer('restrooms-layer');
+      map.removeSource('restrooms');
+    }
+
     if (_watchId !== null) {
       navigator.geolocation.clearWatch(_watchId);
       _watchId = null;
     }
-    // collapse steps panel
+    // collapse the steps panel
     new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
     summaryEl.textContent = '';
-    stepsEl.innerHTML     = '';
+    stepsEl.innerHTML = '';
   }
 
   // ─── 6) clearRoute(): remove markers + layers ───
   function clearRoute() {
     if (startMarker) { startMarker.remove(); startMarker = null; }
-    if (endMarker)   { endMarker.remove();   endMarker   = null; }
+    if (endMarker) { endMarker.remove(); endMarker = null; }
     document.getElementById('btn-save-route')?.classList.add('d-none');
     clearLayers();
   }
@@ -151,11 +170,11 @@ export function initDirections(map) {
   // ─── 7) Fetch route ───
   async function fetchRoute(start, end, prof) {
     const apiProfile = prof === 'senior' ? 'walking'
-                      : prof === 'wheelchair' ? 'driving'
-                      : prof;
+      : prof === 'wheelchair' ? 'cycling'
+        : prof;
     const url = new URL('/api/directions', window.location.origin);
     url.searchParams.set('start', start);
-    url.searchParams.set('end',   end);
+    url.searchParams.set('end', end);
     url.searchParams.set('profile', apiProfile);
 
     const res = await fetch(url);
@@ -167,28 +186,186 @@ export function initDirections(map) {
 
   // ─── 8) Draw & fit ───
   function drawRoute(route) {
-    const dashed = profile === 'walking' || profile === 'senior';
-    const paint  = {
-      'line-color': '#007cbf',
-      'line-width': dashed ? 6 : 14,
-      ...(dashed ? { 'line-dasharray': [0, 4] } : {})
-    };
-    if (map.getLayer('route-line'))  map.removeLayer('route-line');
-    if (map.getSource('route-line')) map.removeSource('route-line');
+    let paint;
+    if (profile === 'wheelchair') {
+      paint = {
+        'line-color': '#FF00FF',
+        'line-width': 6
+      };
+    }
+    else if (profile === 'driving') {
+      paint = {
+        'line-color': '#0000FF',
+        'line-width': 6
+      };
+    }
+    else {
+      const dashed = profile === 'walking' || profile === 'senior';
+      paint = {
+        'line-color': '#FF00FF',
+        'line-width': dashed ? 6 : 14,
+        ...(dashed ? { 'line-dasharray': [0, 2] } : {})
+      };
+    }
 
-    map.addSource('route-line', { type: 'geojson', data: { type:'Feature', geometry:route.geometry } });
-    map.addLayer({
-      id: 'route-line', type: 'line', source: 'route-line',
-      layout: { 'line-cap':'round','line-join':'round' }, paint
-    });
+    if (map.getSource('route-line')) {
+      map.getSource('route-line').setData({
+        type: 'Feature',
+        geometry: route.geometry
+      });
+
+      Object.entries(paint).forEach(([prop, val]) =>
+        map.setPaintProperty('route-line', prop, val)
+      );
+
+    } else {
+      map.addSource('route-line', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: route.geometry
+        }
+      });
+      map.addLayer({
+        id: 'route-line',
+        type: 'line',
+        source: 'route-line',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint
+      });
+    }
 
     const coords = route.geometry.coordinates;
     const bounds = coords.reduce(
-      (b,c) => b.extend(c),
+      (b, c) => b.extend(c),
       new mapboxgl.LngLatBounds(coords[0], coords[0])
     );
-    map.fitBounds(bounds, { padding:40, maxZoom:14 });
+    map.fitBounds(bounds, { padding: 40, maxZoom: 14 });
   }
+
+  // ─── addWheelchairFacilities: show little wheelchair-friendly icons ───
+  async function addWheelchairFacilities(route) {
+    try {
+      const resp = await fetch('/data/wheelchair-friendly.geojson');
+      if (!resp.ok) throw new Error('Wheelchair facilities data missing');
+      const data = await resp.json();
+
+      const feature = turf.feature(route.geometry);
+      const buf = turf.buffer(feature, 0.5, { units: 'kilometers' });
+
+      const nearby = data.features
+        .filter(f => f.geometry?.type === 'Point' && turf.booleanPointInPolygon(f, buf))
+        .map(f => ({
+          type: 'Feature',
+          geometry: f.geometry,
+          properties: { icon: f.properties.facilityType }
+        }));
+
+      const fc = { type: 'FeatureCollection', features: nearby };
+
+      if (map.getSource('wheelchair-facilities')) {
+        map.getSource('wheelchair-facilities').setData(fc);
+      } else {
+        map.addSource('wheelchair-facilities', { type: 'geojson', data: fc });
+        map.addLayer({
+          id: 'wheelchair-facilities-layer',
+          type: 'symbol',
+          source: 'wheelchair-facilities',
+          layout: {
+            'icon-image': ['get', 'icon'],
+            'icon-size': 0.5,
+            'icon-allow-overlap': true
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Wheelchair facilities load error:', e);
+    }
+  }
+
+  // ─── addRamps: show little ramp icons ───
+  async function addRamps(route) {
+    try {
+      const resp = await fetch('/data/wheelchair-ramps.geojson');
+      if (!resp.ok) throw new Error('Ramps data missing');
+      const data = await resp.json();
+      const routeFeature = turf.feature(route.geometry);
+      const buf = turf.buffer(routeFeature, 0.05, { units: 'kilometers' });
+      const nearby = data.features
+        .filter(f => f.geometry?.type === 'Point' && turf.booleanPointInPolygon(f, buf))
+        .map(f => ({
+          type: 'Feature',
+          geometry: f.geometry,
+          properties: { icon: 'ramp-15' }
+        }));
+
+      const fc = { type: 'FeatureCollection', features: nearby };
+
+      if (map.getSource('ramps')) {
+        map.getSource('ramps').setData(fc);
+      } else {
+        map.addSource('ramps', { type: 'geojson', data: fc });
+        map.addLayer({
+          id: 'ramps-layer',
+          type: 'symbol',
+          source: 'ramps',
+          layout: {
+            'icon-image': ['get', 'icon'],
+            'icon-size': 0.04,
+            'icon-allow-overlap': true
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Ramps load error:', e);
+    }
+  }
+
+  // ─── addRestrooms: show toilet icons ───
+  async function addRestrooms(route) {
+    try {
+      const debugResp = await fetch('/data/wheelchair-restrooms.geojson');
+      if (!debugResp.ok) throw new Error(`Fetch failed: ${debugResp.status}`);
+      const data = await debugResp.json();
+      const routeFeature = turf.feature(route.geometry);
+      const buf = turf.buffer(routeFeature, 0.5, { units: 'kilometers' });
+      const nearbyPoints = data.features.filter(f =>
+        f.geometry?.type === 'Point' && turf.booleanPointInPolygon(f, buf)
+      );
+
+      const nearby = nearbyPoints.map(f => ({
+        type: 'Feature',
+        geometry: f.geometry,
+        properties: { icon: 'toilet-15' }
+      }));
+
+      const fc = { type: 'FeatureCollection', features: nearby };
+
+      if (map.getSource('restrooms')) {
+        map.getSource('restrooms').setData(fc);
+      } else {
+        map.addSource('restrooms', {
+          type: 'geojson',
+          data: fc
+        });
+        map.addLayer({
+          id: 'restrooms-layer',
+          type: 'symbol',
+          source: 'restrooms',
+          layout: {
+            'icon-image': 'custom-restroom',
+            'icon-size': 0.05,
+            'icon-allow-overlap': true
+          }
+        });
+        map.moveLayer('restrooms-layer');
+      }
+
+    } catch (e) {
+      console.warn('Restrooms load error:', e);
+    }
+  }
+
 
   // ─── 9) Benches for seniors ───
   async function addBenches(route) {
@@ -196,17 +373,17 @@ export function initDirections(map) {
       const resp = await fetch('/data/benches.geojson');
       if (!resp.ok) throw new Error('Benches data missing');
       const data = await resp.json();
-      const buffer = turf.buffer(route.geometry, 0.05, { units:'kilometers' });
+      const buffer = turf.buffer(route.geometry, 0.05, { units: 'kilometers' });
       const nearby = data.features.filter(f => turf.booleanPointInPolygon(f, buffer));
-      const fc = { type:'FeatureCollection', features:nearby };
+      const fc = { type: 'FeatureCollection', features: nearby };
 
       if (map.getSource('benches')) {
         map.getSource('benches').setData(fc);
       } else {
-        map.addSource('benches',{type:'geojson',data:fc});
+        map.addSource('benches', { type: 'geojson', data: fc });
         map.addLayer({
-          id:'benches-layer', type:'symbol', source:'benches',
-          layout:{'icon-image':'bench-15','icon-size':0.04,'icon-allow-overlap':true}
+          id: 'benches-layer', type: 'symbol', source: 'benches',
+          layout: { 'icon-image': 'bench-15', 'icon-size': 0.04, 'icon-allow-overlap': true }
         });
       }
     } catch (e) {
@@ -217,38 +394,68 @@ export function initDirections(map) {
   // ─── 10) Render steps & voice ───
   function renderSteps(route) {
     const steps = route.legs[0].steps;
-    if (steps.length) speak(steps[0].maneuver.instruction);
+    if (!steps.length) return;
+
+    // Log the current profile and raw instruction
+    const raw = steps[0].maneuver.instruction;
+
+    let text = raw;
+    if (profile === 'wheelchair') {
+      text = text.replace(/.*?(?=(Drive|Bike|Ride|Continue|Head))/i, '');
+      text = text.replace(/^(Drive|Bike|Ride)\b/i, 'Roll');
+      text = '🦽 ' + text;
+    }
+
+    speak(text);
+
+    // ─── render list visually ───
     stepsEl.innerHTML = steps.map(s => `
-      <li data-instruction="${s.maneuver.instruction}">
-        ${s.maneuver.instruction}
-        <div class="step-meta">${formatDistance(s.distance)} · ${formatTime(s.duration)}</div>
-      </li>
-    `).join('');
+    <li data-instruction="${s.maneuver.instruction}">
+      ${s.maneuver.instruction}
+      <div class="step-meta">${formatDistance(s.distance)} · ${formatTime(s.duration)}</div>
+    </li>
+  `).join('');
+
+    // ─── click-to-speak ───
     stepsEl.onclick = e => {
       const li = e.target.closest('li[data-instruction]');
-      if (li) speak(li.dataset.instruction);
+      if (!li) return;
+
+      let t = li.dataset.instruction;
+      if (profile === 'wheelchair') {
+        t = t.replace(/.*?(?=(Drive|Bike|Ride|Continue|Head))/i, '');
+        t = t.replace(/^(Drive|Bike|Ride)\b/i, 'Roll');
+        t = '🦽 ' + t;
+      }
+      console.log('🔊 speaking on click:', t);
+      speak(t);
     };
   }
 
+
+
+
   function formatDistance(m) {
-    return m >= 1000 ? `${(m/1000).toFixed(1)} km` : `${Math.round(m)} m`;
+    return m >= 1000 ? `${(m / 1000).toFixed(1)} km` : `${Math.round(m)} m`;
   }
   function formatTime(s) {
-    return `${Math.ceil(s/60)} m`;
+    return `${Math.ceil(s / 60)} m`;
   }
 
   // ─── 11) Route logic ───
   async function route() {
     clearError();
-    clearLayers();             // <<— only clear layers, keep markers
+    clearLayers();
     showSpinner();
     try {
       const r = await fetchRoute(coordStart, coordEnd, profile);
-      if (profile === 'senior')     { r.duration*=1.5; r.legs[0].steps.forEach(s=>s.duration*=1.5); }
-      if (profile === 'wheelchair') { r.duration*=1.25; r.legs[0].steps.forEach(s=>s.duration*=1.25); }
+      if (profile === 'senior') { r.duration *= 1.5; r.legs[0].steps.forEach(s => s.duration *= 1.5); }
+      if (profile === 'wheelchair') { r.duration *= 1.25; r.legs[0].steps.forEach(s => s.duration *= 1.25); }
 
-      summaryEl.textContent = `Total: ${formatDistance(r.distance)} · ETA ${formatTime(r.duration)}`;
+      const prefix = profile === 'wheelchair' ? '🦽 Roll—' : '';
+      summaryEl.textContent = `${prefix}Total: ${formatDistance(r.distance)} · ETA ${formatTime(r.duration)}`;
       speak(summaryEl.textContent);
+
 
       drawRoute(r);
       renderSteps(r);
@@ -258,6 +465,12 @@ export function initDirections(map) {
       document.getElementById('btn-save-route')?.classList.remove('d-none');
 
       if (profile === 'senior') await addBenches(r);
+
+      if (profile === 'wheelchair') {
+        await addWheelchairFacilities(r);
+        await addRamps(r);
+        await addRestrooms(r);
+      }
 
       new bootstrap.Collapse(collapseEl, { toggle: true });
       startLiveTracking(fetchRoute, drawRoute, renderSteps, showError);
@@ -273,7 +486,7 @@ export function initDirections(map) {
   document.getElementById('dir-go').addEventListener('click', () => {
     clearError();
     if (!coordStart) { showError('Please set a start location.'); return; }
-    if (!coordEnd)   { showError('Please set an end location.');   return; }
+    if (!coordEnd) { showError('Please set an end location.'); return; }
     route();
   });
 
