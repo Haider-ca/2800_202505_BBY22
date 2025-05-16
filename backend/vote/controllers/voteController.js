@@ -3,29 +3,30 @@ const voteService = require('../services/voteService');
 
 // Handle vote request for a specific post
 exports.votePost = async (req, res) => {
-  const postId = req.params.id;
-  const { type, voterId } = req.body;
+  // const postId = req.params.id;
+  // const { type, voterId } = req.body;
+  const { type: modelType, id: targetId } = req.params;
+  const { type: voteType, voterId } = req.body;
 
-  // Validate post ID format
-  if (!mongoose.Types.ObjectId.isValid(postId)) {
-    return res.status(400).json({ error: 'Invalid post ID' });
+  if (!['post', 'poi'].includes(modelType)) {
+    return res.status(400).json({ error: 'Invalid content type' });
   }
 
-  // Ensure vote type is either 'like' or 'dislike'
-  if (!['like', 'dislike'].includes(type)) {
+  if (!mongoose.Types.ObjectId.isValid(targetId)) {
+    return res.status(400).json({ error: 'Invalid ID' });
+  }
+
+  if (!['like', 'dislike'].includes(voteType)) {
     return res.status(400).json({ error: 'Invalid vote type' });
   }
 
-  // Ensure voterId is provided (for anonymous voting tracking)
   if (!voterId) {
     return res.status(400).json({ error: 'Missing voterId' });
   }
 
   try {
-    // Call vote service
-    const updated = await voteService.votePost(postId, type, voterId);
+    const updated = await voteService.voteTarget(modelType, targetId, voteType, voterId);
 
-    // Respond with updated like/dislike counts
     res.json({ likes: updated.likes, dislikes: updated.dislikes });
   } catch (err) {
     console.error(err);

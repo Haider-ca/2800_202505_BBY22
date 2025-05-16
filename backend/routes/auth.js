@@ -49,8 +49,10 @@ router.post('/login', async (req, res) => {
      return res.status(401).json({ message: 'Incorrect password' });
    }
 
-   // ✅ Store user email in session after successful login
+   // Store user userId, email, name in session after successful login
+   req.session.userId  = user._id;
    req.session.email = user.email;
+   req.session.name  = user.name;
 
     // Login successful (you can add JWT/session here)
     res.json({ message: 'Login successful', user: user.email });
@@ -60,24 +62,56 @@ router.post('/login', async (req, res) => {
   }
 });
 
+//route to check if user is authenticated.
+router.get('/check-auth', async (req, res) => {
+  if (req.session && req.session.email) {
+    try {
+      const user = await User.findOne({ email: req.session.email });
+      if (!user) {
+        return res.status(401).json({ loggedIn: false });
+      }
+
+      res.status(200).json({
+        loggedIn: true,
+        email: user.email,
+        name: user.name 
+      });
+    } catch (err) {
+      console.error('Check-auth error:', err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  } else {
+    res.status(401).json({ loggedIn: false });
+  }
+});
 // Middleware to check if user is authenticated
 const authMiddleware = async (req, res, next) => {
-  if (!req.session.email) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
-
-  try {
-    const user = await User.findOne({ email: req.session.email });
-    if (!user) {
-      return res.status(401).json({ error: 'User not found' });
+  if (req.session && req.session.email) {
+    try {
+      const user = await User.findOne({ email: req.session.email });
+      if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      req.user = user;
+      next();
+    } catch (err) {
+      console.error('Auth middleware error:', err);
+      res.status(500).json({ message: 'Server error during authentication' });
     }
-    req.user = { id: user._id };
-    next();
-  } catch (err) {
-    console.error('Auth middleware error:', err);
-    res.status(500).json({ error: 'Server error during authentication' });
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
   }
 };
+
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ message: 'Logout failed' });
+    res.clearCookie('connect.sid');
+    res.status(200).json({ message: 'Logged out' });
+  });
+});
+
+
 
 module.exports = router;
 module.exports.authMiddleware = authMiddleware;

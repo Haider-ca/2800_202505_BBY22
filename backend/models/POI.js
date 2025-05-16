@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const poiSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  username: String,
   title: String,
   description: String,
   imageUrl: String,
@@ -36,4 +42,5 @@ const poiSchema = new mongoose.Schema({
 
 poiSchema.index({ coordinates: '2dsphere' });
 
-module.exports = mongoose.model('POI', poiSchema);
+const POI = mongoose.models.POI || mongoose.model('POI', poiSchema);
+module.exports = POI;

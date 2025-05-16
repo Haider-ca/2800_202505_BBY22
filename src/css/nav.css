@@ -1,21 +1,44 @@
-/* Push page content away from fixed navbars */
-body {
-  padding-top: 56px;    /* height of fixed-top navbar */
-  padding-bottom: 56px; /* height of fixed-bottom navbar */
+/* === Theme Variables === */
+:root[data-theme='light'] {
+  --bg-color: #fdfdfd;
+  --text-color: #111;
+  --navbar-bg: linear-gradient(to right, #ffffff, #d6d1d19c);
 }
 
-/* Ensure both navbars span full width and sit above map & controls */
+:root[data-theme='dark'] {
+  --bg-color: #1e1e1e;
+  --text-color: #f0f0f0 !important;
+  --navbar-bg: linear-gradient(to right,#a8a9ac, #4d4a4a, #0c0101);
+}
+
+:root[data-theme='system'] {
+  --bg-color: #fdfdfd;
+  --text-color: #101010;
+  --navbar-bg:linear-gradient(to right,#f3f4f7, #dcdbe2, #99b4cc);
+}
+
+/* === Base body style === */
+body {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+/* === Navbar (top and bottom) unified gradient style === */
+nav.navbar {
+  background: var(--navbar-bg) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Make sure both navbars span full width */
 #navbar-placeholder nav,
 #bottom-navbar-placeholder nav {
   width: 100%;
   z-index: 1030;
 }
 
-/* Allow the logo to overflow its container */
-nav.navbar {
-  overflow: visible;
-}
-/* Center a tall logo in the 56px bar */
+/* Responsive adjustments (optional, logo, spacing) */
 nav.navbar .navbar-brand img {
   height: 100px !important;
   width: auto;
@@ -23,44 +46,106 @@ nav.navbar .navbar-brand img {
   margin-bottom: -35px;
 }
 
-/* Top navbar (light) */
-.navbar-light.fixed-top {
-  background-color: #f8f9fa !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-.navbar-light.fixed-top .navbar-brand,
-.navbar-light.fixed-top .nav-link {
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-.navbar-light.fixed-top .nav-link:hover,
-.navbar-light.fixed-top .navbar-brand:hover {
-  color: #000 !important;
-}
-.navbar-light.fixed-top .navbar-toggler-icon {
-  filter: invert(0.2); /* ensure visibility on light bg */
+.nav-link{
+  color: var(--text-color) !important;
 }
 
-/* Bottom navbar (light) */
-.navbar-light.fixed-bottom {
-  background-color: #f8f9fa !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-.navbar-light.fixed-bottom .nav-link {
-  color: rgba(0, 0, 0, 0.85) !important;
-}
-.navbar-light.fixed-bottom .nav-link:hover {
-  color: #000 !important;
+/* Text size */
+body.size-small {
+  font-size: 12px;
 }
 
-/* Fallback dark‐theme support */
-.navbar-dark {
-  background-color: #343a40 !important;
+body.size-medium {
+  font-size: 16px;
 }
-.navbar-dark .navbar-brand,
-.navbar-dark .nav-link {
-  color: rgba(255, 255, 255, 0.85) !important;
+
+body.size-large {
+  font-size: 20px;
 }
-.navbar-dark .navbar-brand:hover,
-.navbar-dark .nav-link:hover {
-  color: #fff !important;
+
+/* === Contact Us Popup Container === */
+#contact-popup {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  background: var(--navbar-bg); /* 与导航栏同步的渐变背景 */
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 400px;
+  width: 90%;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+/* === Form Inputs === */
+#contact-popup input,
+#contact-popup textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+#contact-popup input:focus,
+#contact-popup textarea:focus {
+  border-color: var(--text-color);
+  outline: none;
+}
+
+#contact-popup textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+/* === Buttons: white background + hover feedback === */
+#contact-popup button {
+  padding: 6px 14px;
+  margin-left: 6px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #fff;
+  color: var(--text-color);
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#contact-popup button:hover {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+#contact-popup button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* === Responsive: popup higher on small screens === */
+@media (max-width: 480px) {
+  #contact-popup {
+    top: 20%;
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
+:root[data-theme='dark'] #contact-popup input,
+:root[data-theme='dark'] #contact-popup textarea {
+  background: #ffffff;
+  color: #000000;
+}
+
+:root[data-theme='dark'] #contact-popup button {
+  background: #ffffff;
+  color: #000000;
 }

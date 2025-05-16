@@ -12,7 +12,7 @@ body {
     color: #333;
 }
 
-.container {
+.containerProfile {
     max-width: 1200px;
     margin: 0 auto;
     padding: 25px;
@@ -25,12 +25,12 @@ body {
     padding: 20px;
 }
 
-.avatar {
+.avatarProfile {
     position: relative;
     margin-bottom: 20px;
 }
 
-.avatar img {
+.avatarProfile img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -54,11 +54,11 @@ body {
     color: #007bff;
 }
 
-.dropdown {
+.dropdownMenu {
     display: none;
     position: absolute;
     top: 100%;
-    right: 40%;
+    right: 35%;
     background-color: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -68,10 +68,10 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
+@keyframes fadeIn1 {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(10px);
     }
 
     to {
@@ -80,38 +80,53 @@ body {
     }
 }
 
-.dropdown div {
+.dropdownMenu div {
     padding: 8px 15px;
     font-size: 14px;
     color: #333;
     cursor: pointer;
 }
 
-.dropdown div:hover {
+.dropdownMenu div:hover {
     background-color: #f1f1f1;
     color: #007bff;
 }
 
-.dropdown.show {
+.dropdownMenu.show {
     display: block;
 }
 
 .info {
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 auto 20px;
     padding: 15px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left;
 }
 
 .info p {
     font-size: 16px;
     color: #444;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 .info p strong {
     color: #222;
+    text-align: left;
+    flex-shrink: 0;
+    margin-right: 5px;
+}
+
+.info p span {
+    flex-grow: 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 #editForm {
@@ -139,6 +154,10 @@ body {
 #editForm textarea {
     min-height: 100px;
     resize: vertical;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    max-width: 100%;
 }
 
 #editForm input[type="email"]:focus,
@@ -180,6 +199,151 @@ body {
     background-color: #c82333;
 }
 
+#avatarPreviewContainer {
+    position: relative;
+    display: none;
+    margin: 10px 0;
+    text-align: left;
+}
+
+#avatarPreview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#removeAvatar {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    color: #dc3545;
+    background: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 1px solid #ddd;
+}
+
+#removeAvatar:hover {
+    color: #c82333;
+    background: #f8d7da;
+}
+
+/* Reset Password Modal Styles */
+#resetPasswordModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+#resetPasswordModal.show {
+    display: block;
+}
+
+#resetPasswordModal > div {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#resetPasswordModal h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+}
+
+#resetPasswordModal .input-group {
+    margin-bottom: 12px;
+}
+
+#newPassword,
+#confirmPassword {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#newPassword:focus,
+#confirmPassword:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+#resetPasswordModal .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#resetPasswordModal button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#resetPasswordModal button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#resetPasswordModal button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#resetPasswordModal button[type="button"] {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#resetPasswordModal button[type="button"]:hover {
+    background-color: #c82333;
+}
+
+@keyframes fadeIn2 {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0);
+    }
+}
+
+.edit-btn, .delete-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.edit-btn i, .delete-btn i {
+    font-size: 1rem;
+}
+
 /* Responsive Styles */
 @media (min-width: 769px) {
     #editForm {
@@ -209,19 +373,31 @@ body {
         font-size: 24px;
     }
 
-    .dropdown {
+    .dropdownMenu {
         right: 35%;
         top: 100%;
+    }
+
+    #avatarPreviewContainer {
+        text-align: center;
+    }
+
+    #resetPasswordModal > div {
+        max-width: 400px;
+    }
+
+    #resetPasswordModal button {
+        width: auto;
     }
 }
 
 @media (max-width: 768px) {
-    .container {
+    .containerProfile {
         padding: 15px;
         max-width: 90%;
     }
 
-    .avatar img {
+    .avatarProfile img {
         width: 150px;
         height: 150px;
     }
@@ -233,7 +409,7 @@ body {
         padding: 5px;
     }
 
-    .dropdown {
+    .dropdownMenu {
         top: 100%;
         right: 27%;
         min-width: 120px;
@@ -242,6 +418,14 @@ body {
     .info {
         max-width: 100%;
         padding: 10px;
+    }
+
+    .info p {
+        font-size: 14px;
+    }
+
+    .info p strong {
+        width: 100px;
     }
 
     #editForm {
@@ -261,5 +445,51 @@ body {
         font-size: 13px;
         padding: 8px 12px;
         width: 100%;
+    }
+
+    #avatarPreview {
+        width: 80px;
+        height: 80px;
+    }
+
+    #removeAvatar {
+        top: 0;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+    }
+
+    #resetPasswordModal {
+        width: 90%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #resetPasswordModal > div {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    #newPassword,
+    #confirmPassword {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    #resetPasswordModal button {
+        font-size: 13px;
+        padding: 8px 12px;
+        width: 100%;
+    }
+
+    .edit-btn, .delete-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    .edit-btn i, .delete-btn i {
+        font-size: 0.875rem;
     }
 }

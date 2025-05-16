@@ -1,11 +1,32 @@
-// src/script/addPoi.js
+/**
+ * addPoi.js — Interactive POI (Point of Interest) Add Feature
+ * 
+ * This module enables authenticated users to add POIs to the map.
+ * It includes logic for:
+ *  - Checking login status before allowing POI submission
+ *  - Adding a floating "Add POI" button to the map
+ *  - Geolocating the user and placing a marker at a clicked location
+ *  - Displaying a modal form to submit POI details
+ *  - Cleaning up temporary UI state after interaction
+ * 
+ * Dependencies:
+ *  - utils/authCheck.js (for login verification)
+ *  - utils/instruction.js (for floating UI instruction prompts)
+ * 
+ * Generated with the help of ChatGPT:
+ *  - Automatically move the map to the user's current location.
+ *  - Place a red marker with a popup on the map for POI selection.
+ */
+
+import { requireLogin } from '../utils/authCheck.js';
+import { showInstruction, hideInstruction } from '../utils/instruction.js';
 
 // shared module‐scope state
-let addingPOIMode  = false;
-let tempPOIMarker  = null;
+let addingPOIMode = false;
+let tempPOIMarker = null;
 
 export function setupAddPOIFeature() {
-  console.log('🔘 setupAddPOIFeature() called');
+  console.log('setupAddPOIFeature() called');
   const map = window.pathpalMap;
   if (!map) {
     console.error('AddPOI: map not initialized yet');
@@ -25,27 +46,27 @@ export function setupAddPOIFeature() {
 
 // Creates the floating button for "Add POI"
 function createAddPOIButton() {
-  console.log('⚙️ createAddPOIButton() running');
-  // const poiBtn = document.createElement("button");
-    const map = window.pathpalMap;
+  const map = window.pathpalMap;
   if (!map) return console.error('AddPOI: map not initialized');
   const poiBtn = document.createElement("button");
   poiBtn.id = "add-poi-btn";
   poiBtn.className = "poi-btn";
 
- // inline fallback positioning
- poiBtn.style.position = 'fixed';
- poiBtn.style.bottom   = '80px';
- poiBtn.style.right    = '10px';
- poiBtn.style.zIndex   = '10000';
-
+  // inline fallback positioning
+  poiBtn.style.position = 'fixed';
+  poiBtn.style.bottom = '80px';
+  poiBtn.style.right = '10px';
+  poiBtn.style.zIndex = '10000';
 
   poiBtn.setAttribute("aria-label", "Add POI");
 
-  poiBtn.addEventListener("click", () => {
+  poiBtn.addEventListener("click", async () => {
+    const loggedIn = await requireLogin();
+    if (!loggedIn) return;
+
     addingPOIMode = true;
     showInstruction("Click a location on the map for your new POI.");
-    // move the map to user's current location
+    // Move the map to user's current location (Generated with the help of ChatGPT)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -73,13 +94,12 @@ function createAddPOIButton() {
     }
   });
 
-  // document.getElementById("map").appendChild(poiBtn);
   document.body.appendChild(poiBtn);
 }
 
 // Handles a click on the map while in "add POI" mode
 function handlePOICreationClick(e) {
-    const map = window.pathpalMap;
+  const map = window.pathpalMap;
   if (!map) return console.error('AddPOI: map not initialized in click handler');
   const { lng, lat } = e.lngLat;
 
@@ -96,7 +116,7 @@ function handlePOICreationClick(e) {
     </div>
   `;
 
-  // Place a red marker with popup on the map
+  // Place a red marker with popup on the map (Generated with the help of ChatGPT)
   const popup = new mapboxgl.Popup().setHTML(popupContent);
   tempPOIMarker = new mapboxgl.Marker({ color: 'red' })
     .setLngLat([lng, lat])
@@ -130,23 +150,4 @@ function cleanUp() {
     tempPOIMarker.remove();
     tempPOIMarker = null;
   }
-}
-
-// Show a floating instruction on the map
-function showInstruction(message) {
-  let el = document.getElementById("map-instruction");
-  if (!el) {
-    el = document.createElement("div");
-    el.id = "map-instruction";
-    el.className = "map-instruction";
-    document.getElementById("map").appendChild(el);
-  }
-  el.innerText = message;
-  el.style.display = "block";
-}
-
-// Hide the instruction
-function hideInstruction() {
-  const el = document.getElementById("map-instruction");
-  if (el) el.style.display = "none";
 }

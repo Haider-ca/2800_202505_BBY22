@@ -10,7 +10,8 @@ const connectDB = require('./config/db');
 const MongoStore = require('connect-mongo');
 
 const authRoutes = require('./routes/auth');//add this for login features 
-
+const aiRouter = require("./routes/ai"); 
+const contactRoutes = require('./routes/contact');// add this for contact us information
 const app = express();
 connectDB();
 
@@ -36,6 +37,7 @@ app.use(session({
     secure: false, 
     maxAge: 1000*60*60*24}
 }))
+
 // app.use(cors({
 //   origin: 'http://localhost:5000',  // Replace with your frontend port
 //   credentials: true
@@ -46,7 +48,12 @@ app.use(express.json());
 
 // Home Page
 app.get('/', (req, res) => {
-  res.redirect('/html/map.html');
+  if (!req.session?.userId) {
+    res.redirect('/index.html');
+  }
+  else{
+    res.redirect('/html/feed.html?mode=community');
+  }
 });
 
 // static assets
@@ -58,15 +65,21 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'src')));
 
 // API endpoints
+app.use('/api/routes', require('./map/routes/routeRoutes'));
 app.use('/api/map', require('./map/routes/mapRoutes'));
 app.use('/api/poi', require('./poi/routes/poiRoutes'));
-app.use('/api/community', require('./community/routes/communityRoutes'));
 app.use('/api/vote', require('./vote/routes/voteRoutes'));
-app.use('/api', authRoutes);//add this for login features 
 app.use('/api/profile', require('./profile/routes/profileRoutes'));
-
+app.use("/api", aiRouter);//add this for ai feature
+app.use('/api/contact', contactRoutes);//add this for contact us information
+app.use('/api/post', require('./post/routes/postRoutes'));
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
+app.use('/api/save', require('./savePost/routes/savePostRoutes'));
+
+app.use('/api', authRoutes);//add this for login features 
+
+
 
 // global error handler
 app.use((err, req, res, next) => {
