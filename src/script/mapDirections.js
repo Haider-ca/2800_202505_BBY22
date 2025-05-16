@@ -192,12 +192,19 @@ export function initDirections(map) {
         'line-color': '#FF00FF',
         'line-width': 6
       };
-    } else {
+    }
+    else if (profile === 'driving') {
+      paint = {
+        'line-color': '#0000FF',
+        'line-width': 6
+      };
+    }
+    else {
       const dashed = profile === 'walking' || profile === 'senior';
       paint = {
-        'line-color': '#007cbf',
+        'line-color': '#FF00FF',
         'line-width': dashed ? 6 : 14,
-        ...(dashed ? { 'line-dasharray': [0, 4] } : {})
+        ...(dashed ? { 'line-dasharray': [0, 2] } : {})
       };
     }
 
