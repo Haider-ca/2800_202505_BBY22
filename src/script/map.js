@@ -3,6 +3,7 @@
 import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
 import { createPopup } from './popup.js';
+import { handleVoteClick } from '../utils/vote.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
@@ -205,6 +206,8 @@ map.on('load', () => {
       lastDestination = destination;
     }
   });
+  window.pathpalDirections = directions;
+
 
   Object.entries(profileMap).forEach(([mode, profile]) => {
     const tab = document.getElementById(`${mode}Tab`);
@@ -222,6 +225,7 @@ map.on('load', () => {
       }
     });
   });
+  
 });
 
   // ─── 9) Initialize Add-POI feature ───
@@ -351,15 +355,47 @@ function makeMarkers(features, list, icon) {
       properties: f.properties
     });
 
-    // Hover listeners
-    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
-    el.addEventListener('mouseleave', () => popup.remove());
-
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
+    // Open popup on marker click only
+    el.addEventListener('click', () => {
+      popup.addTo(map).setLngLat([lng, lat]);
+
+      setTimeout(() => {
+        const btn = document.querySelector('.get-directions-btn');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const lng = parseFloat(btn.dataset.lng);
+            const lat = parseFloat(btn.dataset.lat);
+
+            // Optional: set origin to user location
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(pos => {
+                window.pathpalDirections.setOrigin([
+                  pos.coords.longitude,
+                  pos.coords.latitude
+                ]);
+                window.pathpalDirections.setDestination([lng, lat]);
+                window.pathpalDirections.route();
+              });
+            } else {
+              window.pathpalDirections.setDestination([lng, lat]);
+              window.pathpalDirections.route();
+            }
+
+            map.flyTo({ center: [lng, lat], zoom: 14 });
+          });
+        }
+
+        // Attach vote logic after DOM is injected
+        const likeBtn = document.querySelector('.like-btn');
+        const dislikeBtn = document.querySelector('.dislike-btn');
+        likeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+        dislikeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+      });
+    });
   }
 }
-
 
 ///////////////////////
 // ToggleControl     //

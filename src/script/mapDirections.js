@@ -290,4 +290,27 @@ export function initDirections(map) {
   document.getElementById('btn-hide-steps').addEventListener('click', () => {
     new bootstrap.Collapse(collapseEl, { toggle: true });
   });
+
+  return {
+  setOrigin([lng, lat]) {
+    coordStart = `${lng},${lat}`;
+    if (startMarker) startMarker.remove();
+    startMarker = new mapboxgl.Marker({ color: '#007cbf' }).setLngLat([lng, lat]).addTo(map);
+  },
+  setDestination([lng, lat]) {
+    coordEnd = `${lng},${lat}`;
+    if (endMarker) endMarker.remove();
+    endMarker = new mapboxgl.Marker({ color: '#007cbf' }).setLngLat([lng, lat]).addTo(map);
+  },
+  setProfile(p) {
+    profile = p;
+  },
+  route() {
+    if (coordStart && coordEnd) route();
+  },
+  clearRoute() {
+    clearRoute();
+  }
+};
+
 }
