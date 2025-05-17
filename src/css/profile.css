@@ -143,6 +143,7 @@ body {
 
 #editForm input[type="email"],
 #editForm input[type="text"],
+#editForm select,
 #editForm textarea {
     padding: 10px;
     border: 2px solid #ddd;
@@ -276,6 +277,7 @@ body {
     margin-bottom: 12px;
 }
 
+#currentPassword,
 #newPassword,
 #confirmPassword {
     width: 100%;

@@ -57,8 +57,11 @@ const deleteProfileHandler = async (req, res) => {
 // Handler to reset the user's password
 const resetPasswordHandler = async (req, res) => {
     try {
-        const { newPassword } = req.body;
-        await resetPassword(req.user.id, newPassword);
+        const { currentPassword, newPassword } = req.body;
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ message: 'Current password and new password are required' });
+        }
+        await resetPassword(req.user.id, currentPassword, newPassword);
         res.status(200).json({ message: 'Password reset successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message || 'Failed to reset password' });
