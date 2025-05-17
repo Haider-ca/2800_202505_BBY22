@@ -30,6 +30,7 @@ async function loadProfile() {
     document.getElementById('email').textContent = data.email || '';
     document.getElementById('name').textContent = data.name || '';
     document.getElementById('description').textContent = data.description || '';
+    document.getElementById('userType').textContent = data.userType || 'caregiver';
 }
 
 // Function to update user profile information and upload an image if provided
@@ -46,6 +47,7 @@ async function updateProfile(event) {
     formData.append('email', document.getElementById('newEmail').value);
     formData.append('name', document.getElementById('newName').value);
     formData.append('description', document.getElementById('newDescription').value);
+    formData.append('userType', document.getElementById('newUserType').value);
     if (document.getElementById('avatarInput').files[0]) {
         formData.append('image', document.getElementById('avatarInput').files[0]);
     } else {
@@ -148,11 +150,17 @@ async function resetPassword(event) {
         return;
     }
 
+    const currentPassword = document.getElementById('currentPassword').value;
     const newPassword = document.getElementById('newPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
+    if (!currentPassword) {
+        alert('Please enter your current password.');
+        return;
+    }
+
     if (newPassword !== confirmPassword) {
-        alert('Passwords do not match.');
+        alert('New passwords do not match.');
         return;
     }
 
@@ -162,7 +170,7 @@ async function resetPassword(event) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ newPassword }),
+        body: JSON.stringify({ currentPassword, newPassword }),
         credentials: 'include'
     });
 
@@ -300,7 +308,7 @@ async function loadUserPOIs() {
             loadUserPOIs();
             return;
         } else if (!pois.length) {
-            feedContainer.innerHTML = `<span class="text-muted">No POIs found for userId: ${userId}</span>`;
+            feedContainer.innerHTML = `<span class="text-muted">No POIs found</span>`;
             nextPageBtn.disabled = true;
             return;
         }

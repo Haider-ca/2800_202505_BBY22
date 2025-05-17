@@ -17,6 +17,7 @@ const getProfile = async (email) => {
     avatar: user.avatar || '/public/img/defaultUser.png',
     name: user.name || '',
     description: user.description || '',
+    userType: user.userType || 'caregiver'
   };
 };
 
@@ -43,6 +44,7 @@ const updateProfile = async (email, updates) => {
   user.email = updates.email || user.email;
   user.name = updates.name || user.name;
   user.description = updates.description || user.description;
+  user.userType = updates.userType || user.userType;
 
   // Save and return the updated user profile
   const updatedUser = await User.findOneAndUpdate({ email }, user, { new: true, runValidators: true });
@@ -52,14 +54,21 @@ const updateProfile = async (email, updates) => {
     avatar: updatedUser.avatar || '/public/img/defaultUser.png',
     name: updatedUser.name || '',
     description: updatedUser.description || '',
+    userType: updatedUser.userType || 'caregiver'
   };
 };
 
 // Service to reset the user's password
-const resetPassword = async (userId, newPassword) => {
+const resetPassword = async (userId, currentPassword, newPassword) => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
+
+    // Check current password
+    const passwordMatch = await user.comparePassword(currentPassword);
+    if (!passwordMatch) {
+      throw new Error('Current password is incorrect');
+    }
 
     // Hash the new password using bcrypt
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
