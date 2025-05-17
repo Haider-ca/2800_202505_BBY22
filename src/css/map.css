@@ -19,6 +19,14 @@ html, body {
 
 /* Nav placeholders */
 #navbar-placeholder,
+
+ /* bring the top‐nav above the directions panel */
+ #navbar-placeholder {
+   position: fixed;
+   width: 100%;
+   z-index: 1500;
+ }
+
 #bottom-navbar-placeholder {
   position: fixed; width: 100%; z-index: 1000;
 }
