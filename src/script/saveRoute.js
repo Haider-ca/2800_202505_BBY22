@@ -55,8 +55,9 @@
       if (!confirmed) return;
 
       if (!isSaved) {
+        const routeNameObj = await generateRouteName(window.lastRouteGeoJSON);
         const payload = {
-          name: window.lastRouteName || 'Saved Route',
+          name: routeNameObj.display,
           description: '',
           profile: window.currentProfile,
           geometry: window.lastRouteGeoJSON.geometry,
@@ -193,3 +194,38 @@
     });
   }
 })();
+
+async function generateRouteName(routeGeoJSON) {
+  const coords = routeGeoJSON.geometry?.coordinates;
+  if (!Array.isArray(coords)) return { display: 'Saved Route', full: 'Saved Route' };
+
+  const start = coords[0];
+  const end = coords[coords.length - 1];
+
+  const [startFull, endFull] = await Promise.all([
+    reverseGeocode(start),
+    reverseGeocode(end)
+  ]);
+
+  const startShort = shortenAddress(startFull);
+  const endShort = shortenAddress(endFull);
+
+  return {
+    display: `${startShort} → ${endShort}`,
+    full: `${startFull} → ${endFull}`
+  };
+}
+
+async function reverseGeocode(coord) {
+  const [lng, lat] = coord;
+  const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${window.MAPBOX_TOKEN}`);
+  if (!res.ok) return 'Unknown';
+  const data = await res.json();
+  return data?.features?.[0]?.place_name || 'Unknown';
+}
+
+function shortenAddress(fullAddress) {
+  const parts = fullAddress.split(',');
+  return parts.slice(0, 2).join(',');
+}
+
