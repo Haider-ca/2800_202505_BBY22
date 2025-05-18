@@ -60,6 +60,8 @@
           name: routeNameObj.display,
           description: '',
           profile: window.currentProfile,
+          startAddress: routeNameObj.startFull,
+          endAddress: routeNameObj.endFull,
           geometry: window.lastRouteGeoJSON.geometry,
           steps: (window.lastRouteSteps || []).map(step => ({
             instruction: step.maneuver?.instruction || '—',
@@ -206,13 +208,13 @@ async function generateRouteName(routeGeoJSON) {
     reverseGeocode(start),
     reverseGeocode(end)
   ]);
-
   const startShort = shortenAddress(startFull);
   const endShort = shortenAddress(endFull);
 
   return {
     display: `${startShort} → ${endShort}`,
-    full: `${startFull} → ${endFull}`
+    startFull,
+    endFull
   };
 }
 

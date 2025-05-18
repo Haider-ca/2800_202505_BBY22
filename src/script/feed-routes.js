@@ -1,11 +1,26 @@
-import { reverseGeocodeDisplay } from '../utils/helpers.js';
 import { showToast } from '../utils/toast.js';
 
-export async function loadRoutes({ currentPage, limit, feedCards, loadMore, setLoading }) {
+export async function loadRoutes({
+  currentPage,
+  limit,
+  feedCards,
+  loadMore,
+  setLoading,
+  sortDirection,
+  searchQuery,
+  favoritesMode
+}) {
   setLoading(true);
 
   try {
-    const res = await fetch('/api/routes');
+    const query = new URLSearchParams({
+      page: currentPage,
+      limit,
+      q: searchQuery || '',
+      sort: 'createdAt',
+      direction: sortDirection === 1 ? 'asc' : 'desc'
+    });
+    const res = await fetch(`/api/routes/saved?${query.toString()}`);
     const routes = await res.json();
 
     if (!Array.isArray(routes) || routes.length === 0) {
@@ -31,18 +46,10 @@ export async function loadRoutes({ currentPage, limit, feedCards, loadMore, setL
       const start = coords[0];
       const end = coords[coords.length - 1];
 
-      let startFull = 'Unknown', endFull = 'Unknown';
-      let startShort = 'From', endShort = 'To';
-
-      if (start && end) {
-        [startFull, endFull] = await Promise.all([
-          reverseGeocodeDisplay(start),
-          reverseGeocodeDisplay(end)
-        ]);
-
-        startShort = startFull.split(',')[0] || 'From';
-        endShort = endFull.split(',')[0] || 'To';
-      }
+      let startFull = route.startAddress || 'Unknown';
+      let endFull = route.endAddress || 'Unknown';
+      let startShort = startFull.split(',')[0] || 'From';
+      let endShort = endFull.split(',')[0] || 'To';
 
       card.innerHTML = `
         <div class="card-body">
