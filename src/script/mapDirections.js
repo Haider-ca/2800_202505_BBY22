@@ -101,6 +101,16 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
       .addTo(map);
   });
 
+  // Set the route's end coordinates from POI post and place a marker on the map.
+  window.setCoordEnd = function (coordStr) {
+    coordEnd = coordStr;
+    const [lng, lat] = coordStr.split(',').map(Number);
+    if (endMarker) endMarker.remove();
+    endMarker = new mapboxgl.Marker({ color: '#007cbf' })
+      .setLngLat([lng, lat])
+      .addTo(map);
+  };
+
   // ─── 2) Geolocate control ───
   const panelGeo = new mapboxgl.GeolocateControl({
     positionOptions: { enableHighAccuracy: true, maximumAge: 60000, timeout: 5000 },
