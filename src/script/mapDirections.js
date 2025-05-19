@@ -69,7 +69,9 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
     types: 'place,address,poi',
     limit: 5,
     marker: false,
-    filter: feature => startInputEl?.value !== 'Current Location'
+    filter: feature => startInputEl?.value !== 'Current Location',
+    // only search within Lower Mainland bounds:
+    bbox: [-123.50, 49.00, -122.30, 49.40]
   });
   document.getElementById('geocoder-start')
     .appendChild(geocoderStart.onAdd(map));
@@ -81,7 +83,9 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
     placeholder: 'End (city, address…)',
     types: 'place,address,poi',
     limit: 5,
-    marker: false
+    marker: false,
+    // Lower Mainland limit:
+    bbox: [-123.50, 49.00, -122.30, 49.40]
   });
   document.getElementById('geocoder-end')
     .appendChild(geocoderEnd.onAdd(map));
