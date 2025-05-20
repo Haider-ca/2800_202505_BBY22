@@ -15,4 +15,7 @@ router.get('/all', poiController.getAllPOIs);
 // Get favorites POIs
 router.get('/favorites', poiController.getSavedPOIs);
 
+// Get a single POI by ID
+router.get('/:id', poiController.getPOIById);
+
 module.exports = router;

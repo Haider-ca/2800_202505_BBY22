@@ -93,7 +93,7 @@ export function renderCard(post, voteKey = '', postType = 'post') {
   `;
 
   // If POI post with coordinates, display reverse-geocoded address
-  if (postType === 'poi' && post.lat && post.lng) {
+  if (postType === 'poi' && post.lat && post.lng && post._id) {
     const placeholder = document.createElement('div');
     placeholder.className = 'mb-2 text-muted small location-placeholder';
     placeholder.innerText = '📍 Loading address...';
@@ -104,31 +104,21 @@ export function renderCard(post, voteKey = '', postType = 'post') {
       .then(res => res.json())
       .then(data => {
         const address = data.features?.[0]?.place_name || 'Unknown location';
-        
+
         placeholder.innerHTML = `
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start bg-light p-3 rounded gap-2">
-          <div class="text-muted small flex-grow-1">
-            <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
-            ${address}
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start bg-light p-3 rounded gap-2">
+            <div class="text-muted small flex-grow-1">
+              <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
+              ${address}
+            </div>
+            <div class="text-end">
+              <a href="/html/map.html?type=user-poi&poiId=${post._id}" 
+                class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
+                View on Map
+              </a>
+            </div>
           </div>
-          <div class="text-end">
-            <a href="/html/map.html?lat=${post.lat}&lng=${post.lng}" 
-               class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
-              View on Map
-            </a>
-          </div>
-        </div>
-      `;
-            
-        // If on the map page, also pre-fill the destination input
-        if (window.location.pathname.includes('/html/map.html')) {
-          window.preselectedDestination = `${post.lng},${post.lat}`;
-          const input = document.querySelector('#geocoder-end input');
-          if (input) {
-            input.value = address;
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-          }
-        }
+        `;
       })
       .catch(err => {
         placeholder.innerText = '📍 Location unavailable';
