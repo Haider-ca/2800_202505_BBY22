@@ -14,7 +14,7 @@ export function createPopup({ coordinates, properties }) {
     const username = properties.username || 'Anonymous';
     const rawTime = properties.time;
     const time = rawTime ? formatDate(rawTime) : 'Unknown time';
-    const image = properties.image || '/icons/default.jpg';
+    const image = properties.image || properties.imageUrl ||'/icons/default.jpg';
     const description = properties.description || 'No description available.';
     const likes = properties.likes || 0;
     const comments = properties.comments || 0;

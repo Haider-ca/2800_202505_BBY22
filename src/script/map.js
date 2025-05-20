@@ -4,6 +4,7 @@ import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
 import { createPopup } from './popup.js';
 import { loadSavedRoutes } from './loadSavedRoute.js';
+import { applyPOITargetFromURL, autoFillEndInputFromURL, applySavedRouteFromURL } from './mapRouteFromURL.js';
 import { handleVoteClick } from '../utils/vote.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
@@ -211,9 +212,18 @@ map.on('load', () => {
   map.addControl(srCtrl, 'top-right');
   map.addControl(userPOICtrl, 'top-right');
 
+
   // ─── 7) Draw boundary & load initial POIs ───
   loadBoundary();
   loadPOIs();
+
+  // ─── 7.1) Reload POIs on pan/zoom ───
+  map.on('moveend', () => {
+    if (filterWheelchair || filterSenior || filterUserPOI) {
+      loadPOIs();
+    }
+  });
+
 
   // ─── 8) Initialize directions ───
   const directions = initDirections(map, {
@@ -225,6 +235,18 @@ map.on('load', () => {
   window.pathpalDirections = directions;
 
 
+  // Get profile param from saved routes
+  const profileFromURL = new URLSearchParams(window.location.search).get('profile');
+  if (profileFromURL) {
+    directions.setProfile(profileFromURL);
+    
+    // Highlight the correct tab
+    document.querySelectorAll('#mode-buttons button').forEach(btn => {
+      const mode = btn.dataset.mode;
+      btn.classList.toggle('active', mode === profileFromURL);
+    });
+  }
+  
   Object.entries(profileMap).forEach(([mode, profile]) => {
     const tab = document.getElementById(`${mode}Tab`);
     if (!tab) return;
@@ -243,6 +265,19 @@ map.on('load', () => {
   });
   // Load saved routes
   loadSavedRoutes(map);
+
+  // Get lat and lng from POI post and auto fill End address input field
+  console.log("type");
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  console.log(type);
+  if (type === 'user-poi') {
+    applyPOITargetFromURL(map);
+    autoFillEndInputFromURL();
+  } 
+  if (type === 'savedRoutes')  {
+    applySavedRouteFromURL(map, directions);
+  }
 });
 
 // ─── 9) Initialize Add-POI feature ───
@@ -290,69 +325,67 @@ async function loadBoundary() {
 }
 
 async function loadPOIs() {
+  // 1) clear out old markers
   wheelchairMarkers.forEach(m => m.remove());
   seniorMarkers.forEach(m => m.remove());
   userPOIMarkers.forEach(m => m.remove());
-  wheelchairMarkers.length = 0;
-  seniorMarkers.length = 0;
-  userPOIMarkers.length = 0;
+  wheelchairMarkers.length = seniorMarkers.length = userPOIMarkers.length = 0;
+
+  // 2) viewport bounds
+  const bounds = map.getBounds();
 
   try {
+    // ─── Wheelchair ───
     if (filterWheelchair) {
       const res = await fetch('/data/wheelchair-friendly.geojson');
       const geo = await res.json();
-      makeMarkers(geo.features, wheelchairMarkers, 'wheelchair');
+      const inView = geo.features.filter(f => {
+        const coords = (f.geometry.type === 'Point')
+          ? f.geometry.coordinates
+          : turf.centroid(f).geometry.coordinates;
+        return bounds.contains(coords);
+      });
+      makeMarkers(inView, wheelchairMarkers, 'wheelchair');
     }
+
+    // ─── Senior ───
     if (filterSenior) {
       const res = await fetch('/data/senior-friendly.geojson');
       const geo = await res.json();
-      makeMarkers(geo.features, seniorMarkers, 'senior');
+      const inView = geo.features.filter(f => {
+        const coords = (f.geometry.type === 'Point')
+          ? f.geometry.coordinates
+          : turf.centroid(f).geometry.coordinates;
+        return bounds.contains(coords);
+      });
+      makeMarkers(inView, seniorMarkers, 'senior');
     }
+
+    // ─── User‐added POIs ───
     if (filterUserPOI) {
       const res = await fetch('/api/poi/markers');
       const data = await res.json();
-
-      // Convert to GeoJSON Feature format
+      // turn into GeoJSON‐like features
       const features = data.map(poi => ({
         type: 'Feature',
         geometry: poi.coordinates,
-        properties: {
-          _id: poi._id,
-          title: poi.title,
-          description: poi.description,
-          image: poi.imageUrl,
-          time: poi.createdAt,
-          likes: poi.likes,
-          dislikes: poi.dislikes
-        }
+        properties: { ...poi }
       }));
-
-      makeMarkers(features, userPOIMarkers, 'poi');
+      const inView = features.filter(f => {
+        const coords = f.geometry.coordinates;
+        return bounds.contains(coords);
+      });
+      makeMarkers(inView, userPOIMarkers, 'poi');
     }
-
-
-    // --- To switch back to dynamic API when your DB has locations, replace the above block with: ---
-    /*
-    // Build query string only for active filters
-    const params = new URLSearchParams();
-    if (filterWheelchair) params.set('wheelchair', 'true');
-    if (filterSenior)     params.set('senior',     'true');
-    const url = '/api/map' + (params.toString() ? `?${params}` : '');
-
-    const res = await fetch(url, { cache: 'no-store' });
-    const data = await res.json();
-    const wcFeatures = data.features.filter(f => f.properties.wheelchairFriendly);
-    const srFeatures = data.features.filter(f => f.properties.seniorFriendly);
-    makeMarkers(wcFeatures, wheelchairMarkers, 'wheelchair');
-    makeMarkers(srFeatures, seniorMarkers, 'senior');
-    */
   } catch (err) {
     console.error('POI load error:', err);
   }
 }
 
+
 function makeMarkers(features, list, icon) {
   for (const f of features) {
+     console.log('Feature properties:', f.properties);
     const coords = f.geometry.type === 'Point'
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
@@ -366,11 +399,18 @@ function makeMarkers(features, list, icon) {
     el.style.height = '32px';
     el.style.backgroundSize = 'contain';
 
-    // Create popup
+      // ← Updated popup instantiation:
     const popup = createPopup({
       coordinates: [lng, lat],
-      properties: f.properties
+      properties: {
+        ...f.properties,
+        image: f.properties.imageUrl
+      }
     });
+    
+    // Hover listeners
+    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+    el.addEventListener('mouseleave', () => popup.remove());
 
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);

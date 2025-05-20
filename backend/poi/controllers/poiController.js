@@ -91,3 +91,15 @@ exports.getSavedPOIs = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+// Get POI by Id
+exports.getPOIById = async (req, res) => {
+  try {
+    const poi = await POI.findById(req.params.id);
+    if (!poi) return res.status(404).json({ error: 'POI not found' });
+    res.json(poi);
+  } catch (err) {
+    console.error('Failed to fetch POI by ID:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

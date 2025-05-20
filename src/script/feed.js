@@ -4,12 +4,14 @@ import { loadAnnouncements } from './feed-announcement.js';
 import { handleVoteClick } from '../utils/vote.js';
 import { handleSaveClick } from '../utils/save.js';
 import { loadRoutes } from './feed-routes.js';
+import { requireLogin } from '../utils/authCheck.js';
 
 let currentPage = 1;
 const limit = 5;
 let isLoading = false;
 let activeFilters = [];
 let sortBy = 'createdAt';
+let sortDirection = -1;
 const feedCards = document.getElementById('feed-cards');
 const loadMore = document.querySelector('.text-center');
 let noMoreData = false; 
@@ -18,13 +20,13 @@ let observer;
 const tabSets = {
   community: [
     { id: 'post', label: 'Community', type: 'post' },
-    { id: 'poi', label: 'POIs', type: 'poi' },
+    { id: 'poi', label: 'Places', type: 'poi' },
     { id: 'announcement', label: 'Announcements', type: 'announcement' }
   ],
   favorites: [
-    { id: 'poi', label: 'POIs', type: 'poi' },
-    { id: 'post', label: 'Posts', type: 'post' },
-    { id: 'routes', label: 'Routes', type: 'routes' }
+    { id: 'routes', label: 'Routes', type: 'routes' },
+    { id: 'poi', label: 'Places', type: 'poi' },
+    { id: 'post', label: 'Community', type: 'post' },
   ]
 };
 
@@ -57,16 +59,36 @@ function updateFilterVisibility() {
   if (filterBtn) filterBtn.classList.toggle('d-none', !shouldShow);
 }
 
+function updatePostButtonVisibility() {
+  const createPostBtn = document.getElementById('createPostBtn');
+  const shouldShow = (feedType === 'post' && mode === 'community');
+  if (createPostBtn) {
+    createPostBtn.classList.toggle('d-none', !shouldShow);
+  }
+}
+
 // Listen for filter and sort changes
 document.querySelectorAll('.form-check-input').forEach(cb => {
   cb.addEventListener('change', resetAndLoad);
 });
+
 document.querySelector('.btn-sort')?.addEventListener('click', () => {
-  // Toggle sorting between "likes" and "createdAt"
-  sortBy = sortBy === 'likes' ? 'createdAt' : 'likes';
-  document.getElementById('sortLabel').textContent = sortBy === 'likes' ? 'Most liked' : 'Newest';
+  if (feedType === 'routes') {
+    // only toggle sort direction (ascending/descending by time)
+    sortDirection = sortDirection === -1 ? 1 : -1;
+    document.getElementById('sortLabel').textContent =
+      sortDirection === -1 ? 'Newest' : 'Oldest';
+  } else {
+    // toggle between 'likes' and 'createdAt' (default descending)
+    sortBy = sortBy === 'likes' ? 'createdAt' : 'likes';
+    document.getElementById('sortLabel').textContent =
+      sortBy === 'likes' ? 'Most liked' : 'Newest';
+    sortDirection = -1; // Default to descending
+  }
+
   resetAndLoad();
 });
+
 
 // Reset and reload posts based on new filters/sorting
 function resetAndLoad() {
@@ -84,8 +106,19 @@ function resetAndLoad() {
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
   updateFilterVisibility(); // Filter feature only available for POI
+  updatePostButtonVisibility(); // Create post button is only available for Comunity post
   renderTabs();
   loadFeed();
+
+  const createPostBtn = document.getElementById('createPostBtn');
+  if (createPostBtn) {
+    createPostBtn.addEventListener('click', async () => {
+      const loggedIn = await requireLogin();
+      if (!loggedIn) return;
+
+      window.location.href = '/html/post.html';
+    });
+  }
 
   // Set up infinite scroll
   observer = new IntersectionObserver((entries) => {
@@ -157,13 +190,25 @@ function loadFeed() {
         });
         break;
     case 'routes':
-      loadRoutes({ currentPage, limit, feedCards, loadMore, setLoading })
-        .then(nextPage => {
+      loadRoutes({
+        currentPage,
+        limit,
+        feedCards,
+        loadMore,
+        setLoading,
+        sortBy: 'createdAt', // using 'createdAt' as default sort field
+        sortDirection, // Sort order: -1 = newest first, 1 = oldest first
+        searchQuery,
+        favoritesMode: true
+      }).then(nextPage => {
+        if (nextPage) {
+          currentPage = nextPage;
+        } else {
           noMoreData = true;
           observer?.unobserve(loadMore);
-        });
+        }
+      });
       break;
-
   }
 }
 
@@ -179,6 +224,7 @@ document.addEventListener('click', async (e) => {
       feedType = newType;
       resetUIState(); //Reset search,filter and sort button
       updateFilterVisibility(); // Filter feature only available for POI
+      updatePostButtonVisibility(); // Create post button lonly available for Community post
       resetAndLoad();
       return;
     }

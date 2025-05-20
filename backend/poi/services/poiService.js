@@ -1,5 +1,6 @@
 const POI = require('../../models/POI');
 const User = require('../../models/user');
+const { addLatLngToPOIs } = require('../../utils/poiHelpers');
 
 exports.createPOI = async ({ userId, username, title, description, imageUrl, coordinates, tags }) => {
   const newPOI = new POI({ userId, username, title, description, imageUrl, coordinates, tags });
@@ -35,10 +36,12 @@ exports.fetchPOIs = async ({ page, limit, sort, filter, search }) => {
   }
 
   // Execute query
-  return await POI.find(filterQuery)
+  const rawPOIs = await POI.find(filterQuery)
     .sort(sortOption)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .lean();
+  return addLatLngToPOIs(rawPOIs);
 };
 
 // Fetch saved POIs with pagination, sorting, filtering, and optional search
@@ -79,5 +82,5 @@ exports.fetchSavedPOIs = async ({ userId, page, limit, sort, filter, search }) =
     });
   }
 
-  return pois;
+  return addLatLngToPOIs(pois);
 };

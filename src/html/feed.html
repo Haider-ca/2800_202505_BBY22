@@ -42,6 +42,13 @@
               <i class="bi bi-arrow-down-up"></i>
               <span id="sortLabel" class="text-nowrap">Newest</span>
             </button>
+
+            <!-- New "Create Post" button -->
+            <button id="createPostBtn" class="btn btn-outline-primary d-flex align-items-center gap-1"
+              title="Create Post">
+              <i class="bi bi-plus-circle"></i>
+              <span class="d-none d-md-inline">Post</span>
+            </button>
           </div>
     
           <!-- Filter (only visible for POI) -->
@@ -64,12 +71,6 @@
     
           <!-- Feed cards container -->
           <div id="feed-cards" class="d-flex flex-column gap-3"></div>
-    
-          <!-- Saved Routes folder (for favorites mode) -->
-          <details id="folder-saved-routes" hidden class="mb-3">
-            <summary>🗺️ Saved Routes</summary>
-            <ul id="saved-routes-list" class="list-group list-group-flush"></ul>
-          </details>
     
           <!-- Load More -->
           <div class="text-center">

@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = '&times;';
         btn.className = 'btn btn-sm btn-danger position-absolute top-0 end-0 m-2';
         btn.style.zIndex = '10';
-        btn.onclick = clearMedia;
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearMedia();
+        });
+    
         return btn;
     }
 
