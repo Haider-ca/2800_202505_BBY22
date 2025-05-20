@@ -16,49 +16,49 @@ export function initDirections(map) {
     utter.lang = 'en-US';
     window.speechSynthesis.speak(utter);
   }
-  
-function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
-  if (_watchId !== null) navigator.geolocation.clearWatch(_watchId);
-  _liveCount = 0;
 
-  _watchId = navigator.geolocation.watchPosition(
-    async pos => {
-      _liveCount++;
-      if (_liveCount <= 3) return; 
+  function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
+    if (_watchId !== null) navigator.geolocation.clearWatch(_watchId);
+    _liveCount = 0;
 
-      // 1️⃣ Skip low-accuracy fixes (>20 m)
-      if (pos.coords.accuracy && pos.coords.accuracy > 20) return;
+    _watchId = navigator.geolocation.watchPosition(
+      async pos => {
+        _liveCount++;
+        if (_liveCount <= 3) return;
 
-      // 2️⃣ Skip tiny moves (<20 m)
-      if (coordStart) {
-        const [oldLng, oldLat] = coordStart.split(',').map(Number);
-        const movedKm = turf.distance(
-          turf.point([oldLng, oldLat]),
-          turf.point([pos.coords.longitude, pos.coords.latitude]),
-          { units: 'kilometers' }
-        );
-        if (movedKm < 0.02) return;
+        // 1️⃣ Skip low-accuracy fixes (>20 m)
+        if (pos.coords.accuracy && pos.coords.accuracy > 20) return;
+
+        // 2️⃣ Skip tiny moves (<20 m)
+        if (coordStart) {
+          const [oldLng, oldLat] = coordStart.split(',').map(Number);
+          const movedKm = turf.distance(
+            turf.point([oldLng, oldLat]),
+            turf.point([pos.coords.longitude, pos.coords.latitude]),
+            { units: 'kilometers' }
+          );
+          if (movedKm < 0.02) return;
+        }
+
+        // 3️⃣ Now that it’s a “real” move + good fix, update & redraw:
+        coordStart = `${pos.coords.longitude},${pos.coords.latitude}`;
+        try {
+          const route = await fetchRoute(coordStart, coordEnd, profile);
+          drawRoute(route);
+          renderSteps(route);
+        } catch (e) {
+          console.warn('Live update failed:', e);
+          showError(e.message);
+        }
+      },
+      err => console.warn('Live watch error:', err),
+      {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 60000
       }
-
-      // 3️⃣ Now that it’s a “real” move + good fix, update & redraw:
-      coordStart = `${pos.coords.longitude},${pos.coords.latitude}`;
-      try {
-        const route = await fetchRoute(coordStart, coordEnd, profile);
-        drawRoute(route);
-        renderSteps(route);
-      } catch (e) {
-        console.warn('Live update failed:', e);
-        showError(e.message);
-      }
-    },
-    err => console.warn('Live watch error:', err),
-    {
-      enableHighAccuracy: true,
-      maximumAge: 30000,
-      timeout: 60000
-    }
-  );
-}
+    );
+  }
 
   // ─── 1) Geocoders ───
   let startInputEl;
@@ -75,6 +75,16 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
   });
   document.getElementById('geocoder-start')
     .appendChild(geocoderStart.onAdd(map));
+  // Hide the “No results found” dropdown when using Current Location
+  geocoderStart.on('results', () => {
+    const suggestions = document.querySelector('#geocoder-start .suggestions');
+    if (!suggestions) return;
+    if (startInputEl.value === 'Current Location') {
+      suggestions.style.display = 'none';
+    } else {
+      suggestions.style.display = '';
+    }
+  });
   startInputEl = document.querySelector('#geocoder-start input.mapboxgl-ctrl-geocoder--input');
 
   const geocoderEnd = new MapboxGeocoder({
@@ -109,7 +119,7 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
   window.setCoordEnd = function (coordStr, customMarkerEl = null) {
     coordEnd = coordStr;
     const [lng, lat] = coordStr.split(',').map(Number);
-  
+
     if (endMarker) endMarker.remove();
     endMarker = new mapboxgl.Marker(
       customMarkerEl || { color: '#007cbf' }
@@ -430,56 +440,56 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
     }
   }
 
-// ─── 10) Render steps & voice ───
-function renderSteps(route) {
-  const steps = route.legs[0].steps;
-  if (!steps.length) return;
+  // ─── 10) Render steps & voice ───
+  function renderSteps(route) {
+    const steps = route.legs[0].steps;
+    if (!steps.length) return;
 
-  // ─── Helpers ───
-  // Turn any Drive/Bike/Ride/Cycle into "Roll", no emoji
-  function normalizeVoice(raw) {
-    let t = raw.replace(/\b(Drive|Bike|Ride|Cycle|Cycling)\b/gi, 'Roll');
-    if (!/^\s*Roll/i.test(t)) t = 'Roll ' + t;
-    return t;
-  }
-  // Same, but add emoji prefix for display
-  function normalizeDisplay(raw) {
-    return '🦽 ' + normalizeVoice(raw);
-  }
+    // ─── Helpers ───
+    // Turn any Drive/Bike/Ride/Cycle into "Roll", no emoji
+    function normalizeVoice(raw) {
+      let t = raw.replace(/\b(Drive|Bike|Ride|Cycle|Cycling)\b/gi, 'Roll');
+      if (!/^\s*Roll/i.test(t)) t = 'Roll ' + t;
+      return t;
+    }
+    // Same, but add emoji prefix for display
+    function normalizeDisplay(raw) {
+      return '🦽 ' + normalizeVoice(raw);
+    }
 
-  // ─── 1) Speak the first instruction ───
-  const firstRaw = steps[0].maneuver.instruction;
-  const speakText = profile === 'wheelchair'
-    ? normalizeVoice(firstRaw)
-    : firstRaw;
-  speak(speakText);
+    // ─── 1) Speak the first instruction ───
+    const firstRaw = steps[0].maneuver.instruction;
+    const speakText = profile === 'wheelchair'
+      ? normalizeVoice(firstRaw)
+      : firstRaw;
+    speak(speakText);
 
-  // ─── 2) Render the list visually ───
-  stepsEl.innerHTML = steps.map(s => {
-    const raw = s.maneuver.instruction;
-    const text = profile === 'wheelchair'
-      ? normalizeDisplay(raw)
-      : raw;
-    return `
+    // ─── 2) Render the list visually ───
+    stepsEl.innerHTML = steps.map(s => {
+      const raw = s.maneuver.instruction;
+      const text = profile === 'wheelchair'
+        ? normalizeDisplay(raw)
+        : raw;
+      return `
       <li data-instruction="${raw}">
         ${text}
         <div class="step-meta">${formatDistance(s.distance)} · ${formatTime(s.duration)}</div>
       </li>
     `;
-  }).join('');
+    }).join('');
 
-  // ─── 3) Click-to-speak ───
-  stepsEl.onclick = e => {
-    const li = e.target.closest('li[data-instruction]');
-    if (!li) return;
-    const raw = li.getAttribute('data-instruction');
-    const t = profile === 'wheelchair'
-      ? normalizeVoice(raw)
-      : raw;
-    console.log('🔊 speaking on click:', t);
-    speak(t);
-  };
-}
+    // ─── 3) Click-to-speak ───
+    stepsEl.onclick = e => {
+      const li = e.target.closest('li[data-instruction]');
+      if (!li) return;
+      const raw = li.getAttribute('data-instruction');
+      const t = profile === 'wheelchair'
+        ? normalizeVoice(raw)
+        : raw;
+      console.log('🔊 speaking on click:', t);
+      speak(t);
+    };
+  }
 
   function formatDistance(m) {
     return m >= 1000 ? `${(m / 1000).toFixed(1)} km` : `${Math.round(m)} m`;
@@ -578,5 +588,5 @@ function renderSteps(route) {
     setProfile: mode => {
       profile = mode;
     }
-  };  
+  };
 }
