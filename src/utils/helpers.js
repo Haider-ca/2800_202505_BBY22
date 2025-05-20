@@ -45,3 +45,12 @@ export function reverseGeocodeAndFill(coord, selector) {
       })
       .catch(err => console.warn('Reverse geocode failed:', err));
 }
+
+/**
+ * Shortens a full “Place Name, City, Province” down to
+ * “Place Name, City”.
+ */
+export function shortenAddress(fullAddress) {
+  const parts = fullAddress.split(',');
+  return parts.slice(0, 2).join(',');
+}

@@ -40,7 +40,7 @@ body {
   --bottom-nav-height: 56px;
   --pathpal-primary: #1f8ef1;
   --pathpal-secondary: #f0f3ff;
-  --pathpal-accent: #18ce0f;
+  --pathpal-accent: #0c4e88;
   --pathpal-border-radius: 1.5rem;
   --pathpal-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -612,9 +612,15 @@ body {
   .weather-text #description {
     font-size: 0.7rem !important;
   }
+
+  /* ────────────────────────────────────────────────────────────
+     MOBILE ONLY: Vertically center geocoder text & clear-button
+  ────────────────────────────────────────────────────────────── */
   .mapboxgl-ctrl-geocoder {
     position: relative !important;
   }
+
+  /* absolutely position the clear icon */
   .mapboxgl-ctrl-geocoder .mapboxgl-ctrl-geocoder--button,
   .mapboxgl-ctrl-geocoder button[aria-label="Clear input"] {
     position: absolute !important;
@@ -645,8 +651,7 @@ body {
     padding-right: 2.5rem !important;
     font-size: 0.75rem !important;
   }
-} 
-/* end of mobile media query */
+} /* end of mobile media query */
 
 /* Align the geocoder magnifier icon vertically & horizontally */
 .mapboxgl-ctrl-geocoder--icon {
