@@ -345,6 +345,15 @@ body {
   display: flex !important;
   align-items: center;
   gap: 0.5rem;
+  overflow: visible !important;
+}
+#geocoder-start .mapboxgl-ctrl-geocoder {
+  position: relative !important; 
+  z-index: 2000 !important;       
+}
+
+#geocoder-start .mapboxgl-ctrl-geocoder .suggestions {
+  z-index: 2001 !important;      
 }
 
 .start-wrapper .mapboxgl-ctrl-geocoder {
