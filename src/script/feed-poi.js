@@ -41,6 +41,8 @@ export async function loadPOIs({
         data.forEach(poi => {
             const voteKey = `vote_${poi._id}`;
             const card = renderCard(poi, voteKey, 'poi');
+            card.id = `poi-${poi._id}`;//catch the poi position
+            //console.log('🧾 rendering poi:', poi._id);
             feedCards.appendChild(card);
         });
 

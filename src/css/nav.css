@@ -130,6 +130,31 @@ body.size-large {
   transform: translateY(1px) scale(0.98);
 }
 
+
+/*Notification for hamburger-indicator*/
+#hamburger-indicator {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(240, 199, 85);
+  border: 1px solid white;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#notification-indicator{
+  display:none; 
+  color: rgb(240, 199, 85);
+}
+
+#menu-indicator{
+  display:none; 
+  color: rgb(240, 199, 85);
+}
+
 /* === Responsive: popup higher on small screens === */
 @media (max-width: 480px) {
   #contact-popup {

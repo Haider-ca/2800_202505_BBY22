@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
               //✅ set up contact us pop up window
               setupContactUsPopup();
 
+              //✅ set up new message notification
+               setupMessageMenuClick()
+
               if (botEl) {
                  // ✅ Load bottom navbar if present
                     fetch(`/partials/bottomNavbar.html`)
@@ -255,5 +258,41 @@ function makePopupDraggable(popup) {
 
   document.addEventListener('mouseup', () => {
     isDragging = false;
+  });
+}
+
+function setupMessageMenuClick() {
+  const messageMenu = document.getElementById('message-menu');
+  if (!messageMenu) {
+    console.warn('❌ #message-menu not found in nav');
+    return;
+  }
+
+  messageMenu.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Read target info from sessionStorage (set by notification.js)
+    const type = sessionStorage.getItem('targetType');
+    const id = sessionStorage.getItem('targetId');
+
+    if (!type || !id) {
+      alert('⚠️ No new message available.');
+      return;
+    }
+
+    clearNotificationIndicators();
+
+    // If already on the feed page, scroll directly
+    const isOnFeedPage = window.location.pathname === '/html/feed.html';
+    if (isOnFeedPage) {
+      window.switchToTabByType?.(type);
+      window.resetAndLoad?.();
+      setTimeout(() => {
+        window.scrollToLatestTarget?.();
+      }, 600);
+    } else {
+      // Otherwise, go to feed page and scroll from there
+      window.location.href = '/html/feed.html';
+    }
   });
 }

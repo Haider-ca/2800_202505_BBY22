@@ -38,7 +38,7 @@ const poiSchema = new mongoose.Schema({
     default: []
   },
   createdAt: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 poiSchema.index({ coordinates: '2dsphere' });
 
