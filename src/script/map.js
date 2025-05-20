@@ -4,7 +4,7 @@ import { initDirections } from './mapDirections.js';
 import { setupAddPOIFeature } from './addPoi.js';
 import { createPopup } from './popup.js';
 import { loadSavedRoutes } from './loadSavedRoute.js';
-import { applyPOITargetFromURL, autoFillEndInputFromURL } from './mapRouteFromURL.js';
+import { applyPOITargetFromURL, autoFillEndInputFromURL, applySavedRouteFromURL } from './mapRouteFromURL.js';
 
 mapboxgl.accessToken = window.MAPBOX_TOKEN;
 
@@ -252,8 +252,17 @@ map.on('load', () => {
   loadSavedRoutes(map);
 
   // Get lat and lng from POI post and auto fill End address input field
-  applyPOITargetFromURL(map);
-  autoFillEndInputFromURL(); 
+  console.log("type");
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  console.log(type);
+  if (type === 'user-poi') {
+    applyPOITargetFromURL(map);
+    autoFillEndInputFromURL();
+  } 
+  if (type === 'savedRoutes')  {
+    applySavedRouteFromURL(map, directions);
+  }
 });
 
 // ─── 9) Initialize Add-POI feature ───

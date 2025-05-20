@@ -78,7 +78,7 @@ export async function loadRoutes({
             <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#routeDetails${index}">
               View Steps
             </button>
-            <a class="btn btn-sm btn-success" href="/html/map.html?routeId=${route._id}">
+            <a class="btn btn-sm btn-success" href="/html/map.html?type=savedRoutes&routeId=${route._id}">
               Navigate on Map
             </a>
             <button class="btn btn-sm text-muted unsave-btn ms-auto" data-id="${route._id}">

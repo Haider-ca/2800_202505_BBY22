@@ -29,4 +29,19 @@ export async function reverseGeocodeDisplay(coord) {
       return '';
     }
 }
-  
+
+export function reverseGeocodeAndFill(coord, selector) {
+    const [lng, lat] = coord;
+    fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}`)
+      .then(res => res.json())
+      .then(data => {
+        const address = data.features?.[0]?.place_name || '';
+        console.log(address);
+        const input = document.querySelector(selector);
+        if (input) {
+          input.value = address;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      })
+      .catch(err => console.warn('Reverse geocode failed:', err));
+}

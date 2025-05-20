@@ -106,11 +106,14 @@ function startLiveTracking(fetchRoute, drawRoute, renderSteps, showError) {
   });
 
   // Set the route's end coordinates from POI post and place a marker on the map.
-  window.setCoordEnd = function (coordStr) {
+  window.setCoordEnd = function (coordStr, customMarkerEl = null) {
     coordEnd = coordStr;
     const [lng, lat] = coordStr.split(',').map(Number);
+  
     if (endMarker) endMarker.remove();
-    endMarker = new mapboxgl.Marker({ color: '#007cbf' })
+    endMarker = new mapboxgl.Marker(
+      customMarkerEl || { color: '#007cbf' }
+    )
       .setLngLat([lng, lat])
       .addTo(map);
   };
@@ -553,4 +556,27 @@ function renderSteps(route) {
   document.getElementById('btn-hide-steps').addEventListener('click', () => {
     new bootstrap.Collapse(collapseEl, { toggle: true });
   });
+
+  // ─── 15) Return minimal API for external use (mapRouteFromURL) ───
+  return {
+    setOrigin: coord => {
+      coordStart = coord;
+      const [lng, lat] = coord.split(',').map(Number);
+      if (startMarker) startMarker.remove();
+      startMarker = new mapboxgl.Marker({ color: '#007cbf' })
+        .setLngLat([lng, lat])
+        .addTo(map);
+    },
+    setDestination: coord => {
+      coordEnd = coord;
+      const [lng, lat] = coord.split(',').map(Number);
+      if (endMarker) endMarker.remove();
+      endMarker = new mapboxgl.Marker({ color: '#007cbf' })
+        .setLngLat([lng, lat])
+        .addTo(map);
+    },
+    setProfile: mode => {
+      profile = mode;
+    }
+  };  
 }
