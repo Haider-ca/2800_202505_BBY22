@@ -1,3 +1,97 @@
+// Function to generate or retrieve a voter ID
+function getOrCreateVoterId() {
+    let voterId = localStorage.getItem('voterId');
+    if (!voterId) {
+        voterId = 'voter-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('voterId', voterId);
+    }
+    return voterId;
+}
+
+// function to handle like action
+async function handleLike(postId, contentType = 'post') {
+    const voterId = getOrCreateVoterId();
+
+    try {
+        const res = await fetch(`/api/vote/${contentType}/${postId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'like', voterId })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            const likeBtn = document.querySelector(`.like-btn[data-id="${postId}"]`);
+            const dislikeBtn = document.querySelector(`.dislike-btn[data-id="${postId}"]`);
+            
+            if (likeBtn && dislikeBtn) {
+                const likeCountSpan = likeBtn.querySelector('.count');
+                const dislikeCountSpan = dislikeBtn.querySelector('.count');
+                const likeIcon = likeBtn.querySelector('i');
+                const dislikeIcon = dislikeBtn.querySelector('i');
+                const voteKey = `vote_${postId}`;
+                const previousVote = localStorage.getItem(voteKey);
+
+                if (likeCountSpan) likeCountSpan.textContent = result.likes;
+                if (dislikeCountSpan) dislikeCountSpan.textContent = result.dislikes;
+
+                if (previousVote === 'like') {
+                    likeIcon.className = 'bi bi-hand-thumbs-up';
+                    localStorage.removeItem(voteKey);
+                } else {
+                    likeIcon.className = 'bi bi-hand-thumbs-up-fill';
+                    dislikeIcon.className = 'bi bi-hand-thumbs-down';
+                    localStorage.setItem(voteKey, 'like');
+                }
+            }
+        }
+    } catch (err) {
+        console.error('Like failed:', err);
+    }
+}
+
+// function to handle dislike action
+async function handleDislike(postId, contentType = 'post') {
+    const voterId = getOrCreateVoterId();
+
+    try {
+        const res = await fetch(`/api/vote/${contentType}/${postId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'dislike', voterId })
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            const dislikeBtn = document.querySelector(`.dislike-btn[data-id="${postId}"]`);
+            const likeBtn = document.querySelector(`.like-btn[data-id="${postId}"]`);
+            
+            if (dislikeBtn && likeBtn) {
+                const dislikeCountSpan = dislikeBtn.querySelector('.count');
+                const likeCountSpan = likeBtn.querySelector('.count');
+                const dislikeIcon = dislikeBtn.querySelector('i');
+                const likeIcon = likeBtn.querySelector('i');
+                const voteKey = `vote_${postId}`;
+                const previousVote = localStorage.getItem(voteKey);
+
+                if (dislikeCountSpan) dislikeCountSpan.textContent = result.dislikes;
+                if (likeCountSpan) likeCountSpan.textContent = result.likes;
+
+                if (previousVote === 'dislike') {
+                    dislikeIcon.className = 'bi bi-hand-thumbs-down';
+                    localStorage.removeItem(voteKey);
+                } else {
+                    dislikeIcon.className = 'bi bi-hand-thumbs-down-fill';
+                    likeIcon.className = 'bi bi-hand-thumbs-up';
+                    localStorage.setItem(voteKey, 'dislike');
+                }
+            }
+        }
+    } catch (err) {
+        console.error('Dislike failed:', err);
+    }
+}
+
 // Function to check authentication status
 async function checkAuth() {
     const API_BASE_URL = '/api';
@@ -315,7 +409,13 @@ async function loadUserPOIs() {
 
         pois.forEach(poi => {
             const card = document.createElement('div');
-            card.className = 'card mb-3 position-relative';
+            card.className = 'card mb-3';
+
+            // Extract latitude and longitude from coordinates
+            const lng = poi.coordinates && poi.coordinates.length > 0 ? poi.coordinates[0] : null;
+            const lat = poi.coordinates && poi.coordinates.length > 1 ? poi.coordinates[1] : null;
+
+            // Render card content
             card.innerHTML = `
                 <div class="card-body">
                     <div class="position-absolute top-0 end-0 p-2 d-flex gap-1">
@@ -346,16 +446,60 @@ async function loadUserPOIs() {
                             <i class="bi bi-hand-thumbs-down"></i> <span class="count">${poi.dislikes || 0}</span>
                         </span>
                     </div>
+                    ${lat && lng ? `
+                        <div class="mb-2 text-muted small location-placeholder">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start bg-light p-3 rounded gap-2">
+                                <div class="text-muted small flex-grow-1">
+                                    <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
+                                    Loading address...
+                                </div>
+                                <div class="text-end">
+                                    <a href="/html/map.html?type=user-poi&poiId=${poi._id}" 
+                                       class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
+                                        View on Map
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
                 </div>
             `;
             feedContainer.appendChild(card);
+
+            // Add address resolution using Mapbox API if coordinates exist
+            if (lat && lng && window.MAPBOX_TOKEN) {
+                const placeholder = card.querySelector('.location-placeholder');
+                fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${window.MAPBOX_TOKEN}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const address = data.features?.[0]?.place_name || 'Unknown location';
+                        placeholder.innerHTML = `
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start bg-light p-3 rounded gap-2">
+                                <div class="text-muted small flex-grow-1">
+                                    <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
+                                    ${address}
+                                </div>
+                                <div class="text-end">
+                                    <a href="/html/map.html?type=user-poi&poiId=${poi._id}" 
+                                       class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
+                                        View on Map
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    })
+                    .catch(err => {
+                        placeholder.innerText = '📍 Location unavailable';
+                        console.warn('Failed to fetch address:', err);
+                    });
+            }
         });
 
         // Add event listeners to edit buttons
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 const poiId = e.currentTarget.dataset.id;
-                const poi = pois.find(p => p._id === poiId); // find the POI object by ID
+                const poi = pois.find(p => p._id === poiId);
 
                 // Get the list of tags from the filter checkboxes
                 const filterCheckboxes = document.querySelectorAll('.form-check-input');
@@ -487,6 +631,21 @@ async function loadUserPOIs() {
                         alert('Failed to delete POI: ' + err.message);
                     }
                 }
+            });
+        });
+
+        // Add event listeners for like and dislike buttons
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const poiId = btn.dataset.id;
+                await handleLike(poiId, 'poi');
+            });
+        });
+
+        document.querySelectorAll('.dislike-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const poiId = btn.dataset.id;
+                await handleDislike(poiId, 'poi');
             });
         });
 
