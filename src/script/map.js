@@ -232,6 +232,18 @@ map.on('load', () => {
     }
   });
 
+  // Get profile param from saved routes
+  const profileFromURL = new URLSearchParams(window.location.search).get('profile');
+  if (profileFromURL) {
+    directions.setProfile(profileFromURL);
+    
+    // Highlight the correct tab
+    document.querySelectorAll('#mode-buttons button').forEach(btn => {
+      const mode = btn.dataset.mode;
+      btn.classList.toggle('active', mode === profileFromURL);
+    });
+  }
+  
   Object.entries(profileMap).forEach(([mode, profile]) => {
     const tab = document.getElementById(`${mode}Tab`);
     if (!tab) return;
