@@ -1,5 +1,5 @@
 let lastChecked = new Date().toISOString();
-console.log("✅ notification.js loaded");
+//console.log("✅ notification.js loaded");
 
 // Store latest notification data from backend
 let latestTargetId = null;
