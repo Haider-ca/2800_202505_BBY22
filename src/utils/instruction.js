@@ -22,11 +22,11 @@ export function showInstruction(message) {
         el = document.createElement("div");
         el.id = "map-instruction";
         el.className = "map-instruction";
-        el.style.position = 'absolute';
-        el.style.top = '20px';
+        el.style.position = 'fixed';
+        el.style.top = '80px';
         el.style.left = '50%';
         el.style.transform = 'translateX(-50%)';
-        el.style.zIndex = 1000;
+        el.style.zIndex = 2000;
         el.style.background = 'rgba(0,0,0,0.75)';
         el.style.color = '#fff';
         el.style.padding = '10px 16px';
@@ -35,7 +35,7 @@ export function showInstruction(message) {
         el.style.fontSize = '0.9rem';
         el.style.maxWidth = '90%';
         el.style.textAlign = 'center';
-        document.getElementById("map").appendChild(el);
+        document.body.appendChild(el);
     }
 
     el.innerText = message;
