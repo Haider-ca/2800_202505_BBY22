@@ -47,6 +47,7 @@ async function handleLike(postId, contentType = 'post') {
         }
     } catch (err) {
         console.error('Like failed:', err);
+        showToast('Failed to like the POI.', 'error');
     }
 }
 
@@ -89,6 +90,7 @@ async function handleDislike(postId, contentType = 'post') {
         }
     } catch (err) {
         console.error('Dislike failed:', err);
+        showToast('Failed to dislike the POI.', 'error');
     }
 }
 
@@ -107,16 +109,20 @@ async function checkAuth() {
 async function loadProfile() {
     const isAuthenticated = await checkAuth();
     if (!isAuthenticated) {
-        alert('Please log in to view your profile.');
-        window.location.href = '/src/html/login/login.html';
+        showToast('Please log in to view your profile.', 'error');
+        setTimeout(() => {
+            window.location.href = '/src/html/login/login.html';
+        }, 2000);
         return;
     }
 
     const API_BASE_URL = '/api';
     const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
     if (!response.ok) {
-        alert('Failed to load profile. Please log in again.');
-        window.location.href = '/html/login/login.html';
+        showToast('Failed to load profile. Please log in again.', 'error');
+        setTimeout(() => {
+            window.location.href = '/html/login/login.html';
+        }, 2000);
         return;
     }
     const data = await response.json();
@@ -132,8 +138,10 @@ async function updateProfile(event) {
     event.preventDefault(); // Prevent default form submission behavior (reload page)
     const isAuthenticated = await checkAuth();
     if (!isAuthenticated) {
-        alert('Please log in to update your profile.');
-        window.location.href = '/src/html/login/login.html';
+        showToast('Please log in to update your profile.', 'error');
+        setTimeout(() => {
+            window.location.href = '/src/html/login/login.html';
+        }, 2000);
         return;
     }
 
@@ -156,10 +164,11 @@ async function updateProfile(event) {
     });
     if (response.ok) {
         document.getElementById('editForm').style.display = 'none'; // Hide edit form on success
+        showToast('Profile updated successfully.', 'success');
         loadProfile(); // Reload profile information
     } else {
         const errorData = await response.json();
-        alert('Failed to update profile: ' + (errorData.message || 'An unexpected error occurred')); // Display error message
+        showToast('Failed to update profile: ' + (errorData.message || 'An unexpected error occurred'), 'error');
     }
 }
 
@@ -167,8 +176,10 @@ async function updateProfile(event) {
 async function deleteProfile() {
     const isAuthenticated = await checkAuth();
     if (!isAuthenticated) {
-        alert('Please log in to delete your profile.');
-        window.location.href = '/src/html/login/login.html';
+        showToast('Please log in to delete your profile.', 'error');
+        setTimeout(() => {
+            window.location.href = '/src/html/login/login.html';
+        }, 2000);
         return;
     }
 
@@ -179,10 +190,12 @@ async function deleteProfile() {
             credentials: 'include'
         });
         if (response.ok) {
-            alert('Profile deleted'); // Display success message
-            window.location.href = '/'; // Redirect to home page
+            showToast('Profile deleted successfully.', 'success');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
         } else {
-            alert('Failed to delete profile'); // Display failure message
+            showToast('Failed to delete profile.', 'error');
         }
     }
 }
@@ -239,8 +252,10 @@ async function resetPassword(event) {
     event.preventDefault();
     const isAuthenticated = await checkAuth();
     if (!isAuthenticated) {
-        alert('Please log in to reset your password.');
-        window.location.href = '/src/html/login/login.html';
+        showToast('Please log in to reset your password.', 'error');
+        setTimeout(() => {
+            window.location.href = '/src/html/login/login.html';
+        }, 2000);
         return;
     }
 
@@ -249,12 +264,12 @@ async function resetPassword(event) {
     const confirmPassword = document.getElementById('confirmPassword').value;
 
     if (!currentPassword) {
-        alert('Please enter your current password.');
+        showToast('Please enter your current password.', 'warning');
         return;
     }
 
     if (newPassword !== confirmPassword) {
-        alert('New passwords do not match.');
+        showToast('New passwords do not match.', 'warning');
         return;
     }
 
@@ -269,11 +284,11 @@ async function resetPassword(event) {
     });
 
     if (response.ok) {
-        alert('Password reset successfully.');
+        showToast('Password reset successfully.', 'success');
         cancelResetPassword();
     } else {
         const errorData = await response.json();
-        alert('Failed to reset password: ' + (errorData.message || 'An unexpected error occurred'));
+        showToast('Failed to reset password: ' + (errorData.message || 'An unexpected error occurred'), 'error');
     }
 }
 
@@ -453,7 +468,7 @@ async function loadUserPOIs() {
                                     <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
                                     Loading address...
                                 </div>
-                                <div class="text-end">
+                                <div class="text-end" id="viewMap">
                                     <a href="/html/map.html?type=user-poi&poiId=${poi._id}" 
                                        class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
                                         View on Map
@@ -479,7 +494,7 @@ async function loadUserPOIs() {
                                     <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
                                     ${address}
                                 </div>
-                                <div class="text-end">
+                                <div class="text-end" id="viewMap">
                                     <a href="/html/map.html?type=user-poi&poiId=${poi._id}" 
                                        class="btn btn-sm btn-outline-primary rounded-pill shadow-sm">
                                         View on Map
@@ -590,6 +605,7 @@ async function loadUserPOIs() {
 
                         if (response.ok) {
                             bootstrapModal.hide();
+                            showToast('POI updated successfully.', 'success');
                             loadUserPOIs();
                         } else {
                             const errorData = await response.json();
@@ -597,7 +613,7 @@ async function loadUserPOIs() {
                         }
                     } catch (err) {
                         console.error('Error updating POI:', err);
-                        alert('Failed to update POI: ' + err.message);
+                        showToast('Failed to update POI: ' + err.message, 'error');
                     }
                 });
 
@@ -620,7 +636,7 @@ async function loadUserPOIs() {
                         });
 
                         if (response.ok) {
-                            alert('POI deleted successfully');
+                            showToast('POI deleted successfully.', 'success');
                             loadUserPOIs();
                         } else {
                             const errorData = await response.json();
@@ -628,7 +644,7 @@ async function loadUserPOIs() {
                         }
                     } catch (err) {
                         console.error('Error deleting POI:', err);
-                        alert('Failed to delete POI: ' + err.message);
+                        showToast('Failed to delete POI: ' + err.message, 'error');
                     }
                 }
             });
