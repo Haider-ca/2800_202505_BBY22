@@ -587,6 +587,19 @@ export function initDirections(map) {
     },
     setProfile: mode => {
       profile = mode;
+    },
+    clear: () => {
+      clearRoute();          // Remove start/end markers and route layers
+      geocoderStart.clear(); // Clear the start location input field
+      geocoderEnd.clear();   // Clear the end location input field
+      coordStart = coordEnd = null;
+      clearError();          // Clear any error messages
+      window.speechSynthesis.cancel();
+
+      // Collapse the directions panel and reset contents
+      new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
+      summaryEl.textContent = '';
+      stepsEl.innerHTML = '';
     }
   };
 }

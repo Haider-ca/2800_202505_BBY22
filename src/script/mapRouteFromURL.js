@@ -92,6 +92,12 @@ export async function autoFillEndInputFromURL() {
         console.error('Failed to fetch and fill POI address:', err);
       }
     }
+    // Clear the temporary parameters after use
+    const cleanURL = new URL(window.location.href);
+    cleanURL.searchParams.delete('lat');
+    cleanURL.searchParams.delete('lng');
+    cleanURL.searchParams.delete('type');
+    window.history.replaceState({}, '', cleanURL.pathname);
   }  
 
 // applySavedRouteFromURL

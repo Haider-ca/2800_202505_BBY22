@@ -267,10 +267,8 @@ map.on('load', () => {
   loadSavedRoutes(map);
 
   // Get lat and lng from POI post and auto fill End address input field
-  console.log("type");
   const params = new URLSearchParams(window.location.search);
   const type = params.get('type');
-  console.log(type);
   if (type === 'user-poi') {
     applyPOITargetFromURL(map);
     autoFillEndInputFromURL();
@@ -385,7 +383,6 @@ async function loadPOIs() {
 
 function makeMarkers(features, list, icon) {
   for (const f of features) {
-     console.log('Feature properties:', f.properties);
     const coords = f.geometry.type === 'Point'
       ? f.geometry.coordinates
       : turf.centroid(f).geometry.coordinates;
@@ -417,39 +414,6 @@ function makeMarkers(features, list, icon) {
     // Open popup on marker click only
     el.addEventListener('click', () => {
       popup.addTo(map).setLngLat([lng, lat]);
-
-      setTimeout(() => {
-        const btn = document.querySelector('.get-directions-btn');
-        if (btn) {
-          btn.addEventListener('click', () => {
-            const lng = parseFloat(btn.dataset.lng);
-            const lat = parseFloat(btn.dataset.lat);
-
-            // Optional: set origin to user location
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(pos => {
-                window.pathpalDirections.setOrigin([
-                  pos.coords.longitude,
-                  pos.coords.latitude
-                ]);
-                window.pathpalDirections.setDestination([lng, lat]);
-                window.pathpalDirections.route();
-              });
-            } else {
-              window.pathpalDirections.setDestination([lng, lat]);
-              window.pathpalDirections.route();
-            }
-
-            map.flyTo({ center: [lng, lat], zoom: 14 });
-          });
-        }
-
-        // Attach vote logic after DOM is injected
-        const likeBtn = document.querySelector('.like-btn');
-        const dislikeBtn = document.querySelector('.dislike-btn');
-        likeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
-        dislikeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
-      });
     });
   }
 }
@@ -488,6 +452,32 @@ class ToggleControl {
       );
       this.onToggle(this.visible);
 
+      // Clear navigation route and markers (if any)
+      // Only clear directions and inputs when user-poi marker toggled OFF
+      if (this.type === 'poi' && !this.visible) {
+        // Clear route
+        if (window.pathpalDirections?.clear) {
+          window.pathpalDirections.clear();
+        }
+      
+        // Clear input fields
+        const inputStart = document.querySelector('#geocoder-start input');
+        const inputEnd = document.querySelector('#geocoder-end input');
+        if (inputStart) inputStart.value = '';
+        if (inputEnd) inputEnd.value = '';
+      
+        // Hide error message
+        document.querySelector('.directions-error')?.classList.add('d-none');
+      
+        // Hide turn-by-turn panel
+        document.getElementById('turn-by-turn')?.classList.add('d-none');
+        document.getElementById('btn-show-turns')?.classList.remove('d-none');
+      
+        // Remove all popups
+        document.querySelectorAll('.mapboxgl-popup').forEach(p => p.remove());
+      }
+
+
       // If the POI toggle is activated, pan to the user's current location
       if (this.type === 'poi' && this.visible && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
@@ -505,6 +495,22 @@ class ToggleControl {
     this.map = null;
   }
 }
+
+// Add global event delegation for voting on popups
+document.addEventListener('click', async (e) => {
+  const likeBtn = e.target.closest('.like-btn');
+  const dislikeBtn = e.target.closest('.dislike-btn');
+
+  if (likeBtn || dislikeBtn) {
+    const btn = likeBtn || dislikeBtn;
+    const type = btn.dataset.type || 'poi';
+    await handleVoteClick(e, type);
+  }
+});
+
+// Make URL-fill functions available globally for popup.js
+window.applyPOITargetFromURL = applyPOITargetFromURL;
+window.autoFillEndInputFromURL = autoFillEndInputFromURL;
 
 // Expose the map instance and user POI markers globally for access from other scripts
 
