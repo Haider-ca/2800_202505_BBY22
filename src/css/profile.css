@@ -46,7 +46,6 @@ body {
     font-size: 20px;
     cursor: pointer;
     color: #666;
-    z-index: 1001;
     padding: 5px;
 }
 
@@ -64,7 +63,6 @@ body {
     border-radius: 5px;
     padding: 5px 0;
     min-width: 140px;
-    z-index: 1000;
     animation: fadeIn 0.3s ease;
 }
 
@@ -346,6 +344,10 @@ body {
     font-size: 1rem;
 }
 
+#viewMap {
+    align-self: center;
+}
+
 /* Responsive Styles */
 @media (min-width: 769px) {
     #editForm {
@@ -396,7 +398,7 @@ body {
 @media (max-width: 768px) {
     .containerProfile {
         padding: 15px;
-        max-width: 90%;
+        max-width: 100%;
     }
 
     .avatarProfile img {
