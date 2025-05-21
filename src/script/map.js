@@ -453,6 +453,39 @@ el.addEventListener('click', () => {
     // Open popup on marker click only
     el.addEventListener('click', () => {
       popup.addTo(map).setLngLat([lng, lat]);
+
+      setTimeout(() => {
+        const btn = document.querySelector('.get-directions-btn');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const lng = parseFloat(btn.dataset.lng);
+            const lat = parseFloat(btn.dataset.lat);
+
+            // Optional: set origin to user location
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(pos => {
+                window.pathpalDirections.setOrigin([
+                  pos.coords.longitude,
+                  pos.coords.latitude
+                ]);
+                window.pathpalDirections.setDestination([lng, lat]);
+                window.pathpalDirections.route();
+              });
+            } else {
+              window.pathpalDirections.setDestination([lng, lat]);
+              window.pathpalDirections.route();
+            }
+
+            map.flyTo({ center: [lng, lat], zoom: 14 });
+          });
+        }
+
+        // Attach vote logic after DOM is injected
+        const likeBtn = document.querySelector('.like-btn');
+        const dislikeBtn = document.querySelector('.dislike-btn');
+        likeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+        dislikeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+      });
     });
   }
 }
