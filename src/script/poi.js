@@ -14,6 +14,7 @@
  */
 
 import { showToast } from '../utils/toast.js';
+import { createPopup } from './popup.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("poi-form-container");
@@ -137,9 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!res.ok) throw new Error(data.error || 'Failed to submit POI');
                 return data;
               })
-              .then(data => {
+              .then(async data => {
                 console.log("POI response:", data);
                 // 1. Read coordinates
+                const res = await fetch(`/api/poi/${data.poi._id}`);
+                const poi = await res.json();
                 const { lng, lat } = window.clickedLatLng || {};
 
                 if (lng && lat) {
@@ -152,12 +155,27 @@ document.addEventListener("DOMContentLoaded", () => {
                   el.style.height = '32px';
                   el.style.backgroundSize = 'contain';
 
-                  // 3. Add marker to the map
+                  // 3. Create popup
+                  const popup = createPopup({
+                    coordinates: [lng, lat],
+                    properties: {
+                      ...poi,
+                      image: poi.imageUrl,
+                    }
+                  });
+                  popup.addTo(window.pathpalMap).setLngLat([lng, lat]);
+
+                  // 4. Add popup to the marker, and add marker to the map
                   // Generated with the help of ChatGPT (OpenAI)
-                  const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(window.pathpalMap);
+                  const marker = new mapboxgl.Marker(el)
+                  .setLngLat([lng, lat])
+                  .setPopup(popup)
+                  .addTo(window.pathpalMap);
+
                   if (window.userPOIMarkers) {
                     window.userPOIMarkers.push(marker);
                   }
+                  marker.togglePopup();
                 }
 
                 // 4. Show message
