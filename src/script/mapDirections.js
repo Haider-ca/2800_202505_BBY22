@@ -595,11 +595,8 @@ export function initDirections(map) {
       coordStart = coordEnd = null;
       clearError();          // Clear any error messages
       window.speechSynthesis.cancel();
-
-      // Collapse the directions panel and reset contents
-      new bootstrap.Collapse(collapseEl, { toggle: false }).hide();
-      summaryEl.textContent = '';
-      stepsEl.innerHTML = '';
-    }
+    },
+    getOrigin: () => coordStart,
+    getDestination: () => coordEnd
   };
 }

@@ -469,14 +469,9 @@ class ToggleControl {
         // Hide error message
         document.querySelector('.directions-error')?.classList.add('d-none');
       
-        // Hide turn-by-turn panel
-        document.getElementById('turn-by-turn')?.classList.add('d-none');
-        document.getElementById('btn-show-turns')?.classList.remove('d-none');
-      
         // Remove all popups
         document.querySelectorAll('.mapboxgl-popup').forEach(p => p.remove());
       }
-
 
       // If the POI toggle is activated, pan to the user's current location
       if (this.type === 'poi' && this.visible && navigator.geolocation) {

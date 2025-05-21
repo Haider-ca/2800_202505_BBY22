@@ -63,7 +63,6 @@ export function createPopup({ coordinates, properties }) {
     directionsBtn?.addEventListener('click', () => {
       const lat = directionsBtn.dataset.lat;
       const lng = directionsBtn.dataset.lng;
-
       const coordStr = `${lng},${lat}`;
 
       // URL parameters
@@ -86,7 +85,13 @@ export function createPopup({ coordinates, properties }) {
         window.autoFillEndInputFromURL();
       }
 
-      // Fly to target coordinates on the map
+      if (
+        window.pathpalDirections?.getOrigin?.() &&
+        window.pathpalDirections?.getDestination?.()
+      ) {
+        document.getElementById('dir-go')?.click();
+      }      
+      
       window.pathpalMap.flyTo({ center: [parseFloat(lng), parseFloat(lat)], zoom: 14 });
     });
   });

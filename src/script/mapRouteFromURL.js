@@ -52,7 +52,7 @@ export async function applyPOITargetFromURL(map) {
     popup.addTo(map).setLngLat([lng, lat]);
 
     // Optional: fly to location
-    map.flyTo({ center: [lng, lat], zoom: 16 });
+    map.flyTo({ center: [lng, lat], zoom: 14 });
 
   } catch (err) {
     console.error('Failed to load POI from URL:', err);
