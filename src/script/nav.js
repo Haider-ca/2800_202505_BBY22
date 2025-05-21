@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     botEl.innerHTML = bottomHtml;
                     const homeLink = botEl.querySelector('#home-link');
                     if (homeLink) {
-                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/home.html');
+                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/index.html');
                     }
                    });
                }
             }
             else{
               const homeLink = botEl.querySelector('#home-link');
-              homeLink.setAttribute('href', '/html/home.html');
+              homeLink.setAttribute('href', '/html/index.html');
             }
           });
       });

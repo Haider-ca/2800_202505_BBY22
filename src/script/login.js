@@ -1,4 +1,8 @@
 //src/script/login.js
+
+import { showToast } from '../utils/toast.js';
+
+
 document.getElementById('login-form').addEventListener('submit', async function (e) {
           e.preventDefault(); // Prevent the default HTML form submission
         
@@ -22,15 +26,15 @@ document.getElementById('login-form').addEventListener('submit', async function 
         
             if (response.ok) {
               // Login success: redirect or show message
-              alert('Login successful');
+              showToast('Login successful', 'success');
               window.location.href = '/html/feed.html?mode=community'; // Change to your main page
             } else {
               // Show error message from backend
-              alert(data.message || 'Login failed');
+              showToast(data.message || 'Login failed', 'error');
             }
           } catch (error) {
             console.error('Login error:', error);
-            alert('Something went wrong. Please try again later.');
+            showToast('Something went wrong. Please try again later.', 'error');
           }
         });
         

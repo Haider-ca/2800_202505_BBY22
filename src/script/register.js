@@ -1,3 +1,4 @@
+import { showToast } from '../utils/toast.js';
 document.getElementById('register-form').addEventListener('submit', async function (e) {
           e.preventDefault(); // Prevent form's default behavior
         
@@ -9,7 +10,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
         
           // Basic validation
           if (password !== confirmPassword) {
-            return alert('Passwords do not match');
+            return showToast('Passwords do not match', 'error');
           }
         
           try {
@@ -22,14 +23,14 @@ document.getElementById('register-form').addEventListener('submit', async functi
             const data = await response.json();
         
             if (response.ok) {
-              alert('Registration successful!');
+              showToast('Registration successful!', 'success');
               window.location.href = '../login/login.html';
             } else {
-              alert(data.message || 'Registration failed');
+              showToast(data.message || 'Registration failed', 'error');
             }
           } catch (err) {
             console.error('Registration error:', err);
-            alert('Something went wrong. Please try again.');
+            showToast('Something went wrong. Please try again.', 'error');
           }
         });
         
