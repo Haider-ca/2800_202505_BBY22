@@ -409,8 +409,8 @@ function makeMarkers(features, list, icon) {
     });
     
     // Hover listeners
-    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
-    el.addEventListener('mouseleave', () => popup.remove());
+    // el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
+    // el.addEventListener('mouseleave', () => popup.remove());
 
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
