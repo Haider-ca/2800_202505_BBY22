@@ -1,3 +1,4 @@
+/* === Base === */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -7,6 +8,7 @@ body {
   flex-direction: column;
 }
 
+/* === Grid Layout for Hero Section === */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -15,7 +17,6 @@ body {
   padding: 50px;
   gap: 40px;
 }
-
 
 .grid-left {
   display: flex;
@@ -51,6 +52,7 @@ body {
   margin-bottom: 30px;
 }
 
+/* === CTA Button === */
 .cta-button {
   display: inline-block;
   padding: 12px 24px;
@@ -71,70 +73,58 @@ body {
   box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
 }
 
-/* Carousel wrapper container */
-
+/* === Carousel Section === */
 .carousel-wrapper {
   overflow: visible;
   padding-inline: 6rem;
 }
 
-/* Carousel card container styling */
 .carousel-card {
-  width: 70vw;                          /* Responsive card width */
-  height: 45vh;                         /* Responsive card height */
-  
-  /* Metallic-style layered gradient background */
+  width: 70vw;
+  height: 45vh;
   background:
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), transparent 60%),
     linear-gradient(135deg, #fafbfc, #ebf2fa, #30c7ec, #93f9b9, #2782b6);
   background-blend-mode: screen;
-
-  border-radius: 25px;                 /* Rounded corners */
-  padding: 2rem;                       /* Inner spacing */
-  margin: 0 auto 4rem auto;            /* Bottom margin to make room for shadow */
-  
-  display: flex;                       /* Center content */
+  border-radius: 25px;
+  padding: 2rem;
+  margin: 0 auto 0.5rem auto;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  color: #000;                         /* Text color */
-  position: relative;                 /* Required for shadow positioning */
-  /*z-index: 1;                         /* Ensure content stays above pseudo-elements */
-
+  color: #000;
+  position: relative;
   box-shadow: 10px 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Card text colors */
 .carousel-card h2,
 .carousel-card p {
-  color: #000;                       /* Black text for contrast */
+  color: #000;
+  margin: 0.5rem 0;
 }
 
 /* Carousel arrow controls */
 .carousel-control-prev,
 .carousel-control-next {
-  width: 5%;                         /* Arrow button size */
-  top: 50%;                          /* Vertically center */
-  transform: translateY(-50%);       /* Adjust exact center alignment */
-  position: absolute;                /* Place outside the carousel card */
-  z-index: 1;                        /* Ensure on top */
+  width: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  z-index: 1;
 }
 
-/* Left arrow positioned to the left of the card */
 .carousel-control-prev {
-  left: calc(50% - 32.5vw - 8rem);    /* 32.5vw is half of 65vw (card width) + margin */
+  left: calc(50% - 32.5vw - 8rem);
 }
 
-/* Right arrow positioned to the right of the card */
 .carousel-control-next {
-  right: calc(50% - 32.5vw - 8rem);  
+  right: calc(50% - 32.5vw - 8rem);
 }
 
-/* Arrow icon styling */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  filter: invert(90%);               /* Light gray arrow color */
+  filter: invert(90%);
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -144,11 +134,31 @@ body {
   overflow: visible !important;
 }
 
+/* === 3D White Button === */
+.btn-white-3d {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 10px 24px;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease-in-out;
+}
 
+.btn-white-3d:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 2px 6px 16px rgba(0, 0, 0, 0.25);
+  color: #000;
+}
+
+/* === Responsive Adjustments === */
 @media (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: 30px;
   }
 
   .grid-left {
@@ -157,5 +167,43 @@ body {
 
   .cta-button {
     margin: 0 auto;
+  }
+
+  .carousel-wrapper {
+    padding-inline: 1rem;
+  }
+
+  .carousel-card {
+    width: 90vw;
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .carousel-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .carousel-card p {
+    font-size: 1rem;
+  }
+
+  .btn-white-3d {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 10%;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .carousel-control-prev {
+    left: 0.5rem;
+  }
+
+  .carousel-control-next {
+    right: 0.5rem;
   }
 }
