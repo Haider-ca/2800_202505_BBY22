@@ -409,8 +409,46 @@ function makeMarkers(features, list, icon) {
     });
     
     // Hover listeners
-    el.addEventListener('mouseenter', () => popup.addTo(map).setLngLat([lng, lat]));
-    el.addEventListener('mouseleave', () => popup.remove());
+el.addEventListener('click', () => {
+  // Close all existing popups
+  document.querySelectorAll('.mapboxgl-popup').forEach(p => p.remove());
+
+  // Add the popup on click
+  popup.addTo(map).setLngLat([lng, lat]);
+
+  setTimeout(() => {
+    const btn = document.querySelector('.get-directions-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const lng = parseFloat(btn.dataset.lng);
+        const lat = parseFloat(btn.dataset.lat);
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(pos => {
+            window.pathpalDirections.setOrigin([
+              pos.coords.longitude,
+              pos.coords.latitude
+            ]);
+            window.pathpalDirections.setDestination([lng, lat]);
+            window.pathpalDirections.route();
+          });
+        } else {
+          window.pathpalDirections.setDestination([lng, lat]);
+          window.pathpalDirections.route();
+        }
+
+        map.flyTo({ center: [lng, lat], zoom: 14 });
+      });
+    }
+
+    // Voting logic
+    const likeBtn = document.querySelector('.like-btn');
+    const dislikeBtn = document.querySelector('.dislike-btn');
+    likeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+    dislikeBtn?.addEventListener('click', (e) => handleVoteClick(e, 'poi'));
+  });
+});
+
 
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     list.push(marker);
