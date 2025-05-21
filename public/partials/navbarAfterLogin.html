@@ -18,6 +18,8 @@
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
+     <!-- 🟡 Notification dot shown on top of hamburger icon -->
+      <span id="hamburger-indicator"></span>
     </button>
 
     <!-- Nav links -->
@@ -38,8 +40,15 @@
             aria-expanded="false"
           >
             <i class="bi bi-person-circle"></i> <span id="user-name">Hi, Guest</span>
+            <span id="notification-indicator">●</span> 
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+            <li>
+              <a id="message-menu" class="dropdown-item" href="#">New Message
+              <span id="menu-indicator">●</span>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="/html/profile.html">Profile</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="#" id="theme-btn">Theme Switch</a></li>

@@ -12,6 +12,7 @@ const MongoStore = require('connect-mongo');
 const authRoutes = require('./routes/auth');//add this for login features 
 const aiRouter = require("./routes/ai"); 
 const contactRoutes = require('./routes/contact');// add this for contact us information
+const notificationRoutes = require('./routes/notification');//add this for notification
 const app = express();
 connectDB();
 
@@ -76,10 +77,16 @@ app.use('/api/post', require('./post/routes/postRoutes'));
 // mount directionsRoutes at /api so that GET /api/directions works
 app.use('/api', require('./map/routes/directionsRoutes'));
 app.use('/api/save', require('./savePost/routes/savePostRoutes'));
-
+app.use('/api/notifications', notificationRoutes);
 app.use('/api', authRoutes);//add this for login features 
 
-
+  // ─── 404 handler ──────────────────────────────────────────────────────────────
+  // any request that didn't match a static file or API route will fall through here
+  app.use((req, res, next) => {
+    res
+      .status(404)
+      .sendFile(path.join(__dirname, '..', 'public', '404.html'));
+  });
 
 // global error handler
 app.use((err, req, res, next) => {

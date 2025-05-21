@@ -52,7 +52,7 @@ export async function applyPOITargetFromURL(map) {
     popup.addTo(map).setLngLat([lng, lat]);
 
     // Optional: fly to location
-    map.flyTo({ center: [lng, lat], zoom: 16 });
+    map.flyTo({ center: [lng, lat], zoom: 14 });
 
   } catch (err) {
     console.error('Failed to load POI from URL:', err);
@@ -92,6 +92,12 @@ export async function autoFillEndInputFromURL() {
         console.error('Failed to fetch and fill POI address:', err);
       }
     }
+    // Clear the temporary parameters after use
+    const cleanURL = new URL(window.location.href);
+    cleanURL.searchParams.delete('lat');
+    cleanURL.searchParams.delete('lng');
+    cleanURL.searchParams.delete('type');
+    window.history.replaceState({}, '', cleanURL.pathname);
   }  
 
 // applySavedRouteFromURL

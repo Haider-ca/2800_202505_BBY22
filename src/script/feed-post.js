@@ -38,6 +38,7 @@ export async function loadPosts({
     data.forEach(post => {
       const voteKey = `vote_${post._id}`;
       const card = renderCard(post, voteKey, 'post');
+      card.id = `post-${post._id}`;
       feedCards.appendChild(card);
     });
 
@@ -53,3 +54,5 @@ export async function loadPosts({
     setLoading(false);
   }
 }
+
+

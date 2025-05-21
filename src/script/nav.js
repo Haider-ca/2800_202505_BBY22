@@ -1,4 +1,5 @@
 // Load navbar and bottom navbar when the DOM is ready
+import { showToast } from '../utils/toast.js';
 document.addEventListener('DOMContentLoaded', () => {
   const topEl = document.getElementById('navbar-placeholder');
   const botEl = document.getElementById('bottom-navbar-placeholder');
@@ -36,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
               //✅ set up contact us pop up window
               setupContactUsPopup();
 
+              //✅ set up new message notification
+               setupMessageMenuClick()
+
               if (botEl) {
                  // ✅ Load bottom navbar if present
                     fetch(`/partials/bottomNavbar.html`)
@@ -44,14 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     botEl.innerHTML = bottomHtml;
                     const homeLink = botEl.querySelector('#home-link');
                     if (homeLink) {
-                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/home.html');
+                      homeLink.setAttribute('href', data.loggedIn ? '/html/feed.html?mode=community' : '/html/index.html');
                     }
                    });
                }
             }
             else{
               const homeLink = botEl.querySelector('#home-link');
-              homeLink.setAttribute('href', '/html/home.html');
+              homeLink.setAttribute('href', '/html/index.html');
             }
           });
       });
@@ -86,7 +90,7 @@ function bindLogout() {
 
 
         } else {
-          alert('Logout failed.');
+          showToast('Logout failed.', 'error');
         }
       } catch (err) {
         console.error('Logout error:', err);
@@ -206,7 +210,7 @@ function setupContactUsPopup() {
       const title = document.getElementById('contact-title').value.trim();
       const description = document.getElementById('contact-description').value.trim();
       if (!title || !description) {
-        alert('Title and Description are required.');
+        showToast('Title and Description are required.', 'error');
         return;
       }
 
@@ -219,14 +223,14 @@ function setupContactUsPopup() {
         });
 
         if (res.ok) {
-          alert('Thank you for your feedback!');
+          showToast('Thank you for your feedback!', 'success');
           popup.remove();
         } else {
-          alert('Submission failed. Please try again.');
+          showToast('Submission failed. Please try again.', 'error');
         }
       } catch (err) {
         console.error('Error:', err);
-        alert('Network error. Try again.');
+        showToast('Network error. Try again.', 'error');
       }
     };
   });
@@ -255,5 +259,41 @@ function makePopupDraggable(popup) {
 
   document.addEventListener('mouseup', () => {
     isDragging = false;
+  });
+}
+
+function setupMessageMenuClick() {
+  const messageMenu = document.getElementById('message-menu');
+  if (!messageMenu) {
+    console.warn('❌ #message-menu not found in nav');
+    return;
+  }
+
+  messageMenu.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Read target info from sessionStorage (set by notification.js)
+    const type = sessionStorage.getItem('targetType');
+    const id = sessionStorage.getItem('targetId');
+
+    if (!type || !id) {
+      showToast('⚠️ No new message available.', 'error');
+      return;
+    }
+
+    clearNotificationIndicators();
+
+    // If already on the feed page, scroll directly
+    const isOnFeedPage = window.location.pathname === '/html/feed.html';
+    if (isOnFeedPage) {
+      window.switchToTabByType?.(type);
+      window.resetAndLoad?.();
+      setTimeout(() => {
+        window.scrollToLatestTarget?.();
+      }, 600);
+    } else {
+      // Otherwise, go to feed page and scroll from there
+      window.location.href = '/html/feed.html';
+    }
   });
 }
