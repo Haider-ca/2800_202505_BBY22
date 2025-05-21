@@ -110,6 +110,18 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTabs();
   loadFeed();
 
+  // 🟢 Globally accessible function to switch tabs by type (e.g. 'post', 'poi')
+  window.switchToTabByType = function(type) {
+    const tabBtn = document.querySelector(`#tab-group .nav-link[data-type="${type}"]`);
+    if (tabBtn) {
+      tabBtn.click(); // 🔄 Simulates a real tab click (your existing listener will handle it)
+      console.log(`✅ Switched to tab for type: ${type}`);
+    } else {
+      console.warn(`❌ Tab not found for type: ${type}`);
+    }
+  };
+
+
   const createPostBtn = document.getElementById('createPostBtn');
   if (createPostBtn) {
     createPostBtn.addEventListener('click', async () => {
@@ -157,6 +169,12 @@ function loadFeed() {
             noMoreData = true;
             observer?.unobserve(loadMore);
           }
+             // ✅ Try to scroll after Posts finish rendering
+          if (typeof window.scrollToLatestTarget === 'function') {
+            setTimeout(() => {
+              window.scrollToLatestTarget();
+            }, 300);
+          }
         });
       break;
     case 'announcement':
@@ -186,6 +204,12 @@ function loadFeed() {
           } else {
             noMoreData = true;
             observer?.unobserve(loadMore);
+          }
+          // ✅ Try to scroll after POIs finish rendering
+          if (typeof window.scrollToLatestTarget === 'function') {
+            setTimeout(() => {
+              window.scrollToLatestTarget();
+            }, 300);
           }
         });
         break;
@@ -284,3 +308,5 @@ function resetUIState() {
     sortLabel.textContent = 'Newest';
   }
 }
+
+window.resetAndLoad = resetAndLoad;

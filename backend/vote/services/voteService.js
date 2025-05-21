@@ -36,7 +36,8 @@ exports.voteTarget = async (type, targetId, voteType, voterId) => {
     await Vote.create(voteData);
     
     await Model.findByIdAndUpdate(targetId, {
-      $inc: { [voteType === 'like' ? 'likes' : 'dislikes']: 1 }
+      $inc: { [voteType === 'like' ? 'likes' : 'dislikes']: 1 },
+      $set: { updatedAt: new Date() }
     });
   }
 
