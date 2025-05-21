@@ -39,7 +39,6 @@ export async function loadPosts({
       const voteKey = `vote_${post._id}`;
       const card = renderCard(post, voteKey, 'post');
       card.id = `post-${post._id}`;
-      //console.log('🧾 rendering post:', post._id);
       feedCards.appendChild(card);
     });
 

@@ -1,4 +1,5 @@
 import { showToast } from '../utils/toast.js';
+import { shortenAddress } from '../utils/helpers.js';
 
 export async function loadRoutes({
   currentPage,
