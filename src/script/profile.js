@@ -130,7 +130,7 @@ async function loadProfile() {
     document.getElementById('email').textContent = data.email || '';
     document.getElementById('name').textContent = data.name || '';
     document.getElementById('description').textContent = data.description || '';
-    document.getElementById('userType').textContent = data.userType || 'caregiver';
+    document.getElementById('userType').textContent = data.userType || '';
 }
 
 // Function to update user profile information and upload an image if provided
@@ -145,16 +145,31 @@ async function updateProfile(event) {
         return;
     }
 
-    const formData = new FormData();
-    formData.append('email', document.getElementById('newEmail').value);
-    formData.append('name', document.getElementById('newName').value);
-    formData.append('description', document.getElementById('newDescription').value);
-    formData.append('userType', document.getElementById('newUserType').value);
-    if (document.getElementById('avatarInput').files[0]) {
-        formData.append('image', document.getElementById('avatarInput').files[0]);
-    } else {
-        console.log('No file selected for upload'); // Log when no file is selected
+    const newEmail = document.getElementById('newEmail').value.trim();
+    const newName = document.getElementById('newName').value.trim();
+    const newDescription = document.getElementById('newDescription').value.trim();
+    const newUserType = document.getElementById('newUserType').value.trim();
+    const avatarInput = document.getElementById('avatarInput');
+    const previewImage = document.getElementById('avatarPreview');
+
+    // Check for empty fields or invalid userType
+    if (!newEmail || !newName || !newDescription || !newUserType || newUserType === '') {
+        showToast('Empty info or invalid user type', 'warning');
+        return;
     }
+
+    const formData = new FormData();
+    formData.append('email', newEmail);
+    formData.append('name', newName);
+    formData.append('description', newDescription);
+    formData.append('userType', newUserType);
+
+    // Handle avatar: use new file if uploaded, default image if preview is cleared, or keep existing if no change
+    if (avatarInput.files[0]) {
+        formData.append('image', avatarInput.files[0]);
+    } else if (previewImage && (previewImage.src === '' || previewImage.src.includes('/public/img/defaultUser.png'))) {
+        formData.append('avatar', '/public/img/defaultUser.png');
+    } // If previewImage doesn't exist or no changes, don't append avatar to keep existing
 
     const API_BASE_URL = '/api';
     const response = await fetch(API_BASE_URL + '/profile', {
@@ -201,9 +216,30 @@ async function deleteProfile() {
 }
 
 // Function to show the edit profile form
-function showEditForm() {
+async function showEditForm() {
     const editForm = document.getElementById('editForm');
     if (editForm) {
+        // Fetch current profile data
+        const API_BASE_URL = '/api';
+        const response = await fetch(API_BASE_URL + '/profile', { method: 'GET', credentials: 'include' });
+        if (!response.ok) {
+            showToast('Failed to load profile data for editing.', 'error');
+            return;
+        }
+        const data = await response.json();
+
+        // Populate form fields with current profile data
+        document.getElementById('newEmail').value = data.email || '';
+        document.getElementById('newName').value = data.name || '';
+        document.getElementById('newDescription').value = data.description || '';
+        document.getElementById('newUserType').value = data.userType || 'Select your user type';
+
+        // Show current avatar in preview
+        const previewImage = document.getElementById('avatarPreview');
+        const previewContainer = document.getElementById('avatarPreviewContainer');
+        previewImage.src = data.avatar || '/public/img/defaultUser.png';
+        previewContainer.style.display = data.avatar ? 'block' : 'none';
+
         editForm.style.display = 'block'; // Show the edit form
         const dropdown = document.querySelector(".dropdownMenu");
         if (dropdown) dropdown.classList.remove("show"); // Hide dropdown if visible
@@ -337,9 +373,9 @@ function removeAvatarPreview() {
     const previewImage = document.getElementById('avatarPreview');
     const avatarInput = document.getElementById('avatarInput');
 
-    previewImage.src = '';
-    previewContainer.style.display = 'none';
-    avatarInput.value = '';
+    previewImage.src = '/public/img/defaultUser.png'; // Set to default image
+    previewContainer.style.display = 'block'; // Keep preview visible
+    avatarInput.value = ''; // Clear file input
 }
 
 // Function to preview the selected POI image in the edit modal
