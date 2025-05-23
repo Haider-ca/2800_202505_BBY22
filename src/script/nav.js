@@ -105,7 +105,7 @@ function bindThemeSwitcher() {
   const themeBtn = document.getElementById('theme-btn');
   const themes = ['light', 'dark', 'system'];
   let currentTheme = localStorage.getItem('theme') || 'system';
-  let nextTheme = localStorage.getItem('theme') || 'light';
+  let nextTheme = themes[(themes.indexOf(currentTheme)+1) % themes.length]|| 'light';
 
   applyTheme(currentTheme);
 
