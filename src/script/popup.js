@@ -47,7 +47,7 @@ export function createPopup({ coordinates, properties, markerType }) {
       </div>
       <img src="${image}" alt="POI photo" class="popup-img" />
       <div class="popup-desc">${description}</div>
-    ` : ''}
+    
 
     <div class="d-flex justify-content-start gap-4 post-actions mt-2">
       <span class="like-btn" data-id="${properties._id}" data-type="poi">
@@ -59,6 +59,7 @@ export function createPopup({ coordinates, properties, markerType }) {
         <span class="count">${properties.dislikes || 0}</span>
       </span>
     </div>
+    ` : ''}
 
     <div class="mt-2 text-end">
       <button class="btn btn-outline-primary btn-sm get-directions-btn" data-lng="${lng}" data-lat="${lat}">
