@@ -1,4 +1,4 @@
-<div id="poiModal" class="position-absolute top-50 start-50 translate-middle bg-white rounded-4 p-3 shadow"
+<div id="poiModal" class="modal-card position-absolute top-50 start-50 translate-middle bg-white rounded-4 p-3 shadow"
     style="width: 85vw; max-width: 20rem; z-index: 1050; display: none;">
 
     <!-- Close button -->
@@ -8,14 +8,14 @@
     <h5 class="fw-semibold mb-3 text-center">📍 Add a New POI</h5>
 
     <!-- Title Field -->
-    <div class="form-floating mb-2">
-        <input type="text" class="form-control" id="poiTitle" placeholder="POI Title">
+    <div class="mb-2">
+        <input type="text" class="form-control" id="poiTitle" placeholder="Title">
         <label for="poiTitle">Title</label>
     </div>
     <div id="titleError" class="text-danger mt-1" style="display: none; font-size: 0.9rem;"></div>
 
     <!-- Description Field -->
-    <div class="form-floating mb-2">
+    <div class="mb-2">
         <textarea class="form-control" id="poiDescription" placeholder="Description" style="height: 100px;"></textarea>
         <label for="poiDescription">Description</label>
     </div>

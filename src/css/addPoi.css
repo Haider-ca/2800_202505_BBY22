@@ -59,3 +59,62 @@
     z-index: 1000;
     display: none;
   }
+
+/* ----------------------------------------------------------------------------
+ * Dark/Light Theme Styles for POI Form modal
+ *
+ * This section below includes customized CSS rules for supporting both light
+ * and dark mode appearance, enhancing user experience in different system themes.
+ *
+ * These styles were collaboratively written with the help of ChatGPT to ensure
+ * clarity, consistency, and compatibility with Bootstrap 5.
+ * ----------------------------------------------------------------------------
+ */
+/* 🌙 Dark mode: background */
+/* === 🌙 Dark mode support for POI Form modal === */
+html[data-theme='dark'] .modal-card {
+  background-color: #1e1e1e !important;
+  color: #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+/* dark input fields */
+html[data-theme='dark'] .modal-card .form-control {
+  background-color: #2a2a2a;
+  color: #fff;
+  border-color: #555;
+}
+html[data-theme='dark'] .modal-card .form-control::placeholder {
+  color: #aaa;
+}
+
+/* form-check label text */
+html[data-theme='dark'] .modal-card .form-check-label {
+  color: #ccc;
+}
+
+/* tag checkboxes */
+html[data-theme='dark'] .modal-card .form-check-input {
+  background-color: #444;
+  border-color: #777;
+}
+
+/* upload button */
+html[data-theme='dark'] .modal-card #uploadBtn {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+html[data-theme='dark'] .modal-card #uploadBtn:hover {
+  background-color: #444;
+}
+
+/* error text */
+html[data-theme='dark'] .modal-card .text-danger {
+  color: #ff7b7b !important;
+}
+
+/* close button (X) visibility */
+html[data-theme='dark'] .modal-card .btn-close {
+  filter: invert(1);
+}
