@@ -152,17 +152,19 @@ async function updateProfile(event) {
     const avatarInput = document.getElementById('avatarInput');
     const previewImage = document.getElementById('avatarPreview');
 
-    // Check for empty fields or invalid userType
-    if (!newEmail || !newName || !newDescription || !newUserType || newUserType === '') {
-        showToast('Empty info or invalid user type', 'warning');
+    // Check for required fields (email and name must not be empty)
+    if (!newEmail || !newName) {
+        showToast('Email and name are required.', 'warning');
         return;
     }
 
     const formData = new FormData();
     formData.append('email', newEmail);
     formData.append('name', newName);
-    formData.append('description', newDescription);
-    formData.append('userType', newUserType);
+    // Allow description to be empty
+    formData.append('description', newDescription || '');
+    // If userType is empty (default option selected), send empty string to clear the field
+    formData.append('userType', newUserType || '');
 
     // Handle avatar: use new file if uploaded, default image if preview is cleared, or keep existing if no change
     if (avatarInput.files[0]) {
