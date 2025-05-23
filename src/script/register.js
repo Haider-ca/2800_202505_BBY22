@@ -24,6 +24,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
         
             if (response.ok) {
               showToast('Registration successful!', 'success');
+              await new Promise(resolve => setTimeout(resolve, 1000));
               window.location.href = '../login/login.html';
             } else {
               showToast(data.message || 'Registration failed', 'error');
