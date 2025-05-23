@@ -27,6 +27,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
             if (response.ok) {
               // Login success: redirect or show message
               showToast('Login successful', 'success');
+              await new Promise(resolve => setTimeout(resolve, 1000));
               window.location.href = '/html/feed.html?mode=community'; // Change to your main page
             } else {
               // Show error message from backend
