@@ -163,7 +163,7 @@ function bindSizeSwitcher() {
 
   // Update button label initially
   if (sizeBtn) {
-    sizeBtn.textContent = `Text Size: ${labels[currentSizeIndex]}`;
+    sizeBtn.textContent = `Text Size: ${labels[(currentSizeIndex+1)%labels.length]}`;
 
     sizeBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -173,7 +173,7 @@ function bindSizeSwitcher() {
       localStorage.setItem('fontSizeClass', sizes[currentSizeIndex]);
 
       // Update button label after change
-      sizeBtn.textContent = `Size: ${labels[currentSizeIndex]}`;
+      sizeBtn.textContent = `Size: ${labels[(currentSizeIndex+1)%labels.length]}`;
     });
   }
 }
