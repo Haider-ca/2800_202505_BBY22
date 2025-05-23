@@ -20,7 +20,7 @@
 /* === Base body style === */
 body {
   background: var(--bg-color) !important;
-  color: var(--text-color) !important;
+  /*color: var(--text-color) ;*/
   padding-top: 56px;
   padding-bottom: 56px;
 }
@@ -46,7 +46,7 @@ nav.navbar .navbar-brand img {
   margin-bottom: -35px;
 }
 
-.nav-link{
+.nav-link-afterlogin{
   color: var(--text-color) !important;
 }
 
@@ -69,7 +69,7 @@ body.size-large {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -30%);
-  background: var(--navbar-bg); /* 与导航栏同步的渐变背景 */
+  background: var(--navbar-bg); 
   color: var(--text-color);
   padding: 20px;
   border-radius: 16px;
@@ -167,10 +167,10 @@ body.size-large {
 :root[data-theme='dark'] #contact-popup input,
 :root[data-theme='dark'] #contact-popup textarea {
   background: #ffffff;
-  color: #000000;
+  color: #000000 !important;
 }
 
 :root[data-theme='dark'] #contact-popup button {
   background: #ffffff;
-  color: #000000;
+  color: #000000 !important;
 }

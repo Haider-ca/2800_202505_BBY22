@@ -540,6 +540,7 @@ class ToggleControl {
         document.querySelectorAll('.mapboxgl-popup').forEach(p => p.remove());
       }
 
+      // If the POI toggle is activated, pan to the user's current location
       if (this.type === 'poi' && this.visible && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
           const { latitude, longitude } = pos.coords;
