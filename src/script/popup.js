@@ -1,6 +1,7 @@
 import { formatDate } from '../utils/helpers.js';
 
-export function createPopup({ coordinates, properties }) {
+export function createPopup({ coordinates, properties, markerType }) {
+
   const [lng, lat] = coordinates;
 
   const username = properties.username || 'Anonymous';
@@ -9,33 +10,64 @@ export function createPopup({ coordinates, properties }) {
   const image = properties.image || properties.imageUrl || '/icons/default.jpg';
   const description = properties.description || 'No description available.';
 
+  // const content = `
+  //   <div class="custom-popup">
+  //     <div class="popup-header">
+  //       <strong class="popup-username">${username}</strong><br>
+  //       <span class="popup-time">${time}</span>
+  //     </div>
+  //     <img src="${image}" alt="POI photo" class="popup-img" />
+  //     <div class="popup-desc">${description}</div>
+      
+  //     <div class="d-flex justify-content-start gap-4 post-actions mt-2">
+  //       <span class="like-btn" data-id="${properties._id}" data-type="poi">
+  //         <i class="bi bi-hand-thumbs-up"></i>
+  //         <span class="count">${properties.likes || 0}</span>
+  //       </span>
+  //       <span class="dislike-btn" data-id="${properties._id}" data-type="poi">
+  //         <i class="bi bi-hand-thumbs-down"></i>
+  //         <span class="count">${properties.dislikes || 0}</span>
+  //       </span>
+  //     </div>
+
+  //     <div class="mt-2 text-end">
+  //       <button class="btn btn-outline-primary btn-sm get-directions-btn" data-lng="${lng}" data-lat="${lat}">
+  //         <i class="bi bi-compass"></i> Navigate
+  //       </button>
+  //     </div>
+  //   </div>
+  // `;
+
   const content = `
-    <div class="custom-popup">
+  <div class="custom-popup">
+    ${!['wheelchair', 'senior'].includes(markerType) ? `
       <div class="popup-header">
         <strong class="popup-username">${username}</strong><br>
         <span class="popup-time">${time}</span>
       </div>
       <img src="${image}" alt="POI photo" class="popup-img" />
       <div class="popup-desc">${description}</div>
-      
-      <div class="d-flex justify-content-start gap-4 post-actions mt-2">
-        <span class="like-btn" data-id="${properties._id}" data-type="poi">
-          <i class="bi bi-hand-thumbs-up"></i>
-          <span class="count">${properties.likes || 0}</span>
-        </span>
-        <span class="dislike-btn" data-id="${properties._id}" data-type="poi">
-          <i class="bi bi-hand-thumbs-down"></i>
-          <span class="count">${properties.dislikes || 0}</span>
-        </span>
-      </div>
+    ` : ''}
 
-      <div class="mt-2 text-end">
-        <button class="btn btn-outline-primary btn-sm get-directions-btn" data-lng="${lng}" data-lat="${lat}">
-          <i class="bi bi-compass"></i> Navigate
-        </button>
-      </div>
+    <div class="d-flex justify-content-start gap-4 post-actions mt-2">
+      <span class="like-btn" data-id="${properties._id}" data-type="poi">
+        <i class="bi bi-hand-thumbs-up"></i>
+        <span class="count">${properties.likes || 0}</span>
+      </span>
+      <span class="dislike-btn" data-id="${properties._id}" data-type="poi">
+        <i class="bi bi-hand-thumbs-down"></i>
+        <span class="count">${properties.dislikes || 0}</span>
+      </span>
     </div>
-  `;
+
+    <div class="mt-2 text-end">
+      <button class="btn btn-outline-primary btn-sm get-directions-btn" data-lng="${lng}" data-lat="${lat}">
+        <i class="bi bi-compass"></i> Navigate
+      </button>
+    </div>
+  </div>
+`;
+
 
   const popup = new mapboxgl.Popup({
     closeButton: true,

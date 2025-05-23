@@ -403,7 +403,8 @@ function makeMarkers(features, list, icon) {
       properties: {
         ...f.properties,
         image: f.properties.imageUrl
-      }
+      },
+      markerType: icon
     });
     
     // Hover listeners
