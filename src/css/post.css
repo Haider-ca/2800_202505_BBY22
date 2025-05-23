@@ -43,3 +43,57 @@ body {
     padding: 1rem;
     border-top: 1px solid #dee2e6;
 }
+
+/* ----------------------------------------------------------------------------
+ * Dark/Light Theme Styles for post form
+ *
+ * This section below includes customized CSS rules for supporting both light
+ * and dark mode appearance, enhancing user experience in different system themes.
+ *
+ * These styles were collaboratively written with the help of ChatGPT to ensure
+ * clarity, consistency, and compatibility with Bootstrap 5.
+ * ----------------------------------------------------------------------------
+ */
+/* 🌙 Dark mode: background */
+html[data-theme='dark'] body {
+    background-color: #121212;
+}
+
+html[data-theme='dark'] .post-modal {
+    background: #1e1e1e;
+    color: #eee;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 🌙 Dark mode: modal header/footer border */
+html[data-theme='dark'] .modal-header,
+html[data-theme='dark'] .modal-footer {
+    border-color: #444;
+}
+
+/* 🌙 Dark mode: form controls */
+html[data-theme='dark'] .form-control {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #555;
+}
+
+html[data-theme='dark'] .form-control::placeholder {
+    color: #aaa;
+}
+
+/* 🌙 Dark mode: button labels */
+html[data-theme='dark'] .btn-outline-secondary {
+    border-color: #555;
+    color: #ccc;
+}
+
+html[data-theme='dark'] .btn-outline-secondary:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+/* 🌙 Dark mode: make the close button visible */
+html[data-theme='dark'] .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
