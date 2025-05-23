@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    enum: ['Senior', 'Wheelchair', 'Caregiver'],
+    enum: ['', 'Senior', 'Wheelchair', 'Caregiver'],
     default: ''
   },
   savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
