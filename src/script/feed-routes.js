@@ -1,3 +1,39 @@
+/**
+ * This module handles loading and displaying saved routes for the user.
+ * It fetches paginated route data from the backend and dynamically creates interactive cards.
+ * Each route card includes summarized trip info, viewable step-by-step directions, and options to navigate or unsave.
+ * 
+ * Exported Function:
+ * - loadRoutes({
+ *     currentPage,
+ *     limit,
+ *     feedCards,
+ *     loadMore,
+ *     setLoading,
+ *     sortDirection,
+ *     searchQuery,
+ *     favoritesMode
+ *   })
+ * 
+ * Parameters:
+ * - `currentPage`: The current pagination page
+ * - `limit`: Number of routes to load per page
+ * - `feedCards`: DOM element to append route cards to
+ * - `loadMore`: DOM element used to show "no more" or error messages
+ * - `setLoading`: Function to toggle loading state
+ * - `sortDirection`: 1 for ascending or -1 for descending (applied to creation date)
+ * - `searchQuery`: Optional keyword filter
+ * - `favoritesMode`: (Unused in this version but included for API compatibility)
+ * 
+ * Features:
+ * - Displays From/To addresses with truncation and full tooltips
+ * - Shows total distance and estimated time
+ * - Allows collapsing to view individual route steps
+ * - Provides "Navigate on Map" link to open the route on map.html
+ * - Allows unsaving a route with confirmation and toast feedback
+ * - Initializes Bootstrap tooltips on all route cards
+ */
+
 import { showToast } from '../utils/toast.js';
 import { shortenAddress } from '../utils/helpers.js';
 

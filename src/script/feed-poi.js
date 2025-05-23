@@ -1,3 +1,38 @@
+/**
+ * This module handles loading POI (Point of Interest) data from the backend and rendering them as cards.
+ * It supports pagination, sorting, filtering, and search. It also adapts for both normal and favorites mode.
+ * 
+ * Exported Function:
+ * - loadPOIs({
+ *     currentPage,
+ *     limit,
+ *     sortBy,
+ *     searchQuery,
+ *     activeFilters,
+ *     feedCards,
+ *     loadMore,
+ *     setLoading,
+ *     favoritesMode = false
+ *   })
+ * 
+ * Parameters:
+ * - `currentPage`: Current page number for pagination
+ * - `limit`: Number of items to load per page
+ * - `sortBy`: Sorting criteria (e.g., 'likes' or 'createdAt')
+ * - `searchQuery`: Optional keyword for fuzzy search
+ * - `activeFilters`: Array of selected tags to filter POIs
+ * - `feedCards`: DOM container where rendered POI cards will be appended
+ * - `loadMore`: DOM element used to display "no more results" messages
+ * - `setLoading`: Function to toggle the loading spinner state
+ * - `favoritesMode`: If true, fetches only the user's saved POIs
+ * 
+ * Behavior:
+ * - Constructs query string based on search and filter inputs
+ * - Sends fetch request to backend endpoint (`/api/poi/all` or `/api/poi/favorites`)
+ * - Renders each POI using `renderCard()` and appends to the feed container
+ * - Displays appropriate message if no data is found
+ */
+
 import { renderCard } from '../utils/renderCard.js';
 
 // Fetch POIs from DB

@@ -1,3 +1,21 @@
+/**
+ * This module configures and exports Cloudinary-based file upload middlewares using Multer.
+ * It supports uploading images, videos, or detecting media type dynamically for general use.
+ * 
+ * Upload Types:
+ * - `uploadSingleImage` – Upload a single image (used in POI submissions).
+ * - `uploadMultipleImages` – Upload up to 5 images at once (optional use).
+ * - `uploadVideo` – Upload a single video file.
+ * - `uploadSingleMedia` – Automatically detects whether the file is image or video and uploads accordingly.
+ * 
+ * All uploads are stored in separate Cloudinary folders: `pathpal-images` and `pathpal-videos`.
+ * 
+ * Dependencies:
+ * - Multer: Handles multipart form data
+ * - Multer-Storage-Cloudinary: Connects Multer with Cloudinary
+ * - Cloudinary config: Provided via `../config/cloudinary`
+ */
+
 const multer = require('multer'); // handlle the upload file
 const { CloudinaryStorage } = require('multer-storage-cloudinary'); // upload file to Cloudinary
 const cloudinary = require('../config/cloudinary');
