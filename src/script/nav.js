@@ -105,6 +105,7 @@ function bindThemeSwitcher() {
   const themeBtn = document.getElementById('theme-btn');
   const themes = ['light', 'dark', 'system'];
   let currentTheme = localStorage.getItem('theme') || 'system';
+  let nextTheme = localStorage.getItem('theme') || 'light';
 
   applyTheme(currentTheme);
 
@@ -112,16 +113,17 @@ function bindThemeSwitcher() {
     themeBtn.addEventListener('click', () => {
       const index = themes.indexOf(currentTheme);
       currentTheme = themes[(index + 1) % themes.length];
+      nextTheme = themes[(index + 2) % themes.length];
 
       localStorage.setItem('theme', currentTheme);
       applyTheme(currentTheme);
 
       // Optional: update button label
-      themeBtn.textContent = `Theme: ${capitalize(currentTheme)}`;
+      themeBtn.textContent = `Theme: ${capitalize(nextTheme)}`;
     });
 
     // Set label on first load
-    themeBtn.textContent = `Theme: ${capitalize(currentTheme)}`;
+    themeBtn.textContent = `Theme: ${capitalize(nextTheme)}`;
   }
 }
 
