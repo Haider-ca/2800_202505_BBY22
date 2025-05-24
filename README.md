@@ -1,4 +1,4 @@
-# PathPal
+# PathPal - Team BBY21
 
 PathPal is a community-driven web application that helps users discover and share accessible locations — such as ramps, benches, washrooms, and more. Users can explore a map of crowd-sourced POIs (Points of Interest), navigate to them, and engage with posts through voting, comments, and sharing tips with others.
 
@@ -40,32 +40,92 @@ PathPal empowers people with mobility needs by providing reliable, real-world in
 /pathpal
 ├── README.md
 ├── backend
-│   ├── config                   # Cloudinary and DB connection settings
-│   ├── map                      # Map-related route handling and services
-│   ├── models                   # Mongoose models for various entities
-│   ├── poi                      # POI (Point of Interest) logic and routing
-│   ├── post                     # General post logic and routing
-│   ├── profile                  # User profile-related routes and services
-│   ├── routes                   # General-purpose routes like auth, contact
-│   ├── savePost                 # Logic for saving posts (bookmarks)
-│   ├── utils                    # Helper utilities (file uploads, POI helpers)
-│   ├── vote                     # Voting system (like/dislike)
-│   └── server.js                # Main server entry point
+│   ├── config                              # Cloudinary and DB connection settings
+│   │   ├── cloudinary.js
+│   │   └── databaseConnection.js
+│   ├── map                                 # Map-related route handling and services
+│   │   ├── controllers
+│   │   │   ├── directionsController.js
+│   │   │   └── ...
+│   │   ├── models
+│   │   │   └── routeModel.js
+│   │   ├── routes
+│   │   │   ├── directionsRoutes.js
+│   │   │   └── ...
+│   │   └── services
+│   │       ├── directionsService.js
+│   │       └── ...
+│   ├── models                              # Mongoose models for various entities
+│   │   ├── POI.js
+│   │   └── ...
+│   ├── poi                                 # POI (Point of Interest) logic and routing
+│   │   ├── controllers
+│   │   │   └── poiController.js
+│   │   ├── routes
+│   │   │   └── poiRoutes.js
+│   │   └── services
+│   │       └── poiService.js
+│   ├── post                                # General post logic and routing
+│   │   ├── controllers
+│   │   │   └── postController.js
+│   │   ├── routes
+│   │   │   └── postRoutes.js
+│   │   └── services
+│   │       └── postService.js
+│   ├── profile                             # User profile-related routes and services
+│   │   ├── controllers
+│   │   │   └── profileController.js
+│   │   ├── routes
+│   │   │   └── profileRoutes.js
+│   │   └── services
+│   │       └── profileService.js
+│   ├── routes                              # General-purpose routes like auth, contact
+│   │   ├── ai.js
+│   │   └── ... 
+│   ├── savePost                            # Logic for saving posts (bookmarks)
+│   │   ├── controllers
+│   │   │   └── savePostController.js
+│   │   ├── routes
+│   │   │   └── savePostRoutes.js
+│   │   └── services
+│   │       └── savePostService.js
+│   ├── utils                               # Helper utilities (file uploads, POI helpers)
+│   │   ├── poiHelpers.js
+│   │   └── upload.js
+│   ├── vote                                # Voting system (like/dislike)
+│   │   ├── controllers
+│   │   │   └── voteController.js
+│   │   ├── routes
+│   │   │   └── voteRoutes.js
+│   │   └── services
+│   │       └── voteService.js
+│   ├── server.js                           # Main server entry point
+│   └──.env
 ├── public
-│   ├── data                     # GeoJSON data layers for map
-│   ├── icons, img, logo         # UI media assets
-│   ├── partials                 # Shared HTML components like navbar
-│   └── help.html, index.html    # Public pages
-├── src
-    ├── css                      # All custom styling grouped by module
-    ├── html                     # Main pages including login/register/map/route/POI/feed/profile
-    ├── script                   # JS files for map, route, feed, POI, post, etc.
-    └── utils                    # Shared front-end JS utilities (e.g. renderCard, authCheck)
+│   ├── data                                # GeoJSON data layers for map
+│   ├── icons, img, logo                    # UI media assets
+│   ├── partials                            # Shared HTML components like navbar
+│   │   ├── bottomNavbar.html
+│   │   └── ...
+│   └── help.html, index.html               # Public pages
+└── src
+    ├── css                                 # All custom styling grouped by module
+    │   ├── addPoi.css
+    │   └── ...
+    ├── html                                # Main pages including login/register/map/route/POI/feed/profile
+    │   ├── feed.html
+    │   └── ... 
+    ├── script                              # JS files for map, route, feed, POI, post, etc.
+    │   ├── addPoi.js
+    │   └── ...
+    └── utils                               # Shared front-end JS utilities (e.g. renderCard, authCheck)
+        ├── api.js
+        └── ...
 
 
 ---
 
-## 📄 Reusable modules and Descriptions
+## Reusable modules and Descriptions
 
 The project includes several reusable front-end modules that handle common tasks such as rendering cards, checking login status, managing votes and saves, showing toast messages, and storing constants:
 
@@ -74,7 +134,7 @@ The project includes several reusable front-end modules that handle common tasks
   - `renderCard.js` – generates card UI for posts and POIs
   - `vote.js`, `save.js` – handle front-end logic for voting and saving
   - `toast.js`, `profileToast.js` – show custom toast notifications
-  - `helpers.js`, `constants.js`, `instruction.js` – provide shared logic and constants used across scripts
+  - `helpers.js`, `instruction.js` – provide shared logic and constants used across scripts
 
 
 ---
@@ -84,11 +144,12 @@ The project includes several reusable front-end modules that handle common tasks
 1. **Clone the repo**
    ```bash
    git clone https://github.com/Haider-ca/2800_202505_BBY21.git
-   cd pathpal
+   cd 2800_202505_BBY21
    ```
 
 2. **Install dependencies**
    ```bash
+   cd backend
    npm install
    ```
 
@@ -108,6 +169,7 @@ The project includes several reusable front-end modules that handle common tasks
 
 4. **Run the server**
    ```bash
+   cd backend
    node server.js
    ```
 
@@ -116,6 +178,25 @@ The project includes several reusable front-end modules that handle common tasks
 ---
 
 ## ✨ Features
+
+- **Map Features**  
+  Interactive Map
+  Initialize and interact with a Mapbox GL JS map centered on Metro Vancouver. Load and toggle wheelchair-friendly, senior-friendly, and user-submitted POIs with custom markers and popups.
+
+  Routing & Directions
+  Get turn-by-turn navigation using Mapbox Directions API with profiles for driving, walking, seniors, and wheelchair users. Includes geocoder inputs, current location support, live tracking, and voice guidance.
+
+  Save Routes
+  Save or remove routes via backend API with reverse-geocoded names and Bootstrap toast feedback. Share routes through URL query parameters (?routeId=…) to auto-load on page visit.
+
+  Theming
+  Switch between light, dark, and system themes. Sync Mapbox styles and icon variants dynamically and automatically respond to OS color scheme changes.
+
+  Weather & Location
+  Detect user location with the Geolocation API and fetch local weather from OpenWeatherMap. Display city, temperature, icon, and description in the UI.
+
+  Utilities & Helpers
+  Load saved routes from URL parameters, auto-fill directions inputs, generate consistent popups, and manage global state for seamless integrations.
 
 - **Community Feed**  
   View and interact with posts from other users. Includes POIs, general posts, and announcements. Supports search, filter, sort, and infinite scroll.
@@ -128,6 +209,39 @@ The project includes several reusable front-end modules that handle common tasks
 
 - **Map Navigation**  
   Use the navigation feature from a POI card or saved route card to jump to the map and start navigation to that location using Mapbox Directions.
+
+- **Profile**  
+  View profile information, edit profile and delete account, reset account password. View poi posts, edit and delete posts.
+
+
+- **Settings Features**  
+The Settings page provides a personalized and responsive user experience with the following features:
+
+  New Message Notification
+  When a post or POI receives a like or dislike, a red dot appears on the "New Message" menu item. Clicking it will:
+    Navigate to the corresponding page (e.g., feed or dashboard)
+    Scroll to the specific item and highlight it for visibility
+
+  Profile Redirect
+    Clicking the profile icon or name in the navigation redirects users to their personal Profile page.
+
+  Theme Switcher
+    Users can toggle between three visual themes:
+      System Default
+      Dark Mode
+      Light Mode
+
+  Text Size Adjustment
+    Users can cycle through three text sizes to improve readability:
+      Small
+      Medium
+      Large
+
+  Logout
+    Instantly logs the user out and redirects them to the login screen.
+  
+  Contact Us
+    Opens a form where users must enter a title and description before submitting feedback. A success message confirms the submission.
 
 
 ---
