@@ -1,3 +1,18 @@
+/**
+ * postController.js
+ * 
+ * This controller handles all HTTP operations related to general (non-POI) community posts.
+ * It manages post creation, retrieval, and fetching saved posts. All actions support JSON responses,
+ * and login checks are applied where necessary.
+ * 
+ * Exported Functions:
+ * - createPost: Handles creation of a new text or media post by a logged-in user.
+ * - getAllPosts: Retrieves a paginated and optionally filtered/sorted list of general posts.
+ * - getSavedPosts: Fetches posts saved by the current user.
+ * 
+ * Media uploads are processed via middleware before reaching this controller.
+ */
+
 const postService = require('../services/postService');
 const Post = require('../../models/post');
 

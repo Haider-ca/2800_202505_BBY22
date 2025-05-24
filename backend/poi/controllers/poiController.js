@@ -1,3 +1,18 @@
+/**
+ * poiController.js
+ * 
+ * This controller handles all server-side logic related to Points of Interest (POIs).
+ * It manages creation, retrieval, filtering, and saved POIs functionality.
+ * All functions return JSON responses and are protected by login checks where required.
+ * 
+ * Exported Functions:
+ * - createPOI: Creates and saves a new POI submitted by a logged-in user.
+ * - getPOIMarkers: Returns all POIs for map marker display.
+ * - getAllPOIs: Retrieves a paginated list of POI posts with support for filtering, sorting, and search.
+ * - getSavedPOIs: Returns the current user's saved POIs with pagination and filters.
+ * - getPOIById: Fetches a single POI by its ID.
+ */
+
 const poiService = require('../services/poiService');
 const POI = require('../../models/POI');
 

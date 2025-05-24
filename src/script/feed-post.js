@@ -1,3 +1,38 @@
+/**
+ * This module handles loading general (non-POI) community posts from the backend and rendering them as cards.
+ * It supports pagination, search, and can optionally load saved (favorite) posts.
+ * 
+ * Exported Function:
+ * - loadPosts({
+ *     currentPage,
+ *     limit,
+ *     sortBy,
+ *     searchQuery,
+ *     activeFilters,
+ *     feedCards,
+ *     loadMore,
+ *     setLoading,
+ *     favoritesMode = false
+ *   })
+ * 
+ * Parameters:
+ * - `currentPage`: Current page number for pagination
+ * - `limit`: Number of posts to load per page
+ * - `sortBy`: Sorting criteria (e.g., 'likes' or 'createdAt')
+ * - `searchQuery`: Keyword for fuzzy search
+ * - `activeFilters`: (Currently unused but included for consistency with POI logic)
+ * - `feedCards`: DOM container where rendered post cards will be appended
+ * - `loadMore`: DOM element used to show "no more results" messages
+ * - `setLoading`: Function to toggle the loading indicator
+ * - `favoritesMode`: If true, fetches only the user's saved posts
+ * 
+ * Behavior:
+ * - Builds a query string based on current filters and search input
+ * - Fetches post data from `/api/post/all` or `/api/post/favorites`
+ * - Renders each post using `renderCard()` and appends to the feed
+ * - Displays message if no results found or no more posts available
+ */
+
 import { renderCard } from '../utils/renderCard.js';
 
 export async function loadPosts({

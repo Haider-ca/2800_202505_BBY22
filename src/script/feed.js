@@ -1,3 +1,29 @@
+/**
+ * This is the main controller script for the feed.html page.
+ * It handles loading and displaying content dynamically based on the selected tab and URL parameters.
+ * Supported content types: 'post', 'poi', 'announcement', and 'routes'.
+ * 
+ * Features:
+ * - Renders Bootstrap tab buttons based on `mode` ('community' or 'favorites')
+ * - Loads posts, POIs, announcements, or saved routes via modular data loaders
+ * - Supports pagination with infinite scroll (IntersectionObserver)
+ * - Implements sorting, tag-based filtering (for POIs), and debounced search
+ * - Handles UI toggling for filter buttons and "Create Post" button
+ * - Supports voting and saving through event delegation and utility modules
+ * 
+ * Dependencies:
+ * - loadPosts, loadPOIs, loadAnnouncements, loadRoutes – content-specific data loaders
+ * - renderCard – used by loaders to display standardized content cards
+ * - vote.js, save.js – handles like/dislike/save behavior with backend sync
+ * - authCheck.js – handles frontend login checks
+ * 
+ * Entry: DOMContentLoaded initializes UI tabs and starts first data load
+ * 
+ * Global utility:
+ * - `window.switchToTabByType(type)` – allows switching tab programmatically
+ * - `window.resetAndLoad()` – externally accessible reset + reload trigger
+ */
+
 import { loadPOIs } from './feed-poi.js';
 import { loadPosts } from './feed-post.js';
 import { loadAnnouncements } from './feed-announcement.js';

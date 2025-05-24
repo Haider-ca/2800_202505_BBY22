@@ -105,6 +105,7 @@ function bindThemeSwitcher() {
   const themeBtn = document.getElementById('theme-btn');
   const themes = ['light', 'dark', 'system'];
   let currentTheme = localStorage.getItem('theme') || 'system';
+  let nextTheme = themes[(themes.indexOf(currentTheme)+1) % themes.length]|| 'light';
 
   applyTheme(currentTheme);
 
@@ -112,16 +113,17 @@ function bindThemeSwitcher() {
     themeBtn.addEventListener('click', () => {
       const index = themes.indexOf(currentTheme);
       currentTheme = themes[(index + 1) % themes.length];
+      nextTheme = themes[(index + 2) % themes.length];
 
       localStorage.setItem('theme', currentTheme);
       applyTheme(currentTheme);
 
       // Optional: update button label
-      themeBtn.textContent = `Theme: ${capitalize(currentTheme)}`;
+      themeBtn.textContent = `Theme: ${capitalize(nextTheme)}`;
     });
 
     // Set label on first load
-    themeBtn.textContent = `Theme: ${capitalize(currentTheme)}`;
+    themeBtn.textContent = `Theme: ${capitalize(nextTheme)}`;
   }
 }
 
@@ -161,7 +163,7 @@ function bindSizeSwitcher() {
 
   // Update button label initially
   if (sizeBtn) {
-    sizeBtn.textContent = `Text Size: ${labels[currentSizeIndex]}`;
+    sizeBtn.textContent = `Text Size: ${labels[(currentSizeIndex+1)%labels.length]}`;
 
     sizeBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -171,7 +173,7 @@ function bindSizeSwitcher() {
       localStorage.setItem('fontSizeClass', sizes[currentSizeIndex]);
 
       // Update button label after change
-      sizeBtn.textContent = `Size: ${labels[currentSizeIndex]}`;
+      sizeBtn.textContent = `Size: ${labels[(currentSizeIndex+1)%labels.length]}`;
     });
   }
 }

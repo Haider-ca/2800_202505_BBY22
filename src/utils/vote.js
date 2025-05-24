@@ -1,3 +1,33 @@
+/**
+ * vote.js
+ * 
+ * This utility handles frontend logic for voting (like/dislike) on posts or POIs.
+ * It ensures that users can only cast one vote per item using a persistent anonymous voter ID.
+ * 
+ * Exported Function:
+ * - handleVoteClick(event, contentType = 'post')
+ * 
+ * Parameters:
+ * - `event`: The DOM click event triggered by a like/dislike button
+ * - `contentType`: Either 'post' or 'poi', used to route the backend API call
+ * 
+ * Behavior:
+ * - Determines which vote button (like or dislike) was clicked
+ * - Retrieves or creates an anonymous `voterId` (stored in localStorage)
+ * - Sends the vote to `/api/vote/:type/:id` with voterId and vote type ('like' or 'dislike')
+ * - Updates localStorage to track user's vote state
+ * - Dynamically updates the icon (`bi-*`) and count display on both vote buttons
+ * - Toggles vote if clicked again (acts like "unvote")
+ * - Reverts previous vote if the opposite button is clicked
+ * 
+ * Dependencies:
+ * - `getOrCreateVoterId()` from `helpers.js` to persist anonymous identity
+ * - Backend must enforce one vote per voterId/contentId combination
+ * 
+ * Used in:
+ * - Feed cards for posts and POIs, enabling community feedback
+ */
+
 import { getOrCreateVoterId } from '../../utils/helpers.js';
 
 export async function handleVoteClick(e, contentType = 'post') {

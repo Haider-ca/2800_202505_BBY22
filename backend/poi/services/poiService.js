@@ -1,3 +1,18 @@
+/**
+ * poiService.js
+ * 
+ * This service module handles data operations related to Points of Interest (POIs).
+ * It includes logic for creating new POIs, fetching all POIs with filters and pagination,
+ * and retrieving a user's saved POIs.
+ * 
+ * Exported Functions:
+ * - createPOI: Saves a new POI document to the database.
+ * - fetchPOIs: Retrieves a paginated list of POIs from the database, with support for
+ *              filtering by tags, keyword search, and sorting (by likes or createdAt).
+ * - fetchSavedPOIs: Retrieves a paginated list of POIs saved by a specific user, with
+ *                   optional search and filter functionality. Marks each result as saved.
+ */
+
 const POI = require('../../models/POI');
 const User = require('../../models/user');
 const { addLatLngToPOIs } = require('../../utils/poiHelpers');
