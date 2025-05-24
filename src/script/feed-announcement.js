@@ -1,4 +1,22 @@
-import { renderCard } from '../utils/renderCard.js';
+/**
+ * loadAnnouncements.js
+ * 
+ * This module provides a mock implementation for loading system announcements 
+ * into the feed UI. It simulates server-side pagination using a local array.
+ * 
+ * Exported Function:
+ * - loadAnnouncements({ currentPage, limit, feedCards, loadMore, setLoading })
+ *   - Loads a paginated batch of announcements and appends them as cards to the feed.
+ *   - Uses `mockAnnouncements` array to simulate real API data.
+ *   - Shows "No more announcements" when no more data is available.
+ * 
+ * Parameters:
+ * - `currentPage`: The current page number for pagination
+ * - `limit`: How many announcements to show per page
+ * - `feedCards`: The container DOM element to append cards to
+ * - `loadMore`: The "load more" DOM element, used to show end-of-feed message
+ * - `setLoading`: Function to toggle loading state
+ */
 
 const mockAnnouncements = [
   {

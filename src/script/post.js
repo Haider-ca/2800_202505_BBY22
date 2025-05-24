@@ -1,3 +1,25 @@
+/**
+ * Post Submission Module (`post.js`)
+ * 
+ * Handles the creation and submission of general (community) posts,
+ * including support for image/video preview, form validation, and toast feedback.
+ * 
+ * Key Responsibilities:
+ * - Supports media upload (image or video, not both) with preview and clear option
+ * - Prevents form submission without title
+ * - Submits post content as `FormData` to the `/api/post` endpoint
+ * - Displays Bootstrap-style toast notification on success or failure
+ * - Redirects user to the community feed after successful submission
+ * 
+ * DOM Elements:
+ * - `#postForm`: the main submission form
+ * - `#imageUpload` / `#videoUpload`: input fields for media selection
+ * - `#mediaPreview`: container for previewing uploaded media
+ * 
+ * Used in:
+ * - `post.html`
+ */
+
 import { showToast } from '../utils/toast.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,7 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = '&times;';
         btn.className = 'btn btn-sm btn-danger position-absolute top-0 end-0 m-2';
         btn.style.zIndex = '10';
-        btn.onclick = clearMedia;
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearMedia();
+        });
+    
         return btn;
     }
 

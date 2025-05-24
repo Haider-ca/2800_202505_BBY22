@@ -29,7 +29,7 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   username: String
-});
+}, {timestamps: true});//adds createdAt and updatedAt
 
 const Post = mongoose.models.Post || mongoose.model('Post', postSchema);
 module.exports = Post;

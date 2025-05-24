@@ -6,12 +6,14 @@ router.get('/test', (req, res) => {
   res.json({ message: 'Minimal route works!' });
 });
 
+router.get('/saved', routeCtrl.getSavedRoutes);
+
 router.post('/', routeCtrl.createRoute); 
+
+router.get('/', routeCtrl.getAllRoutes);
 
 router.get('/:routeId', routeCtrl.getRouteById);
 
 router.delete('/:routeId', routeCtrl.deleteRouteById);
-
-router.get('/', routeCtrl.getAllRoutes);
 
 module.exports = router;

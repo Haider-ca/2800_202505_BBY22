@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PathPal - HomePage</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
 
   <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,119 +22,205 @@
   <!-- top nav bar -->
   <div id="navbar-placeholder" data-nav="before"></div>
 
-<!-- Section 1: Carousel -->
-<section id="carousel-section" class="my-5">
-  <div class="carousel-wrapper mx-auto">
-    <div id="infoCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="carousel-card text-center">
-            <h2>Real-time Map</h2>
-            <p>Track safety updates and explore urban areas in real-time.</p>
+  <!-- Section 1: Carousel -->
+  <section id="carousel-section" class="my-5">
+    <div class="carousel-wrapper mx-auto">
+      <div id="infoCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+          <div class="carousel-item active">
+            <div class="carousel-card text-center">
+              <h2>Real-time Map</h2>
+              <p>Track safety updates and explore urban areas in real-time.</p>
+              <a href="/html/login/login.html" class="btn btn-white-3d mt-3">Let's Start</a>
+
+            </div>
           </div>
+
+          <div class="carousel-item">
+            <div class="carousel-card text-center">
+              <h2>Community Posts</h2>
+              <p>Get insights and updates directly from your local community.</p>
+              <a href="/html/login/login.html" class="btn btn-white-3d mt-3">Let's Start</a>
+
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="carousel-card text-center">
+              <h2>Custom Profile</h2>
+              <p>Create and manage your personal details or your contributions.</p>
+              <a href="/html/login/login.html" class="btn btn-white-3d mt-3">Let's Start</a>
+
+            </div>
+          </div>
+
         </div>
-        <div class="carousel-item">
-          <div class="carousel-card text-center">
-            <h2>Community Posts</h2>
-            <p>Get insights and updates directly from your local community.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="carousel-card text-center">
-            <h2>Custom Profile</h2>
-            <p>Create and manage your personal details or your contributions.</p>
-          </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#infoCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#infoCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="container my-5">
+    <h2 class="text-start mb-4">How to Use Our App — Quick Guide</h2>
+
+    <!-- Step 1: Map Routes -->
+    <div class="mb-5">
+      <h4>Plan Your Route</h4>
+      <p>
+        Enter your starting point and destination based on your user type, such as wheelchair user or elder.
+        The app will highlight suitable accessible routes and display relevant facilities along the way
+        — like ramps, crosswalks, and resting areas — to help you make an informed decision.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <img src="/img/map-routes-1.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Map Route 1" />
+        <img src="/img/map-routes-2.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Map Route 2" />
+        <img src="/img/map-routes-3.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Map Route 3" />
+      </div>
+    </div>
+
+    <!-- Step 5: Save Routes -->
+    <div class="mb-5">
+      <h4>Save Your Favorite Routes</h4>
+      <p>
+        Once you've found a route that fits your needs, you can bookmark it to your favorites.
+        These saved routes can later be accessed and managed easily from your Favorites section in the dashboard.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <img src="/img/save-route-1.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Save Route 1" />
+        <img src="/img/save-route-2.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Save Route 2" />
+        <img src="/img/save-route-3.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Save Route 3" />
+      </div>
+    </div>
+
+    <!-- Step 2: Check POIs -->
+    <div class="mb-5">
+      <h4>Add and View Accessibility POIs</h4>
+      <p>
+        You can create your own Points of Interest (POIs) directly on the map — such as elevators, ramps, or benches.
+        Once added, these POIs will appear in your personal <strong>Dashboard → Places</strong> list.
+        You can also edit or delete your contributed POIs anytime from the <strong>Profile</strong> page.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <img src="/img/poi-1.jpg" class="img-thumbnail" style="max-width: 18%;" alt="POI 1" />
+        <img src="/img/poi-2.jpg" class="img-thumbnail" style="max-width: 18%;" alt="POI 2" />
+        <img src="/img/poi-3.jpg" class="img-thumbnail" style="max-width: 18%;" alt="POI 3" />
+        <img src="/img/poi-4.jpg" class="img-thumbnail" style="max-width: 18%;" alt="POI 4" />
+        <img src="/img/poi-5.jpg" class="img-thumbnail" style="max-width: 18%;" alt="POI 5" />
+      </div>
+    </div>
+
+    <!-- Step 3: Create a Post -->
+    <div class="mb-5">
+      <h4>Share a Post with the Community</h4>
+      <p>
+        On the <strong>Dashboard</strong> page, click the <strong>plus (+) button</strong> to create a new post —
+        whether it’s a helpful tip, a location recommendation, or a barrier warning.
+        Once published, your post will automatically appear in the <strong>Community</strong> section on the homepage
+        for others to see and interact with.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <img src="/img/post-1.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Post 1" />
+        <img src="/img/post-2.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Post 2" />
+        <img src="/img/post-3.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Post 3" />
+      </div>
+    </div>
+
+    <!-- Step 4: Community Interaction -->
+    <div class="mb-5">
+      <h4>Stay Connected in the Community</h4>
+      <p>
+        Your <strong>Dashboard</strong> is the central hub for staying up to date. It includes:
+      </p>
+      <ul>
+        <li><strong>Community</strong> — View recent posts shared by users.</li>
+        <li><strong>Places</strong> — View all the user POIs with location data.</li>
+        <li><strong>Announcements</strong> — Get system alerts about app updates or nearby emergencies.</li>
+      </ul>
+      <p>
+        You can like or dislike on posts to interact with others and stay informed about the world around you.
+      </p>
+      <div class="d-flex flex-wrap gap-3">
+        <img src="/img/community-1.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Community 1" />
+        <img src="/img/community-2.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Community 2" />
+        <img src="/img/community-3.jpg" class="img-thumbnail" style="max-width: 30%;" alt="Community 3" />
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Section 3: About Us -->
+  <section id="about-us" class="container my-5">
+    <h2 class="text-start mb-4">About Us</h2>
+    <p>
+      Our team BBY21 at BCIT is developing PathPal, a responsive web and mobile application that empowers wheelchair
+      users, seniors, caregivers, and allies to navigate urban spaces with confidence. By integrating OpenStreetMap data
+      and crowd-sourced contributions, PathPal highlights key accessibility features—ramps, benches, restrooms, and
+      gentle-incline paths—while offering customizable filters for wheelchair- or senior-friendly routes. Users can
+      upload photos, vote on entries to validate accuracy, and export GPX files for offline navigation. With a gamified
+      rewards system—points, badges, and levels—we’ll foster an engaged community that continually enriches the map’s
+      coverage and reliability.
+    </p>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 mt-4">
+      <!-- Haider -->
+      <div class="col">
+        <div class="card h-100 shadow-sm p-3">
+          <h5 class="card-title text-center">Haider Al-Sudani</h5>
+          <p class="card-text text-start">Team Leader. Oversees the map system and defines the product vision and core
+            functionality.</p>
         </div>
       </div>
 
-      <button class="carousel-control-prev" type="button" data-bs-target="#infoCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#infoCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
+      <!-- Haven -->
+      <div class="col">
+        <div class="card h-100 shadow-sm p-3">
+          <h5 class="card-title text-center">Haven Zhang</h5>
+          <p class="card-text text-start">Responsible for overall system architecture and key features like Posts and
+            POIs.</p>
+        </div>
+      </div>
+
+      <!-- Lin -->
+      <div class="col">
+        <div class="card h-100 shadow-sm p-3">
+          <h5 class="card-title text-center">Lin Pan</h5>
+          <p class="card-text text-start">Handles login, authentication, navbar settings, system styles, and database.
+            Also manages meetings, project tracking, and user feedback.</p>
+        </div>
+      </div>
+
+      <!-- Minh -->
+      <div class="col">
+        <div class="card h-100 shadow-sm p-3">
+          <h5 class="card-title text-center">Minh Phan</h5>
+          <p class="card-text text-start">Leads the development of the Profile page and related user features.</p>
+        </div>
+      </div>
+
+      <!-- Trishaan -->
+      <div class="col">
+        <div class="card h-100 shadow-sm p-3">
+          <h5 class="card-title text-center">Trishaan Shetty</h5>
+          <p class="card-text text-start">Focuses on interactive map popups to enhance the route exploration experience.
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-
-<!-- Section 2: Explore Features (With Images) -->
-<section id="features" class="container my-5">
-  <h2 class="text-start mb-4">Explore Our Features!</h2>
-
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="/images/feature1-route.png" alt="Route Planning" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Route Planning</h4>
-      <p>Choose a start and destination point, preview barrier-free routes, and save them for later use.</p>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
-      <img src="/images/feature2-poi.png" alt="Accessibility POIs" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Accessibility POIs</h4>
-      <p>Browse wheelchair-accessible spots and elder-friendly facilities like ramps, elevators, and seating.</p>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="/images/feature3-add-poi.png" alt="Add POI" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Add New POIs</h4>
-      <p>Contribute by adding new accessible locations or flagging issues for your community.</p>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
-      <img src="/images/feature4-dashboard.png" alt="Community Dashboard" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Community & Dashboard</h4>
-      <p>After login, view updates, posts, and manage your saved POIs and routes in one place.</p>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-5">
-    <div class="col-md-6">
-      <img src="/images/feature5-favorites.png" alt="Favorites" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Favorites</h4>
-      <p>Easily access and manage your favorite places and routes in one convenient location.</p>
-    </div>
-  </div>
-
-  <div class="row align-items-center mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
-      <img src="/images/feature6-profile.png" alt="Profile & Notifications" class="img-fluid rounded-4 shadow-sm" />
-    </div>
-    <div class="col-md-6">
-      <h4>Profile & Notifications</h4>
-      <p>Track your liked/commented contributions and get updates right on the navbar.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- Section 3: About Us -->
-<section id="about-us" class="container my-5">
-  <h2 class="text-start">About Us</h2>
-  <p class="text-start">PathPal is a team of students dedicated to improving mobility experiences for everyone. We believe in inclusion, technology, and community-driven solutions.</p>
-</section>
-
-<!-- Footer -->
-<footer class="text-start py-4 bg-light mt-5">
-  <p>&copy; 2025 PathPal. All rights reserved.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="text-start py-4 bg-light mt-5">
+    <p>&copy; 2025 PathPal. All rights reserved.</p>
+  </footer>
 
 
 
@@ -142,4 +232,5 @@
   <script src="../../script/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

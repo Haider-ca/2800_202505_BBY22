@@ -20,7 +20,7 @@
 /* === Base body style === */
 body {
   background: var(--bg-color) !important;
-  color: var(--text-color) !important;
+  /*color: var(--text-color) ;*/
   padding-top: 56px;
   padding-bottom: 56px;
 }
@@ -46,7 +46,7 @@ nav.navbar .navbar-brand img {
   margin-bottom: -35px;
 }
 
-.nav-link{
+.nav-link-afterlogin{
   color: var(--text-color) !important;
 }
 
@@ -69,7 +69,7 @@ body.size-large {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -30%);
-  background: var(--navbar-bg); /* 与导航栏同步的渐变背景 */
+  background: var(--navbar-bg); 
   color: var(--text-color);
   padding: 20px;
   border-radius: 16px;
@@ -130,6 +130,31 @@ body.size-large {
   transform: translateY(1px) scale(0.98);
 }
 
+
+/*Notification for hamburger-indicator*/
+#hamburger-indicator {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(240, 199, 85);
+  border: 1px solid white;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#notification-indicator{
+  display:none; 
+  color: rgb(240, 199, 85);
+}
+
+#menu-indicator{
+  display:none; 
+  color: rgb(240, 199, 85);
+}
+
 /* === Responsive: popup higher on small screens === */
 @media (max-width: 480px) {
   #contact-popup {
@@ -142,10 +167,10 @@ body.size-large {
 :root[data-theme='dark'] #contact-popup input,
 :root[data-theme='dark'] #contact-popup textarea {
   background: #ffffff;
-  color: #000000;
+  color: #000000 !important;
 }
 
 :root[data-theme='dark'] #contact-popup button {
   background: #ffffff;
-  color: #000000;
+  color: #000000 !important;
 }

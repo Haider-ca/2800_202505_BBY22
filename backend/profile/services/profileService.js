@@ -17,6 +17,7 @@ const getProfile = async (email) => {
     avatar: user.avatar || '/public/img/defaultUser.png',
     name: user.name || '',
     description: user.description || '',
+    userType: user.userType || ''
   };
 };
 
@@ -25,9 +26,9 @@ const updateProfile = async (email, updates) => {
   const user = await User.findOne({ email });
   if (!user) throw new Error('User not found');
 
-  // If avatar is being updated and it's different from the current one
-  if (updates.avatar && updates.avatar !== user.avatar) {
-    // Delete the old avatar from Cloudinary if it's hosted there
+  // If avatar is provided or explicitly set to default
+  if (updates.avatar) {
+    // Delete the old avatar from Cloudinary if it exists and is not the default
     if (user.avatar && user.avatar.startsWith('https://res.cloudinary.com')) {
       const publicId = user.avatar.split('/').slice(-1)[0].split('.')[0];
       try {
@@ -39,10 +40,11 @@ const updateProfile = async (email, updates) => {
     user.avatar = updates.avatar;
   }
 
-  // Update other profile fields if provided
-  user.email = updates.email || user.email;
-  user.name = updates.name || user.name;
-  user.description = updates.description || user.description;
+  // Update fields only if provided; otherwise, set to empty string
+  user.email = updates.email || '';
+  user.name = updates.name || '';
+  user.description = updates.description || '';
+  user.userType = updates.userType || '';
 
   // Save and return the updated user profile
   const updatedUser = await User.findOneAndUpdate({ email }, user, { new: true, runValidators: true });
@@ -52,14 +54,21 @@ const updateProfile = async (email, updates) => {
     avatar: updatedUser.avatar || '/public/img/defaultUser.png',
     name: updatedUser.name || '',
     description: updatedUser.description || '',
+    userType: updatedUser.userType || ''
   };
 };
 
 // Service to reset the user's password
-const resetPassword = async (userId, newPassword) => {
+const resetPassword = async (userId, currentPassword, newPassword) => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
+
+    // Check current password
+    const passwordMatch = await user.comparePassword(currentPassword);
+    if (!passwordMatch) {
+      throw new Error('Current password is incorrect');
+    }
 
     // Hash the new password using bcrypt
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);

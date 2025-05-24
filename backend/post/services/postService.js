@@ -1,3 +1,18 @@
+/**
+ * postService.js
+ * 
+ * This service module handles data operations for general community posts.
+ * It supports creating new posts, retrieving posts with filtering and pagination,
+ * and fetching saved posts for a specific user.
+ * 
+ * Exported Functions:
+ * - createPost: Saves a new text or media post to the database.
+ * - fetchPosts: Retrieves a paginated list of posts with optional filters (tags, search keyword)
+ *               and sorting (by likes or creation date). Adds an `isSaved` flag for the logged-in user.
+ * - fetchSavedPosts: Returns posts saved by the current user, with pagination, sorting,
+ *                    and keyword search. Also marks each post as saved.
+ */
+
 const Post = require('../../models/post');
 const User = require('../../models/user');
 

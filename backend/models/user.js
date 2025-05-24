@@ -3,9 +3,11 @@ const bcrypt = require('bcryptjs');
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
-  name:{
+  name: {
     type: String,
     required: true,
+    trim: true,
+    default: ''
   },
   email: {
     type: String,
@@ -21,19 +23,19 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     default: '/public/img/defaultUser.png'
-},
-name: {
+  },
+  description: {
     type: String,
     trim: true,
     default: ''
-},
-description: {
+  },
+  userType: {
     type: String,
-    trim: true,
+    enum: ['', 'Senior', 'Wheelchair', 'Caregiver'],
     default: ''
-},
-savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-savedPOIs:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'POI' }]
+  },
+  savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+  savedPOIs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'POI' }]
 });
 
 // Add a method to compare a given password with the stored hash

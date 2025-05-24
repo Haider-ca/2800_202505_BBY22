@@ -1,3 +1,26 @@
+/**
+ * This module loads and visualizes a previously saved route on the map.
+ * It retrieves the route ID from the URL (`?routeId=...`) and fetches the corresponding route data from the backend.
+ * 
+ * Features:
+ * - Draws a route line on the Mapbox map using GeoJSON geometry
+ * - Automatically fits the map to show the full route bounds
+ * - Updates or initializes the 'route-line' layer if already present
+ * - Saves route metadata (steps, summary, profile) to global window variables for use in other scripts
+ * - Renders turn-by-turn instructions in the sidebar if available
+ * - Reveals the "Save Route" button for reuse or re-saving
+ * 
+ * Parameters:
+ * - `map`: An initialized Mapbox GL JS map object
+ * 
+ * Used in:
+ * - feed-post.js (when navigating to a saved route from the community feed)
+ * 
+ * Side effects:
+ * - Writes to `window.lastRouteGeoJSON`, `window.currentProfile`, `window.lastRouteSteps`, and `window.lastRouteSummary`
+ * - Modifies DOM elements: `#directions-steps`, `#turn-by-turn`, and `#btn-save-route`
+ */
+
 export async function loadSavedRoutes(map) {
     const params = new URLSearchParams(window.location.search);
     const routeId = params.get('routeId');
